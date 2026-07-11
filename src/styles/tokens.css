@@ -17,9 +17,10 @@
   --c-forest: #2e4b36;   /* primary / heading / panel + footer bg */
   --c-cedar: #1f3325;    /* nav text, deep accents */
   --c-sage: #7c9082;     /* secondary accent, tags */
-  --c-clay: #c4703a;     /* CTA button bg (white text) */
+  --c-clay: #c4703a;     /* CTA button bg */
   --c-clay-dark: #a85c2b;/* CTA hover */
   --c-clay-ink: #9c5324; /* link / accent text on light bg */
+  --c-on-clay: #ffffff;  /* text colour on the CTA button */
   --c-fern: #e0a458;     /* chip / date highlight */
   --c-chip-ink: #4a3410; /* text on the fern chip */
   --c-mist: #8fa9b8;     /* cool accent */
@@ -157,38 +158,42 @@
 }
 
 /* ============ EDITORIAL ============ */
+/* Editorial = crisp & upscale: charcoal ink, warm ivory, antique-gold accent,
+   high-contrast Playfair Display over clean Manrope. */
 :root[data-theme='editorial'] {
-  --c-forest: #45372a;   /* deep warm brown for panels/footer/heading */
-  --c-cedar: #362a20;
-  --c-sage: #6e7a4b;     /* olive secondary */
-  --c-clay: #b4552e;     /* terracotta CTA */
-  --c-clay-dark: #9c4526;
-  --c-clay-ink: #a24a27;
-  --c-fern: #d89a3c;     /* mustard chip */
-  --c-chip-ink: #463207;
-  --c-mist: #9d8b72;
-  --c-paper: #fbf6ef;
+  --c-forest: #20232a;   /* deep charcoal — headings, panels, footer */
+  --c-cedar: #20232a;    /* nav (dark on ivory) */
+  --c-sage: #a79c86;     /* warm greige secondary */
+  --c-clay: #b08d3f;     /* antique-gold CTA (dark text) */
+  --c-clay-dark: #997a34;
+  --c-clay-ink: #7a5d2e; /* brass links / eyebrows */
+  --c-on-clay: #201804;  /* dark text on the gold button */
+  --c-fern: #eadcb4;     /* champagne chip */
+  --c-chip-ink: #4a3a12;
+  --c-mist: #9aa0a6;     /* cool slate */
+  --c-paper: #f4f1ea;    /* warm ivory */
   --c-cream: #ffffff;
-  --c-bark: #2a2622;
-  --c-stone: #6e6153;
-  --c-line: #ebe2d4;
-  --font-heading: 'Newsreader', Georgia, serif;
-  --font-body: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --c-bark: #191b20;
+  --c-stone: #6a6a66;
+  --c-line: #e4dfd3;
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Manrope Variable', 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 :root[data-theme='editorial'][data-mode='dark'] {
-  --c-forest: #52422f;
-  --c-cedar: #e7dccb;
-  --c-sage: #8a9560;
-  --c-clay: #b4552e;
-  --c-clay-dark: #9c4526;
-  --c-clay-ink: #da8b5f;
-  --c-fern: #d89a3c;
-  --c-chip-ink: #3a2a08;
-  --c-mist: #9d8b72;
-  --c-paper: #201a14;
-  --c-cream: #2b231b;
-  --c-bark: #f1e9dd;
-  --c-stone: #a99b88;
-  --c-line: #3a2f24;
-  --heading: #f1e4d4;
+  --c-forest: #2a2e37;   /* charcoal panels on near-black */
+  --c-cedar: #e4e1d8;
+  --c-sage: #a79c86;
+  --c-clay: #c6a45a;     /* brighter gold for dark */
+  --c-clay-dark: #b08d3f;
+  --c-clay-ink: #d9be7e;
+  --c-on-clay: #1a1408;
+  --c-fern: #e6d6ae;
+  --c-chip-ink: #3a2c08;
+  --c-mist: #9aa0a6;
+  --c-paper: #131519;    /* rich near-black */
+  --c-cream: #1b1e24;
+  --c-bark: #eceae1;
+  --c-stone: #a3a199;
+  --c-line: #2c2f36;
+  --heading: #f3f0e6;
 }

@@ -9,10 +9,9 @@
 @import '@fontsource/work-sans/600.css';
 @import '@fontsource/space-grotesk/600.css';
 @import '@fontsource/space-grotesk/700.css';
-@import '@fontsource/newsreader/600.css';
-@import '@fontsource/nunito-sans/400.css';
-@import '@fontsource/nunito-sans/600.css';
-@import '@fontsource/nunito-sans/700.css';
+@import '@fontsource/playfair-display/600.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource-variable/manrope';
 
 :root { color-scheme: light; }
 :root[data-mode='dark'] { color-scheme: dark; }
@@ -145,8 +144,8 @@ li { margin-bottom: 0.35rem; }
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
-.btn-primary { background: var(--c-clay); color: #fff; }
-.btn-primary:hover { background: var(--c-clay-dark); color: #fff; }
+.btn-primary { background: var(--c-clay); color: var(--c-on-clay); }
+.btn-primary:hover { background: var(--c-clay-dark); color: var(--c-on-clay); }
 .btn-secondary { background: transparent; color: var(--heading); border-color: var(--heading); }
 .btn-secondary:hover { background: var(--c-forest); color: #fff; }
 .btn-ghost { background: rgba(255,255,255,0.14); color: #fff; border-color: rgba(255,255,255,0.5); }
