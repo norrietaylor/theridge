@@ -3,6 +3,7 @@
 // wired. Until then, a prominent email fallback keeps neighbours from hitting a
 // dead end. Includes a visually-hidden honeypot ("company") to deter bots.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MailtoForm from '../components/MailtoForm.astro';
 import { SITE } from '../consts';
 
 const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for The Ridge')}`;
@@ -27,13 +28,7 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for T
         </p>
       </div>
 
-      <form class="contact-form" action="/api/contact" method="post">
-        <!-- Honeypot: humans never see or fill this; bots often do. -->
-        <div class="visually-hidden" aria-hidden="true">
-          <label for="company">Company (leave this blank)</label>
-          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
-        </div>
-
+      <form class="contact-form" data-mailto data-to={SITE.email} data-subject="Message for The Ridge">
         <div class="field">
           <label for="c-name">Your name</label>
           <input id="c-name" name="name" type="text" autocomplete="name" required />
@@ -58,10 +53,10 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for T
           <textarea id="c-message" name="message" required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Send message</button>
+        <button type="submit" class="btn btn-primary">Compose email</button>
         <p class="form-note" style="margin-top:var(--space-2)">
-          We're switching on online form delivery shortly. In the meantime, the
-          surest way to reach us is by <a href={mailto}>email</a>.
+          This opens a pre-filled message in your email app (built-in signup is
+          coming soon). No email app? Just write to <a href={mailto}>{SITE.email}</a>.
         </p>
       </form>
     </div>
@@ -81,6 +76,8 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for T
       </p>
     </div>
   </section>
+
+  <MailtoForm />
 </BaseLayout>
 
 <style>

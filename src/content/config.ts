@@ -22,6 +22,9 @@ const events = defineCollection({
     coordinatorEmail: z.string().optional(),
     bring: z.string().optional(),
     rsvp: z.boolean().default(true),
+    // `example: true` marks a suggested/illustrative event (not a confirmed date).
+    // These show a "Suggested" badge and are kept out of the .ics calendar feed.
+    example: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
 });

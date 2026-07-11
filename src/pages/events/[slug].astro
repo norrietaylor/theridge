@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { formatLong } from '../../lib/dates';
 import { SITE } from '../../consts';
+import MailtoForm from '../../components/MailtoForm.astro';
 
 export async function getStaticPaths() {
   const items = await getCollection('events');
@@ -10,22 +11,34 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, start, time, location, summary, coordinator, coordinatorEmail, bring, rsvp } = entry.data;
+const { title, start, time, location, summary, coordinator, coordinatorEmail, bring, rsvp, example } = entry.data;
 const { Content } = await render(entry);
 
 const showRsvp = rsvp !== false;
 
-// mailto fallback for the RSVP form while the /api/rsvp endpoint is being wired up.
+// mailto fallback for the RSVP form (built-in submission arrives with issue #4).
 const rsvpBody = `Event: ${title}\nDate: ${formatLong(start)}${time ? ` (${time})` : ''}\n\nName:\nEmail:\nParty size:\nNote (optional):`;
 const rsvpMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`RSVP: ${title}`)}&body=${encodeURIComponent(rsvpBody)}`;
+
+// For suggested (example) events, invite interest instead of a firm RSVP.
+const interestBody = `Event: ${title}\n\nName:\nEmail:\nAnything to add:`;
+const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd come to: ${title}`)}&body=${encodeURIComponent(interestBody)}`;
 ---
 <BaseLayout title={title} description={summary}>
   <section class="section">
     <div class="container container-narrow">
       <p><a href="/events" class="back-link">← Back to all events</a></p>
 
-      <p class="eyebrow">Ridge event</p>
+      <p class="eyebrow">{example ? 'Suggested event' : 'Ridge event'}</p>
       <h1>{title}</h1>
+
+      {example && (
+        <p class="suggested-note">
+          <strong>This is a suggested gathering.</strong> It's an idea to get us
+          started — the date isn't confirmed yet. If you'd come,
+          <a href={interestMailto}> let us know</a> and we'll try to make it happen.
+        </p>
+      )}
 
       <ul class="event-facts">
         <li><strong>When:</strong> {formatLong(start)}{time && <span> · {time}</span>}</li>
@@ -49,20 +62,13 @@ const rsvpMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`RSVP: ${t
         <Content />
       </div>
 
-      {showRsvp && (
+      {showRsvp && !example && (
         <div class="card card--pad-lg rsvp" style="margin-top: var(--space-5);">
           <h2 style="margin-top:0;">Let us know you're coming</h2>
           <p class="muted">
             A quick RSVP helps us plan numbers — but no pressure, drop-ins are always welcome.
           </p>
-          <form class="rsvp-form" action="/api/rsvp" method="post">
-            <input type="hidden" name="event" value={title} />
-            {/* Honeypot: real people leave this blank; bots tend to fill it in. */}
-            <div class="visually-hidden" aria-hidden="true">
-              <label for="rsvp-company">Company (leave blank)</label>
-              <input id="rsvp-company" name="company" type="text" tabindex="-1" autocomplete="off" />
-            </div>
-
+          <form class="rsvp-form" data-mailto data-to={SITE.email} data-subject={`RSVP: ${title}`}>
             <div class="field">
               <label for="rsvp-name">Your name</label>
               <input id="rsvp-name" name="name" type="text" required autocomplete="name" />
@@ -80,16 +86,29 @@ const rsvpMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`RSVP: ${t
               <textarea id="rsvp-note" name="note"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Send RSVP</button>
+            <button type="submit" class="btn btn-primary">Compose RSVP email</button>
             <p class="form-note" style="margin-top: var(--space-2);">
-              Online RSVPs are still being wired up. For now the surest way is to
-              <a href={rsvpMailto}>email your RSVP to us</a> and we'll add you to the list.
+              This opens a pre-filled RSVP in your email app (one-click RSVPs are
+              coming soon). No email app? Write to <a href={rsvpMailto}>{SITE.email}</a>.
             </p>
           </form>
         </div>
       )}
+
+      {example && (
+        <div class="card card--pad-lg rsvp" style="margin-top: var(--space-5);">
+          <h2 style="margin-top:0;">Would you come to this?</h2>
+          <p class="muted">
+            It's just an idea for now. Tell us you're interested and we'll gauge the
+            appetite and pick a date that works for people.
+          </p>
+          <p style="margin-bottom:0;"><a class="btn btn-primary" href={interestMailto}>I'd come to this — let us know</a></p>
+        </div>
+      )}
     </div>
   </section>
+
+  <MailtoForm />
 </BaseLayout>
 
 <style>
@@ -103,4 +122,11 @@ const rsvpMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`RSVP: ${t
   }
   .event-facts li { margin: 0; }
   .rsvp-form .btn { margin-top: var(--space-1); }
+  .suggested-note {
+    margin: var(--space-2) 0 0;
+    padding: var(--space-2) var(--space-3);
+    background: rgba(224, 164, 88, 0.16);
+    border-left: 4px solid var(--c-fern);
+    border-radius: var(--radius);
+  }
 </style>

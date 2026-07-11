@@ -8,6 +8,7 @@ coordinator: "Ron Taylor"
 coordinatorEmail: "hello@ourridge.ca"
 bring: "Water for you and your dog, poop bags, and a leash for the busier stretches."
 rsvp: true
+example: true
 ---
 
 Every Saturday a happy little pack gathers by the playground for a gentle stroll along the trails and around the parkland. It is a lovely, low-key way to start the weekend, stretch some legs, and put names to the faces (and the dogs) you see around the neighbourhood.
