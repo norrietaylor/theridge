@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EventCard from '../../components/EventCard.astro';
+import { getCollection } from 'astro:content';
+import { isUpcoming, monthYear } from '../../lib/dates';
+
+// All published events, soonest first, keeping only what is still upcoming.
+const events = (await getCollection('events', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.start.getTime() - b.data.start.getTime())
+  .filter((entry) => isUpcoming(entry.data.start));
+
+// Group the upcoming events under their month heading. Because `events` is
+// already sorted ascending, the months come out in chronological order too.
+const byMonth = new Map<string, typeof events>();
+for (const entry of events) {
+  const key = monthYear(entry.data.start);
+  const bucket = byMonth.get(key);
+  if (bucket) bucket.push(entry);
+  else byMonth.set(key, [entry]);
+}
+const months = [...byMonth.entries()];
+---
+<BaseLayout title="Events" description="Upcoming events on The Ridge — dog walks, rides, potlucks and get-togethers for neighbours in South Courtenay, BC.">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">What's on</p>
+      <h1>Events on the Ridge</h1>
+      <p class="lead prose">
+        Here's what's coming up around the neighbourhood — walks, rides, work
+        mornings, and get-togethers in the park. Everyone's welcome, so come as
+        you are and bring a neighbour.
+      </p>
+      <p style="margin-top: var(--space-3);">
+        <a class="btn btn-secondary" href="/events.ics">Subscribe / add to your calendar</a>
+      </p>
+      <p class="form-note" style="margin-top: var(--space-1);">
+        The calendar feed keeps every event in sync with your own phone or laptop calendar.
+      </p>
+
+      <div class="panel callout" style="margin-top: var(--space-4);">
+        <div>
+          <h2 style="margin-top:0;">Looking for the regular walks &amp; rides?</h2>
+          <p class="muted" style="margin-bottom:0;">
+            Our Saturday dog walks, mid-week people walks, and evening bike rides
+            happen week in, week out. Find the schedules and meeting points over
+            on the Community page.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="/community">See Community Life</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      {months.length === 0 ? (
+        <p class="prose muted">
+          No events are on the calendar just yet — check back soon, or
+          <a href="/community">join a regular walk or ride</a> in the meantime.
+          Got an idea for a get-together? <a href="/get-involved">We'd love your help</a>.
+        </p>
+      ) : (
+        <div class="stack">
+          {months.map(([month, items]) => (
+            <div class="month-group">
+              <h2 class="month-heading">{month}</h2>
+              <div class="grid cols-2">
+                {items.map((entry) => (
+                  <EventCard
+                    href={`/events/${entry.id}`}
+                    title={entry.data.title}
+                    start={entry.data.start}
+                    time={entry.data.time}
+                    location={entry.data.location}
+                    summary={entry.data.summary}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .callout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .callout .btn { flex: 0 0 auto; }
+  .month-heading {
+    padding-bottom: var(--space-1);
+    border-bottom: 2px solid var(--border);
+    margin-bottom: var(--space-3);
+  }
+  .month-group + .month-group { margin-top: var(--space-4); }
+</style>

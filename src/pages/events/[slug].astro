@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { formatLong } from '../../lib/dates';
+import { SITE } from '../../consts';
+
+export async function getStaticPaths() {
+  const items = await getCollection('events');
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { title, start, time, location, summary, coordinator, coordinatorEmail, bring, rsvp } = entry.data;
+const { Content } = await render(entry);
+
+const showRsvp = rsvp !== false;
+
+// mailto fallback for the RSVP form while the /api/rsvp endpoint is being wired up.
+const rsvpBody = `Event: ${title}\nDate: ${formatLong(start)}${time ? ` (${time})` : ''}\n\nName:\nEmail:\nParty size:\nNote (optional):`;
+const rsvpMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`RSVP: ${title}`)}&body=${encodeURIComponent(rsvpBody)}`;
+---
+<BaseLayout title={title} description={summary}>
+  <section class="section">
+    <div class="container container-narrow">
+      <p><a href="/events" class="back-link">← Back to all events</a></p>
+
+      <p class="eyebrow">Ridge event</p>
+      <h1>{title}</h1>
+
+      <ul class="event-facts">
+        <li><strong>When:</strong> {formatLong(start)}{time && <span> · {time}</span>}</li>
+        {location && <li><strong>Where:</strong> {location}</li>}
+        {bring && <li><strong>What to bring:</strong> {bring}</li>}
+        {coordinator && (
+          <li>
+            <strong>Coordinator:</strong>{' '}
+            {coordinatorEmail
+              ? <a href={`mailto:${coordinatorEmail}`}>{coordinator}</a>
+              : <span>{coordinator}</span>}
+          </li>
+        )}
+      </ul>
+
+      <p style="margin-top: var(--space-3);">
+        <a class="btn btn-secondary" href="/events.ics">Add to calendar</a>
+      </p>
+
+      <div class="prose" style="margin-top: var(--space-4);">
+        <Content />
+      </div>
+
+      {showRsvp && (
+        <div class="card card--pad-lg rsvp" style="margin-top: var(--space-5);">
+          <h2 style="margin-top:0;">Let us know you're coming</h2>
+          <p class="muted">
+            A quick RSVP helps us plan numbers — but no pressure, drop-ins are always welcome.
+          </p>
+          <form class="rsvp-form" action="/api/rsvp" method="post">
+            <input type="hidden" name="event" value={title} />
+            {/* Honeypot: real people leave this blank; bots tend to fill it in. */}
+            <div class="visually-hidden" aria-hidden="true">
+              <label for="rsvp-company">Company (leave blank)</label>
+              <input id="rsvp-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="field">
+              <label for="rsvp-name">Your name</label>
+              <input id="rsvp-name" name="name" type="text" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="rsvp-email">Email</label>
+              <input id="rsvp-email" name="email" type="email" required autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="rsvp-party">Party size</label>
+              <input id="rsvp-party" name="party" type="number" min="1" value="1" inputmode="numeric" />
+            </div>
+            <div class="field">
+              <label for="rsvp-note">Note <span class="muted">(optional)</span></label>
+              <textarea id="rsvp-note" name="note"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send RSVP</button>
+            <p class="form-note" style="margin-top: var(--space-2);">
+              Online RSVPs are still being wired up. For now the surest way is to
+              <a href={rsvpMailto}>email your RSVP to us</a> and we'll add you to the list.
+            </p>
+          </form>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .back-link { font-weight: 600; }
+  .event-facts {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0 0;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .event-facts li { margin: 0; }
+  .rsvp-form .btn { margin-top: var(--space-1); }
+</style>

@@ -1,0 +1,95 @@
+---
+// Printable one-page flyer for The Ridge outreach kit.
+// This route is the single source of truth for the flyer — edit here and the
+// printed sheet updates. PrintLayout gives us a paper-ready sheet plus a small
+// on-screen "Print / Save as PDF" toolbar.
+import PrintLayout from '../../layouts/PrintLayout.astro';
+import QRCode from '../../components/QRCode.astro';
+import RidgeMark from '../../components/RidgeMark.astro';
+import { SITE } from '../../consts';
+---
+<PrintLayout title="Flyer">
+  <article class="flyer">
+    <header class="flyer-top">
+      <RidgeMark height={54} />
+      <p class="place">South Courtenay, BC</p>
+    </header>
+
+    <div class="flyer-hero">
+      <h1 class="print-hero">Meet your neighbours on the Ridge</h1>
+      <p class="lead">
+        We&rsquo;re a young neighbourhood still finding its feet &mdash; a friendly,
+        all-ages mix of people who&rsquo;d like to know the folks a few doors down.
+        Come as you are.
+      </p>
+    </div>
+
+    <ul class="perks">
+      <li><strong>Community events.</strong> Seasonal get-togethers, potlucks and park days where it&rsquo;s easy to say hello.</li>
+      <li><strong>Dog walks, people walks &amp; bike rides.</strong> Regular, low-key outings on our trails and quiet streets &mdash; all paces welcome.</li>
+      <li><strong>A united voice with the City.</strong> One friendly, constructive channel to help shape parks, traffic and the things that matter here.</li>
+      <li><strong>A friendly monthly email.</strong> A short note with what&rsquo;s on. No spam, unsubscribe anytime.</li>
+    </ul>
+
+    <div class="flyer-join">
+      <div class="qr-wrap">
+        <QRCode value={`${SITE.url}/join?src=flyer`} size={150} label="Scan to join The Ridge mailing list" />
+      </div>
+      <div class="join-copy">
+        <p class="join-lead print-accent">Scan to join &mdash;</p>
+        <p class="join-url">or visit <strong>{SITE.displayUrl}/join</strong></p>
+        <p class="join-email">Questions? Email <strong>{SITE.email}</strong></p>
+      </div>
+    </div>
+
+    <footer class="flyer-foot">
+      <p>Built by neighbours, for neighbours. All welcome &mdash; let&rsquo;s shape this place together.</p>
+    </footer>
+  </article>
+</PrintLayout>
+
+<style>
+  .flyer { display: flex; flex-direction: column; gap: 1.4rem; }
+
+  .flyer-top {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--c-sage);
+    padding-bottom: 1rem;
+  }
+  .place {
+    margin: 0; font-weight: 600; letter-spacing: 0.09em;
+    text-transform: uppercase; font-size: 0.8rem; color: var(--c-clay-ink);
+  }
+
+  .flyer h1 { font-size: 2.7rem; margin: 0 0 0.5rem; }
+  .lead { font-size: 1.2rem; color: var(--c-stone); margin: 0; max-width: 62ch; }
+
+  .perks { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.8rem; }
+  .perks li { position: relative; padding-left: 1.8rem; font-size: 1.06rem; }
+  .perks li::before {
+    content: ''; position: absolute; left: 0; top: 0.45em;
+    width: 0.65rem; height: 0.65rem; border-radius: 3px; background: var(--c-clay);
+  }
+
+  .flyer-join {
+    display: flex; gap: 1.5rem; align-items: center;
+    background: var(--c-paper);
+    border: 2px dashed var(--c-sage);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+  }
+  .qr-wrap {
+    background: #fff; padding: 0.5rem; line-height: 0;
+    border: 1px solid var(--c-line); border-radius: var(--radius);
+  }
+  .join-copy { margin: 0; }
+  .join-lead { font-size: 1.5rem; font-weight: 700; margin: 0; }
+  .join-url { font-size: 1.15rem; margin: 0.25rem 0; }
+  .join-email { margin: 0.5rem 0 0; color: var(--c-stone); }
+
+  .flyer-foot {
+    border-top: 1px solid var(--c-line); padding-top: 0.85rem;
+    color: var(--c-stone); font-size: 0.95rem;
+  }
+  .flyer-foot p { margin: 0; }
+</style>

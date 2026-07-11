@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { getCollection } from 'astro:content';
+import { formatLong } from '../../lib/dates';
+
+// All published news, pinned first, then newest date first.
+const posts = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) => {
+  if (a.data.pinned !== b.data.pinned) return a.data.pinned ? -1 : 1;
+  return b.data.date.getTime() - a.data.date.getTime();
+});
+
+const featured = posts.find((p) => p.data.pinned);
+const rest = posts.filter((p) => p !== featured);
+---
+<BaseLayout
+  title="News & Vision"
+  description="News, announcements and vision from The Ridge neighbourhood in South Courtenay, BC."
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">News &amp; Vision</p>
+      <h1>What's happening on the Ridge</h1>
+      <p class="lead">Announcements, community wins, and the bigger picture of what we're building here together. A slow, friendly trickle — the things worth knowing about your neighbourhood.</p>
+
+      <ul class="legend" aria-label="Post categories">
+        <li><span class="tag">Vision</span> the why behind it all</li>
+        <li><span class="tag">Announcement</span> news, walks &amp; gatherings</li>
+        <li><span class="tag">Development</span> updates that shape our streets</li>
+      </ul>
+
+      {featured && (
+        <article class="panel feature">
+          <div class="feature-top">
+            <span class="tag">{featured.data.category}</span>
+            <time class="muted" datetime={featured.data.date.toISOString()}>{formatLong(featured.data.date)}</time>
+          </div>
+          <h2 class="feature-title"><a href={`/news/${featured.id}`}>{featured.data.title}</a></h2>
+          <p class="feature-summary">{featured.data.summary}</p>
+          <p class="feature-meta">
+            {featured.data.author && <span class="muted">By {featured.data.author}</span>}
+            <a class="btn btn-secondary" href={`/news/${featured.id}`}>Read our vision →</a>
+          </p>
+        </article>
+      )}
+
+      {rest.length > 0 ? (
+        <div class="grid cols-3 news-grid">
+          {rest.map((post) => (
+            <NewsCard
+              href={`/news/${post.id}`}
+              title={post.data.title}
+              date={post.data.date}
+              category={post.data.category}
+              summary={post.data.summary}
+            />
+          ))}
+        </div>
+      ) : (
+        !featured && <p class="muted">No posts yet — check back soon.</p>
+      )}
+
+      <div class="panel-forest news-cta">
+        <div>
+          <h2>Never miss the news that matters</h2>
+          <p>Vision is one thing; timing is another. Join the list and we'll make sure you hear about walks, gatherings, and issues before the City while there's still time to weigh in.</p>
+        </div>
+        <a class="btn btn-ghost" href="/join">Get updates by email</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legend {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0 var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+  }
+  .legend li { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; }
+
+  .feature { border-left: 4px solid var(--c-clay); margin-bottom: var(--space-4); }
+  .feature-top { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-1); }
+  .feature-title { font-size: var(--fs-2xl); margin: 0 0 var(--space-1); }
+  .feature-title a { color: var(--heading); text-decoration: none; }
+  .feature-title a:hover { color: var(--c-clay-ink); }
+  .feature-summary { font-size: var(--fs-lg); color: var(--text-muted); margin: 0 0 var(--space-2); }
+  .feature-meta { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin: 0; }
+
+  .news-grid { margin-bottom: var(--space-5); }
+
+  .news-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .news-cta h2 { margin-bottom: var(--space-1); }
+  .news-cta p { margin: 0; color: #e7ded0; max-width: 46ch; }
+  .news-cta .btn { flex: 0 0 auto; }
+</style>
