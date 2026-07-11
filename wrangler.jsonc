@@ -1,0 +1,17 @@
+{
+  // Cloudflare Workers config for deploying The Ridge as a static site.
+  // `npm run build` produces ./dist (Astro static output); `npx wrangler deploy`
+  // uploads it as Workers Static Assets. No Worker script is needed for the
+  // static site itself — this is an assets-only deployment.
+  //
+  // NOTE: the form back-end in /functions (Cloudflare Pages Functions) is NOT
+  // served by this Workers deployment. In v1 the forms fall back to email, so
+  // that's fine. When the forms are activated (see issue #4), add a Worker entry
+  // (`"main": "..."`) that handles /api/* and let assets serve everything else.
+  "name": "theridge",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
