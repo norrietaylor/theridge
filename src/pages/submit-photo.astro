@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PhotoSubmitForm from '../components/PhotoSubmitForm.astro';
+---
+<BaseLayout
+  title="Share a photo"
+  description="Share a photo of The Ridge for the community gallery. We review every submission before it appears."
+>
+  <section class="section">
+    <div class="container container-narrow">
+      <p class="back"><a href="/gallery">← Back to the gallery</a></p>
+
+      <p class="eyebrow">Community gallery</p>
+      <h1>Share a photo of the Ridge</h1>
+      <p class="lead prose">
+        A walk, a view, a garden, a gathering, if you've caught a moment of our
+        neighbourhood you'd like to share, send it our way and we may add it to
+        the <a href="/gallery">community gallery</a>.
+      </p>
+
+      <ul class="submit-notes prose">
+        <li>Every photo is <strong>reviewed by a neighbour before it appears</strong>, so it won't show up right away.</li>
+        <li>Please only share photos you <strong>took yourself, or have permission to share</strong>. Avoid photos that identify people (especially children) without their okay.</li>
+        <li>Your photo is resized in your browser before it's sent, which also strips location data.</li>
+      </ul>
+
+      <div class="panel" style="margin-top: var(--space-4);">
+        <PhotoSubmitForm />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .back { font-weight: 600; font-size: var(--fs-sm); margin-bottom: var(--space-3); }
+  .submit-notes {
+    margin-top: var(--space-3);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+</style>

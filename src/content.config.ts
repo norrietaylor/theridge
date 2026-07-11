@@ -21,6 +21,8 @@ const events = defineCollection({
     coordinator: z.string().optional(),
     coordinatorEmail: z.string().optional(),
     bring: z.string().optional(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
     rsvp: z.boolean().default(true),
     // `example: true` marks a suggested/illustrative event (not a confirmed date).
     // These show a "Suggested" badge and are kept out of the .ics calendar feed.
@@ -39,6 +41,7 @@ const news = defineCollection({
     summary: z.string(),
     author: z.string().optional(),
     image: z.string().optional(),
+    imageAlt: z.string().optional(),
     pinned: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
@@ -85,4 +88,20 @@ const meetings = defineCollection({
   }),
 });
 
-export const collections = { events, news, positions, groups, meetings };
+// Community photo gallery. Binaries live in R2 (served at /media/...); each
+// entry is a small Markdown file so the gallery stays versioned in git. Entries
+// are created by editors or by approving a resident's photo submission (CMS).
+const gallery = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/gallery' }),
+  schema: z.object({
+    image: z.string(), // e.g. /media/gallery/<uuid>.jpg
+    caption: z.string().optional(),
+    credit: z.string().optional(),
+    date: z.coerce.date(),
+    alt: z.string().optional(),
+    order: z.number().default(50),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { events, news, positions, groups, meetings, gallery };

@@ -1,191 +1,185 @@
 # Editing guide, adding content to The Ridge website
 
 Hello, and thank you for helping keep The Ridge website alive! This guide is for
-**non-technical volunteers**. You don't need to be a programmer, if you can fill
-in a form and save a file, you can add an event, a news post, a group, or a City
-issue.
+**non-technical volunteers**. You don't need to be a programmer, and you don't
+need a GitHub account. If you can sign in to your email and fill in a form, you
+can add an event, a news post, a group, or a City issue, and add a photo to go
+with it.
 
-> **The short version:** each piece of content is a small text file with a few
-> labelled fields at the top. Add a file, save it to the project, and the website
-> rebuilds and publishes itself automatically, usually within a minute or two.
-
-A friendlier, click-and-type visual editor (a **CMS**) is coming as a fast-follow.
-Until then, this guide is all you need.
+> **The short version:** open the editor, fill in a few labelled fields, drop in
+> a photo, watch the live preview, and press **Publish**. The website rebuilds
+> and publishes itself, usually within a minute or two.
 
 ---
 
-## How publishing works
+## Signing in
 
-The website is **static**, it's rebuilt from these text files every time the
-project changes, and hosted on **Cloudflare**.
+1. Go to **[ourridge.ca/admin](https://ourridge.ca/admin)** in your web browser.
+2. You'll be asked for your **email address**. Type the one we added to the
+   editors list, then press continue.
+3. Cloudflare emails you a **one-time code** (a short number). Check your inbox,
+   copy the code, and paste it in.
+4. That's it, you're in. No password to remember, no GitHub account.
 
-1. You add or edit a Markdown (`.md`) file in the right folder (see below).
-2. You save it to the project (commit/push, or use the GitHub website's
-   "Add file" button).
-3. Cloudflare notices the change, rebuilds the site, and publishes it, no extra
-   step needed. Give it a minute, then refresh the page.
+The code is good for one sign-in and expires quickly, so grab it while it's
+fresh. If you're away from the editor for a while it may ask you to sign in
+again, that's normal and keeps things secure.
 
-If something in a file is wrong (a missing field, a bad date), the build will
-stop rather than publish something broken. Don't worry, nothing goes live until
-it's valid, and you can fix the file and save again.
-
----
-
-## Where content lives
-
-Every kind of content has its own folder under `src/content/`:
-
-| I want to add…            | Folder                    |
-| ------------------------- | ------------------------- |
-| A community event         | `src/content/events/`     |
-| A news or vision post     | `src/content/news/`       |
-| A City issue / position   | `src/content/positions/`  |
-| A walking / riding group  | `src/content/groups/`     |
-| A City meeting date       | `src/content/meetings/`   |
-
-**Naming files:** use lowercase words with hyphens and end in `.md`, e.g.
-`summer-park-day.md` or `traffic-on-ridge-road.md`. The file name becomes part of
-the web address, so keep it short and descriptive.
-
-**Dates** are always written as `YYYY-MM-DD` (year-month-day), e.g. `2026-07-18`.
-Type them plainly, with no time zone.
-
-**The `draft` field:** set `draft: true` to keep something hidden while you work
-on it. Set it to `false` (or remove the line) when it's ready to go live.
+**Can't get in?** If your email isn't on the editors list, Cloudflare will turn
+you away, that's the front door doing its job. Email **hello@ourridge.ca** and
+we'll add you.
 
 ---
 
-## The anatomy of a content file
+## Finding your way around
 
-Every file has two parts:
+Once you're signed in you'll see your email at the top (so you know it's *you*
+who's editing), and a menu down the left side:
 
-```md
----
-title: Summer Park Day
-start: 2026-07-25
-summary: A relaxed afternoon in the park, bring a blanket and say hello.
----
+- **Events** — community events
+- **News** — news and vision posts
+- **Voice to the City** — City issues and positions
+- **Groups** — walking and riding groups
+- **Meetings** — City meeting dates
+- **Photos (Gallery)** — the community photo gallery
+- **Photo submissions** — photos neighbours have sent in, waiting for your
+  review (more on this near the end)
 
-Write the longer description here, in plain paragraphs.
-You can use **bold**, _italics_, and [links](https://example.com).
-```
-
-The bit **between the two `---` lines** is called the *frontmatter*, those are
-the labelled fields. The bit **below** is the free-text body (optional for some
-types). Copy one of the templates below and change the values.
-
----
-
-## Templates, copy, paste, and edit
-
-### Add an event → `src/content/events/your-event.md`
-
-```md
----
-title: Summer Park Day
-start: 2026-07-25          # required, the day it happens (YYYY-MM-DD)
-end: 2026-07-25           # optional, only for multi-day events
-time: "1:00 PM – 4:00 PM" # optional, friendly time text, in quotes
-location: Ridgeview Park
-summary: A relaxed afternoon in the park, bring a blanket and say hello.
-coordinator: Ron Taylor    # optional, who's organising
-coordinatorEmail: hello@ourridge.ca  # optional
-bring: A picnic and a lawn chair            # optional
-rsvp: true                 # true shows an RSVP button; false hides it
-draft: false
----
-
-A longer, warm description of the event goes here. What to expect, who it's for,
-where to park, anything that helps a neighbour feel welcome to come along.
-```
-
-### Add a news / vision post → `src/content/news/your-post.md`
-
-```md
----
-title: A warm welcome to the Ridge website
-date: 2026-07-11           # required, the publish date
-category: Announcement     # Announcement | Development | Vision
-summary: One or two friendly sentences shown in the news list.
-author: Ron Taylor         # optional
-image: /img/welcome.jpg    # optional, see "Adding images" below
-pinned: false              # true keeps it at the top of the news list
-draft: false
----
-
-The full post goes here, in plain paragraphs. Keep it warm and to the point.
-```
-
-### Add a City issue / position → `src/content/positions/your-issue.md`
-
-```md
----
-title: Safer crossings on Ridge Road
-status: Watching           # Watching | Active | Resolved
-updated: 2026-07-11        # required, when you last updated this
-summary: What the issue is, in one or two calm, factual sentences.
-whatYouCanDo:              # optional, a short list of neighbourly actions
-  - Share your experience at the next Council meeting
-  - Add your name to the mailing list to stay informed
-draft: false
----
-
-Background and context in plain language. Stick to what's known; keep the tone
-constructive rather than combative.
-```
-
-### Add a group (walk / ride) → `src/content/groups/your-group.md`
-
-```md
----
-name: Saturday Morning Dog Walk
-kind: Dog walk             # Dog walk | People walk | Bike ride | Other
-schedule: "Saturdays, 9:00 AM"
-meetingPoint: The trailhead at the top of the main path
-coordinator: volunteer needed   # a first name, or "volunteer needed"
-summary: An easy loop with the dogs, all breeds and paces welcome.
-order: 10                  # lower numbers show first
-draft: false
----
-
-Optional extra detail, the usual route, how long it takes, what to bring.
-```
-
-### Add a City meeting date → `src/content/meetings/your-meeting.md`
-
-```md
----
-title: City of Courtenay, Regular Council Meeting
-date: 2026-07-21
-kind: Council              # optional, "Council", "Committee of the Whole"…
-agendaUrl: https://www.courtenay.ca/  # optional, link to the official agenda
-note: Item of interest, neighbourhood traffic review   # optional
-draft: false
----
-```
+Click any collection to see what's already there. Each row shows its title and a
+little **Draft** badge if it isn't live yet. Press **Edit** to open one, or
+**New** to start a fresh one.
 
 ---
 
-## Adding images
+## Adding or editing an event
 
-1. Put the image file in the `public/img/` folder (that's where the site's
-   photos live).
-2. Reference it in frontmatter by its path **starting with a slash**, dropping
-   the word `public`. So `public/img/welcome.jpg` becomes:
+1. In the left menu, click **Events**, then **New** (or **Edit** on an existing
+   one).
+2. Fill in the fields. The important ones:
+   - **Title** — the name of the event (required).
+   - **Start** — the day it happens (required). Pick it from the date box.
+   - **End** — only for events that run over more than one day (optional).
+   - **Time** — friendly text like `1:00 PM – 4:00 PM` (optional).
+   - **Location** — where to meet (optional).
+   - **Summary** — one or two warm sentences shown in the events list
+     (required).
+   - **Coordinator** / **Coordinator email** — who's organising (optional).
+   - **Bring** — what to bring along, e.g. a picnic and a lawn chair (optional).
+   - **RSVP** — leave the tick on to show an RSVP button; untick to hide it.
+3. Write the longer description in the **body** box at the bottom, in plain
+   paragraphs. You can use **bold**, _italics_, and [links](https://example.com)
+   (see *Writing in the body* below).
+4. Add a photo if you have one, see **Adding a photo** below.
+5. Watch the **live preview** on the right as you type.
+6. Press **Save draft** to keep working, or **Publish** to put it live.
 
-   ```md
-   image: /img/welcome.jpg
-   ```
+## Adding or editing a news or vision post
 
-Tips:
+1. Click **News**, then **New** (or **Edit**).
+2. Fill in the fields:
+   - **Title** (required).
+   - **Date** — the publish date (required).
+   - **Category** — choose **Announcement**, **Development**, or **Vision**.
+   - **Summary** — a friendly sentence or two for the news list (required).
+   - **Author** — optional.
+   - **Pinned** — tick this to keep an important post at the top of the news
+     list.
+3. Write the full post in the **body** box.
+4. Add a photo if you have one (see below).
+5. Check the preview, then **Save draft** or **Publish**.
 
-- Use `.jpg` for photos and `.png`/`.svg` for logos or graphics.
-- Keep photos a reasonable size (roughly 1600px wide is plenty) so pages load
-  quickly.
-- Always describe your photo honestly, good **alt text** helps neighbours using
-  screen readers. When a field or the future editor asks for alt text, write what
-  you'd say to someone who can't see the picture (e.g. "Families gathered on a
-  grassy hill at sunset").
+The other kinds of content (**Voice to the City**, **Groups**, **Meetings**,
+**Gallery**) work exactly the same way, open the collection, press **New**, fill
+in the labelled fields, and publish. The form only shows the fields that belong
+to that kind of content, so you can't miss one or add the wrong thing.
+
+---
+
+## Adding a photo
+
+Wherever a form has an **image** field (events, news, and the gallery), there's a
+**Choose photo** button:
+
+1. Click it and pick a photo from your computer or phone.
+2. The editor automatically **shrinks it to a sensible size** and strips hidden
+   location data before uploading, so you don't need to resize anything
+   yourself, and no home addresses ride along in the file.
+3. A little thumbnail appears once it's uploaded. That's it, the photo is
+   attached.
+4. Please also fill in the **alt text** field: a short, honest description of the
+   photo for neighbours who use screen readers, e.g. "Families gathered on a
+   grassy hill at sunset." Write what you'd say to someone who can't see the
+   picture.
+
+Only add photos **you took** or have permission to use.
+
+---
+
+## Writing in the body
+
+The big **body** box is plain writing with a few light touches:
+
+- Start a line with `#` for a heading, `##` for a smaller one.
+- Wrap words in `**stars**` for **bold**, `_underscores_` for _italics_.
+- Make a link with `[the words people see](https://the-address.com)`.
+- Start lines with `-` for a bullet list.
+- Leave a blank line between paragraphs.
+
+Don't worry about getting the symbols perfect, the **live preview** shows you
+exactly how it'll look as you go.
+
+---
+
+## The live preview
+
+As you fill in the form, the panel on the **right** shows a live preview: the
+key fields at a glance and your body text formatted the way visitors will see
+it. Use it to catch a typo, a missing summary, or a heading that didn't come out
+right, *before* you publish. Nothing in the preview is live; it's just for you.
+
+---
+
+## Save draft vs Publish
+
+Two buttons, two jobs:
+
+- **Save draft** keeps your work safely stored but **hidden from the public**.
+  The row gets a **Draft** badge. Use this when something isn't ready, when
+  you want a colleague to look first, or when you just need to stop for the day.
+- **Publish** makes it **live on the website**. Give it about **one to two
+  minutes** for the site to rebuild, then refresh the page and your event, post,
+  or photo is there for everyone.
+
+You can publish a draft later, or turn a live item back into a draft, just
+reopen it and press the other button. There's also a **Delete** button if
+something needs to go entirely.
+
+If a field is missing or a date looks wrong, the site is careful: it won't
+publish anything broken. You'll be able to fix it and try again, nothing bad
+goes live in the meantime.
+
+---
+
+## Reviewing resident photo submissions (the moderation queue)
+
+Neighbours can send in their own photos from the website's **Share a photo**
+page. Those photos **don't appear anywhere until an editor approves them**, so
+part of the job is giving them a quick look.
+
+1. In the left menu, click **Photo submissions**.
+2. You'll see a grid of photos waiting for review, each with the submitter's
+   name and caption (if they gave one).
+3. For each photo:
+   - Read the caption and check the photo is friendly, in focus, and something
+     we're happy to share.
+   - Tidy up or add the **caption**, **credit**, and **alt text** if you like.
+   - Press **Approve** to add it to the community **Gallery** (it goes live the
+     same way a publish does, in a minute or two), or **Reject** to remove it.
+4. Approving or rejecting clears it from the queue.
+
+Rejected photos are simply removed, we don't keep them. When in doubt about a
+photo, or if you're unsure it's the submitter's own, leave it and ask a
+teammate.
 
 ---
 
@@ -207,11 +201,17 @@ The Ridge is warm, plain-spoken, and neighbourly. A few gentle rules:
 
 ## Stuck?
 
-- Double-check your dates are `YYYY-MM-DD` and any `time:` value is wrapped in
-  "quotes".
-- Make sure the top of the file has the opening and closing `---` lines.
-- If the site doesn't update after a couple of minutes, the build may have caught
-  an error, ask a teammate to check the Cloudflare deploy log, fix the file, and
-  save again.
+- **It asked me to sign in again.** That's normal, your session expired. Sign in
+  with a fresh email code and you'll pick up where you left off. If you'd started
+  typing something and hadn't saved it, save a draft before stepping away next
+  time.
+- **The page won't let me in.** Your email may not be on the editors list yet,
+  email **hello@ourridge.ca** to be added.
+- **I published but the site didn't change.** Give it a full two minutes and
+  refresh. If it still hasn't updated, let a teammate know, they can check the
+  Cloudflare deploy log.
+- **A photo won't upload.** Make sure it's a normal `.jpg`, `.png`, or `.webp`
+  and not enormous (very large files are rejected). Try one straight from your
+  camera roll.
 
 Questions? Email **hello@ourridge.ca**. Thank you for pitching in. 💛
