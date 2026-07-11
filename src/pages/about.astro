@@ -63,19 +63,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- Orientation / map placeholder -->
+  <!-- Orientation / neighbourhood map -->
   <section class="section-sm">
     <div class="container">
       <p class="eyebrow">Find your way around</p>
-      <h2 class="section-title">A neighbourhood map is on the way</h2>
-      <div class="panel map-placeholder" role="img" aria-label="Placeholder for a neighbourhood map of The Ridge, coming soon">
-        <span class="map-pin" aria-hidden="true">◹</span>
-        <p class="muted">
-          We're putting together a simple map of the Ridge, trails, parks, the
-          playground and playing fields, and where the walks and rides set off from.
-          Check back soon.
-        </p>
-      </div>
+      <h2 class="section-title">The Ridge on the map</h2>
+      <figure class="map">
+        <div class="map-frame">
+          <iframe
+            title="Map of The Ridge neighbourhood in South Courtenay, centred on Ridge Park"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-124.9848%2C49.6500%2C-124.9728%2C49.6576&amp;layer=mapnik&amp;marker=49.6538%2C-124.9788"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <figcaption>
+          Up in South Courtenay, off Harbourview Boulevard, around Ridge Park.
+          <a href="https://www.openstreetmap.org/?mlat=49.6538&amp;mlon=-124.9788#map=16/49.6538/-124.9788" target="_blank" rel="noopener">Open a larger map →</a>
+          <br />
+          A fuller version with the trails, playground, fields and walk start-points is on the way.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -161,18 +169,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--text-muted);
     margin-top: var(--space-2);
   }
-  .map-placeholder {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    min-height: 200px;
-    background:
-      repeating-linear-gradient(135deg, rgba(124,144,130,0.08) 0 12px, transparent 12px 24px),
-      var(--surface);
-    border-style: dashed;
+  .map { margin: 0; }
+  .map-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    background: var(--surface);
   }
-  .map-pin { font-size: 3rem; line-height: 1; color: var(--c-sage); }
-  .map-placeholder p { margin: 0; max-width: 48ch; }
+  .map-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .map figcaption {
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    margin-top: var(--space-2);
+    line-height: 1.5;
+  }
+  .map figcaption a { white-space: nowrap; }
   .cta-strip {
     display: flex;
     align-items: center;
