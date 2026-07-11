@@ -4,19 +4,20 @@
   // uploads it as Workers Static Assets. No Worker script is needed for the
   // static site itself — this is an assets-only deployment.
   //
-  // NOTE: the form back-end in /functions (Cloudflare Pages Functions) is NOT
-  // served by this Workers deployment. In v1 the forms fall back to email, so
-  // that's fine. When the forms are activated (see issue #4), add a Worker entry
-  // (`"main": "..."`) that handles /api/* and let assets serve everything else.
+  // The Worker (worker/index.ts) serves the static site via the ASSETS binding
+  // and handles the /api/* form + newsletter endpoints. Activate the endpoints
+  // by setting the secrets documented in worker/index.ts (Resend, MailerLite,
+  // and optional Turnstile). Until then they return `not-configured` and the
+  // front-end falls back to email.
   "name": "theridge",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-07-01",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "binding": "ASSETS"
   },
-  // Workers observability (Logs + Traces). Note: these apply to Worker code
-  // invocations — for the current assets-only deploy there is no Worker to
-  // observe, so this takes effect once a Worker entry (`main`) is added (issue #4).
+  // Workers observability (Logs + Traces) for the Worker's /api/* invocations.
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,

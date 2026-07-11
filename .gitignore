@@ -2,6 +2,9 @@
 dist/
 .astro/
 
+# wrangler local state/cache
+.wrangler/
+
 # dependencies
 node_modules/
 
