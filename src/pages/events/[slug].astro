@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, start, time, location, summary, coordinator, coordinatorEmail, bring, rsvp, example } = entry.data;
+const { title, start, time, location, summary, coordinator, coordinatorEmail, bring, rsvp, example, image, imageAlt } = entry.data;
 const { Content } = await render(entry);
 
 const showRsvp = rsvp !== false;
@@ -38,6 +38,12 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
           started, the date isn't confirmed yet. If you'd come,
           <a href={interestMailto}> let us know</a> and we'll try to make it happen.
         </p>
+      )}
+
+      {image && (
+        <figure class="event-figure">
+          <img src={image} alt={imageAlt || ''} loading="lazy" />
+        </figure>
       )}
 
       <ul class="event-facts">
@@ -116,6 +122,12 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
 
 <style>
   .back-link { font-weight: 600; }
+  .event-figure { margin: var(--space-3) 0 0; }
+  .event-figure img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
   .event-facts {
     list-style: none;
     padding: 0;

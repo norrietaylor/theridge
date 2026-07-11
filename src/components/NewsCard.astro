@@ -7,10 +7,17 @@ interface Props {
   date: Date;
   category?: string;
   summary?: string;
+  image?: string;
+  imageAlt?: string;
 }
-const { href, title, date, category, summary } = Astro.props;
+const { href, title, date, category, summary, image, imageAlt } = Astro.props;
 ---
 <article class="news-card card">
+  {image && (
+    <a href={href} class="news-media" tabindex="-1" aria-hidden="true">
+      <img src={image} alt={imageAlt || ''} loading="lazy" />
+    </a>
+  )}
   <div class="news-top">
     {category && <span class="tag">{category}</span>}
     <time class="muted" datetime={date.toISOString()}>{formatShort(date)}</time>
@@ -21,6 +28,13 @@ const { href, title, date, category, summary } = Astro.props;
 </article>
 
 <style>
+  .news-media {
+    display: block;
+    margin: calc(var(--space-3) * -1) calc(var(--space-3) * -1) var(--space-2);
+    border-radius: var(--radius) var(--radius) 0 0;
+    overflow: hidden;
+  }
+  .news-media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
   .news-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-1); font-size: var(--fs-sm); }
   .news-title { font-size: var(--fs-lg); margin: 0 0 0.3rem; }
   .news-title a { color: var(--heading); text-decoration: none; }

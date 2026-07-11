@@ -28,6 +28,12 @@ const { Content } = await render(entry);
           {data.summary && <p class="lead">{data.summary}</p>}
         </header>
 
+        {data.image && (
+          <figure class="article-figure">
+            <img src={data.image} alt={data.imageAlt || ''} loading="lazy" />
+          </figure>
+        )}
+
         <div class="prose">
           <Content />
         </div>
@@ -51,6 +57,12 @@ const { Content } = await render(entry);
   .article-meta { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-2); }
   .article-head h1 { margin-bottom: var(--space-1); }
   .byline { margin: 0 0 var(--space-2); font-size: var(--fs-sm); }
+  .article-figure { margin: 0; }
+  .article-figure img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
   .signup-cta { margin-top: var(--space-5); }
   .signup-cta h2 { margin-bottom: 0; }
 </style>
