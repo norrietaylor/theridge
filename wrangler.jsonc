@@ -2,7 +2,7 @@
   // Cloudflare Workers config for deploying The Ridge as a static site.
   // `npm run build` produces ./dist (Astro static output); `npx wrangler deploy`
   // uploads it as Workers Static Assets. No Worker script is needed for the
-  // static site itself — this is an assets-only deployment.
+  // static site itself, this is an assets-only deployment.
   //
   // The Worker (worker/index.ts) serves the static site via the ASSETS binding
   // and handles the /api/* form + newsletter endpoints. Activate the endpoints

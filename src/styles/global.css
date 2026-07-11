@@ -1,7 +1,7 @@
 /* Global styles for The Ridge. Imports tokens, sets base typography, and defines
    a small, reusable class vocabulary used across every page. */
 @import './tokens.css';
-/* Theme fonts — each family only downloads when a theme that uses it is active. */
+/* Theme fonts, each family only downloads when a theme that uses it is active. */
 @import '@fontsource-variable/fraunces';
 @import '@fontsource-variable/inter';
 @import '@fontsource/spectral/600.css';
@@ -166,7 +166,7 @@ li { margin-bottom: 0.35rem; }
 .status-watching { background: #e7ecf1; color: #35586c; }
 .status-resolved { background: #efe6d6; color: #7a5a25; }
 
-/* Date chip — used on event cards */
+/* Date chip, used on event cards */
 .datechip {
   display: inline-flex;
   flex-direction: column;

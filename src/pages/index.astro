@@ -1,5 +1,5 @@
 ---
-// Home — the front door of The Ridge. A balanced hub: connect with neighbours
+// Home, the front door of The Ridge. A balanced hub: connect with neighbours
 // and add your voice with the City. Pulls the next few events and latest news
 // from the content collections, degrading gracefully when they're empty.
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -27,7 +27,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
         <RidgeMark variant="light" height={56} class="hero-mark" />
         <h1>A neighbourhood that looks out for each other</h1>
         <p class="hero-lead">
-          A neighbourhood on the ridge in South Courtenay — parks, trails, and
+          A neighbourhood on the ridge in South Courtenay, parks, trails, and
           neighbours looking out for each other.
         </p>
         <div class="hero-ctas">
@@ -43,7 +43,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
     <div class="container">
       <p class="eyebrow">What's happening</p>
       <h2 class="section-title">Coming up around the Ridge</h2>
-      <p class="lead">Walks, rides, work parties and get-togethers — come as you are, all welcome.</p>
+      <p class="lead">Walks, rides, work parties and get-togethers, come as you are, all welcome.</p>
       {upcomingEvents.length > 0 ? (
         <div class="grid">
           {upcomingEvents.map((entry) => (
@@ -61,7 +61,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
       ) : (
         <div class="card card--pad-lg">
           <p class="muted" style="margin:0">
-            Nothing on the calendar just yet — check back soon, or
+            Nothing on the calendar just yet, check back soon, or
             <a href="/join">add your name to the list</a> and we'll let you know
             the moment something's planned.
           </p>
@@ -69,7 +69,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
       )}
       {upcomingEvents.some((entry) => entry.data.example) && (
         <p class="form-note" style="margin-top: var(--space-2);">
-          These are early ideas to get us started — nothing's locked in yet. See one you'd come to? <a href="/contact">Tell us.</a>
+          These are early ideas to get us started, nothing's locked in yet. See one you'd come to? <a href="/contact">Tell us.</a>
         </p>
       )}
       <p class="more-link"><a href="/events">See all events →</a></p>
@@ -85,7 +85,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
         <article class="card card--pad-lg">
           <h3>Connect with neighbours</h3>
           <p>
-            Dog walks, people walks, bike rides and community events — small, easy
+            Dog walks, people walks, bike rides and community events, small, easy
             ways to meet the folks a few doors down and enjoy the trails together.
           </p>
           <p><a class="btn btn-secondary" href="/community">Find your people</a></p>
@@ -123,7 +123,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
       ) : (
         <div class="card card--pad-lg">
           <p class="muted" style="margin:0">
-            No posts yet — announcements, updates and vision pieces will land here.
+            No posts yet, announcements, updates and vision pieces will land here.
           </p>
         </div>
       )}
@@ -152,7 +152,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
       <SignupForm variant="panel" source="home" />
       <p class="form-note" style="margin-top:var(--space-2)">
         Not online much, or want to sign up a neighbour? Grab the
-        <a href="/outreach">printable outreach kit</a> — a paper sign-up sheet and flyer you can hand out door to door.
+        <a href="/outreach">printable outreach kit</a>, a paper sign-up sheet and flyer you can hand out door to door.
       </p>
     </div>
   </section>

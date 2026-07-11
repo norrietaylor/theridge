@@ -35,7 +35,7 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
       {example && (
         <p class="suggested-note">
           <strong>This is a suggested gathering.</strong> It's an idea to get us
-          started — the date isn't confirmed yet. If you'd come,
+          started, the date isn't confirmed yet. If you'd come,
           <a href={interestMailto}> let us know</a> and we'll try to make it happen.
         </p>
       )}
@@ -66,9 +66,9 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
         <div class="card card--pad-lg rsvp" style="margin-top: var(--space-5);">
           <h2 style="margin-top:0;">Let us know you're coming</h2>
           <p class="muted">
-            A quick RSVP helps us plan numbers — but no pressure, drop-ins are always welcome.
+            A quick RSVP helps us plan numbers, but no pressure, drop-ins are always welcome.
           </p>
-          <form class="rsvp-form" data-endpoint="/api/rsvp" data-mailto data-to={SITE.email} data-subject={`RSVP: ${title}`} data-success="You’re on the list — thanks! See you there.">
+          <form class="rsvp-form" data-endpoint="/api/rsvp" data-mailto data-to={SITE.email} data-subject={`RSVP: ${title}`} data-success="You’re on the list, thanks! See you there.">
             <input type="hidden" name="event" value={title} />
             <div class="visually-hidden" aria-hidden="true">
               <label for="rsvp-company">Company (leave blank)</label>
@@ -107,7 +107,7 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
             It's just an idea for now. Tell us you're interested and we'll gauge the
             appetite and pick a date that works for people.
           </p>
-          <p style="margin-bottom:0;"><a class="btn btn-primary" href={interestMailto}>I'd come to this — let us know</a></p>
+          <p style="margin-bottom:0;"><a class="btn btn-primary" href={interestMailto}>I'd come to this, let us know</a></p>
         </div>
       )}
     </div>

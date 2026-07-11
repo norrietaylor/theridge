@@ -1,31 +1,31 @@
 # The Ridge
 
-The community website for **The Ridge** — a young, distinct neighbourhood in
+The community website for **The Ridge**, a young, distinct neighbourhood in
 **South Courtenay, BC** on Vancouver Island. Built by residents, for residents.
 
 The site has two equal jobs:
 
-1. **Help neighbours connect** — community events, dog walks, people walks and
+1. **Help neighbours connect**, community events, dog walks, people walks and
    bike rides.
-2. **Give residents a united voice with the City of Courtenay** — so we can help
+2. **Give residents a united voice with the City of Courtenay**, so we can help
    shape the neighbourhood, kindly and constructively.
 
-It's warm, plain-spoken, and welcoming — a friendly front porch for the whole
+It's warm, plain-spoken, and welcoming, a friendly front porch for the whole
 neighbourhood.
 
 ---
 
 ## Tech at a glance
 
-- **[Astro 5](https://astro.build/)** — static site generator, plain CSS, no
+- **[Astro 5](https://astro.build/)**, static site generator, plain CSS, no
   heavy framework.
 - **Static output**, deployed to **[Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/)** with static assets.
 - A small **Cloudflare Worker** (`worker/index.ts`) serves the site and powers the
-  contact, volunteer, RSVP and newsletter endpoints under `/api/*` — safe to leave
+  contact, volunteer, RSVP and newsletter endpoints under `/api/*`, safe to leave
   unconfigured (they fall back to email until secrets are set).
 - Content is **Markdown files** in `src/content/`, validated at build time.
 
-You don't need a database or a server — the whole site is files.
+You don't need a database or a server, the whole site is files.
 
 ---
 
@@ -50,16 +50,16 @@ building.
 ```
 theridge/
 ├─ public/                # static assets served as-is (images, favicon, /downloads)
-├─ worker/                # Cloudflare Worker — serves the static site + /api/* endpoints
+├─ worker/                # Cloudflare Worker, serves the static site + /api/* endpoints
 │  └─ index.ts            # contact / volunteer / rsvp (Resend) + subscribe (MailerLite)
 ├─ src/
 │  ├─ components/         # reusable UI (RidgeMark, QRCode, cards, SignupForm…)
-│  ├─ content/            # the editable content (Markdown) — see docs/editing-guide.md
+│  ├─ content/            # the editable content (Markdown), see docs/editing-guide.md
 │  │  ├─ events/  news/  positions/  groups/  meetings/
 │  │  └─ config.ts        # content collection schemas (frontmatter fields)
 │  ├─ layouts/            # BaseLayout (site pages) and PrintLayout (/print routes)
 │  ├─ lib/                # small helpers (date formatting)
-│  ├─ pages/              # routes — including /outreach and the /print/* kit
+│  ├─ pages/              # routes, including /outreach and the /print/* kit
 │  ├─ styles/             # tokens.css, global.css, print.css
 │  └─ consts.ts           # site name, URL, contact email, navigation
 ├─ docs/
@@ -90,8 +90,8 @@ A visual editor (CMS) for click-and-type editing is planned as a fast-follow.
 Volunteers can print flyers, a door-hanger and a sign-up sheet to spread the word
 in person:
 
-- **`/outreach`** — the kit hub, with links and a door-to-door canvassing guide.
-- **`/print/flyer`**, **`/print/door-hanger`**, **`/print/signup-sheet`** —
+- **`/outreach`**, the kit hub, with links and a door-to-door canvassing guide.
+- **`/print/flyer`**, **`/print/door-hanger`**, **`/print/signup-sheet`**, 
   paper-ready pages with a one-click "Print / Save as PDF" button.
 
 Finished PDF copies can also be dropped into `public/downloads/` for easy sharing.
@@ -103,7 +103,7 @@ Finished PDF copies can also be dropped into `public/downloads/` for easy sharin
 Everything works before any secrets exist: the `/api/*` endpoints return a
 friendly `503` and the front-end falls back to a pre-filled **email**. To go
 live, add these to the **Worker** in the Cloudflare dashboard
-(_your Worker → Settings → Variables and Secrets_) — no code change required:
+(_your Worker → Settings → Variables and Secrets_), no code change required:
 
 | Variable               | Needed for        | What it is                                                                            |
 | ---------------------- | ----------------- | ------------------------------------------------------------------------------------- |
@@ -126,7 +126,7 @@ without them they return `503` and the front-end guides neighbours to email
 instead. Verify `ourridge.ca` as a sending domain in Resend (DNS records), and
 enable **double opt-in** in MailerLite for Canadian anti-spam (CASL) compliance.
 
-Secrets live only in the environment — never commit them. Local secrets go in a
+Secrets live only in the environment, never commit them. Local secrets go in a
 `.dev.vars` file, which is git-ignored.
 
 ---
@@ -153,7 +153,7 @@ Once a custom domain is registered, update `SITE.url` / `SITE.displayUrl` in
 
 - **Visual CMS** for content editing (fast-follow) so volunteers can edit without
   touching files.
-- **Real content** — replace the placeholder copy and suggested events with the
+- **Real content**, replace the placeholder copy and suggested events with the
   real thing.
 - **Pre-made PDF downloads** under `public/downloads/` for the outreach kit.
 

@@ -161,7 +161,7 @@
 /* Editorial = crisp & upscale: charcoal ink, warm ivory, antique-gold accent,
    high-contrast Playfair Display over clean Manrope. */
 :root[data-theme='editorial'] {
-  --c-forest: #20232a;   /* deep charcoal — headings, panels, footer */
+  --c-forest: #20232a;   /* deep charcoal, headings, panels, footer */
   --c-cedar: #20232a;    /* nav (dark on ivory) */
   --c-sage: #a79c86;     /* warm greige secondary */
   --c-clay: #b08d3f;     /* antique-gold CTA (dark text) */

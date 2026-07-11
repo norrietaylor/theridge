@@ -1,14 +1,14 @@
 ---
-title: "Introducing the neighbours' group — and a mailing list to match"
+title: "Introducing the neighbours' group, and a mailing list to match"
 date: 2026-06-10
 category: Announcement
 summary: "We've started a simple, open group for everyone who lives on the Ridge, plus a friendly email list so no one misses a walk, an event, or an issue before the City."
 author: "The Ridge group"
 ---
 
-For a while now, a handful of us have been meeting on the sidewalk, at the mailbox, and on the trails — swapping names, comparing notes, and saying the same thing: *someone should get us all connected.* So we did. The Ridge neighbours' group is now up and running, and it is open to everyone who lives here. No dues, no committees to join, no pressure. Just neighbours.
+For a while now, a handful of us have been meeting on the sidewalk, at the mailbox, and on the trails, swapping names, comparing notes, and saying the same thing: *someone should get us all connected.* So we did. The Ridge neighbours' group is now up and running, and it is open to everyone who lives here. No dues, no committees to join, no pressure. Just neighbours.
 
-Alongside the group, we've set up a mailing list. It's the easiest way to hear about the things that are easy to miss: a new dog-walk time, a summer gathering, a volunteer call, or a City decision that affects our streets while there's still time to weigh in. We'll aim for a friendly note now and then — never spam, and you can leave any time.
+Alongside the group, we've set up a mailing list. It's the easiest way to hear about the things that are easy to miss: a new dog-walk time, a summer gathering, a volunteer call, or a City decision that affects our streets while there's still time to weigh in. We'll aim for a friendly note now and then, never spam, and you can leave any time.
 
 If you'd like in, add your name on the [join page](/join). If online forms aren't your thing, there's a printable sign-up sheet too, and we're happy to add you by hand.
 
