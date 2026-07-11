@@ -20,6 +20,16 @@ const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
     </div>
   </section>
 
+  <!-- The view we share -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <figure class="photo-wide">
+        <img src="/img/ridge-mountains.jpg" width="1800" height="1350" alt="Snow-capped Coast Mountains and autumn colour beyond the forest, seen from the Ridge." loading="lazy" />
+        <figcaption>Autumn light over the mountains, from the edge of the neighbourhood.</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- A neighbourhood in bloom -->
   <section class="section" style="padding-top:0;">
     <div class="container">
@@ -120,7 +130,21 @@ const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
 </BaseLayout>
 
 <style>
-  .photo-feature { margin: 0 auto; max-width: 460px; }
+  .photo-wide { margin: 0; }
+  .photo-wide img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    display: block;
+  }
+  .photo-wide figcaption {
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    margin-top: var(--space-2);
+  }
+  .photo-feature { margin: var(--space-4) auto 0; max-width: 460px; }
   .photo-feature img {
     width: 100%;
     aspect-ratio: 4 / 5;
