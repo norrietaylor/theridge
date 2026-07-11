@@ -19,9 +19,10 @@ neighbourhood.
 
 - **[Astro 5](https://astro.build/)** — static site generator, plain CSS, no
   heavy framework.
-- **Static output**, hosted on **[Cloudflare Pages](https://pages.cloudflare.com/)**.
-- **Cloudflare Pages Functions** (in `/functions`) power the contact, volunteer
-  and RSVP forms — independent of the Astro build, and safe to leave unconfigured.
+- **Static output**, deployed to **[Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/)** with static assets.
+- A small **Cloudflare Worker** (`worker/index.ts`) serves the site and powers the
+  contact, volunteer, RSVP and newsletter endpoints under `/api/*` — safe to leave
+  unconfigured (they fall back to email until secrets are set).
 - Content is **Markdown files** in `src/content/`, validated at build time.
 
 You don't need a database or a server — the whole site is files.
@@ -49,12 +50,8 @@ building.
 ```
 theridge/
 ├─ public/                # static assets served as-is (images, favicon, /downloads)
-├─ functions/             # Cloudflare Pages Functions (form back-ends) — NOT part of the Astro build
-│  └─ api/
-│     ├─ _shared.ts       # shared helpers: parsing, honeypot, Turnstile, Resend, JSON responses
-│     ├─ contact.ts       # POST /api/contact
-│     ├─ volunteer.ts     # POST /api/volunteer
-│     └─ rsvp.ts          # POST /api/rsvp
+├─ worker/                # Cloudflare Worker — serves the static site + /api/* endpoints
+│  └─ index.ts            # contact / volunteer / rsvp (Resend) + subscribe (MailerLite)
 ├─ src/
 │  ├─ components/         # reusable UI (RidgeMark, QRCode, cards, SignupForm…)
 │  ├─ content/            # the editable content (Markdown) — see docs/editing-guide.md
@@ -68,6 +65,7 @@ theridge/
 ├─ docs/
 │  └─ editing-guide.md    # friendly, non-technical guide for content editors
 ├─ astro.config.mjs
+├─ wrangler.jsonc        # Cloudflare Worker + static-assets config
 └─ package.json
 ```
 
@@ -102,39 +100,49 @@ Finished PDF copies can also be dropped into `public/downloads/` for easy sharin
 
 ## Turning on forms & newsletter
 
-Everything works before any secrets exist: forms show a graceful **mailto:**
-fallback, and the newsletter signup collects addresses by email until it's wired
-up. To go live, set these in the **Cloudflare Pages dashboard**
-(_Settings → Environment variables and secrets_) — no code change required:
+Everything works before any secrets exist: the `/api/*` endpoints return a
+friendly `503` and the front-end falls back to a pre-filled **email**. To go
+live, add these to the **Worker** in the Cloudflare dashboard
+(_your Worker → Settings → Variables and Secrets_) — no code change required:
 
-| Variable               | Needed for      | What it is                                                            |
-| ---------------------- | --------------- | -------------------------------------------------------------------- |
-| `RESEND_API_KEY`       | sending email   | API key from [Resend](https://resend.com)                            |
-| `CONTACT_TO`           | sending email   | the inbox that receives contact / volunteer / RSVP submissions       |
-| `CONTACT_FROM`         | optional        | a **verified** Resend sender, e.g. `The Ridge <hello@theridge.dev>`  |
-| `TURNSTILE_SECRET_KEY` | optional        | enables [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) spam protection |
+| Variable               | Needed for        | What it is                                                                            |
+| ---------------------- | ----------------- | ------------------------------------------------------------------------------------- |
+| `RESEND_API_KEY`       | contact/RSVP mail | API key from [Resend](https://resend.com)                                             |
+| `CONTACT_TO`           | contact/RSVP mail | inbox that receives submissions, e.g. `hello@ourridge.ca`                             |
+| `CONTACT_FROM`         | optional          | a **verified** Resend sender, e.g. `The Ridge <hello@ourridge.ca>`                    |
+| `MAILERLITE_API_KEY`   | newsletter        | API key from [MailerLite](https://www.mailerlite.com)                                 |
+| `MAILERLITE_GROUP_ID`  | optional          | target list/group id for new subscribers                                              |
+| `TURNSTILE_SECRET_KEY` | optional          | server side of [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) spam checks |
 
-When `RESEND_API_KEY` and `CONTACT_TO` are both set, the form endpoints send
-email. Without them, they return a friendly `503` so the front-end can guide
-neighbours to email us instead. The newsletter (MailerLite) is a separate
-fast-follow — see `src/components/SignupForm.astro`.
+One **build-time** variable turns on the Turnstile widget in the browser (set it
+as a build environment variable, not a Worker secret):
+
+| Variable                    | Needed for | What it is                         |
+| --------------------------- | ---------- | ---------------------------------- |
+| `PUBLIC_TURNSTILE_SITE_KEY` | optional   | public Turnstile site key (widget) |
+
+When the relevant secrets are set, the endpoints send email / add subscribers;
+without them they return `503` and the front-end guides neighbours to email
+instead. Verify `ourridge.ca` as a sending domain in Resend (DNS records), and
+enable **double opt-in** in MailerLite for Canadian anti-spam (CASL) compliance.
 
 Secrets live only in the environment — never commit them. Local secrets go in a
 `.dev.vars` file, which is git-ignored.
 
 ---
 
-## Deploy to Cloudflare Pages
+## Deploy to Cloudflare
 
-1. Connect this repository to a new **Cloudflare Pages** project.
-2. Build settings:
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-3. Cloudflare automatically detects and deploys the `/functions` directory
-   alongside the static site.
-4. Add the environment variables above (when you're ready to enable forms).
-5. Every push to the main branch triggers a fresh build and deploy. Pull requests
-   get their own preview URL.
+The site deploys to **Cloudflare Workers** with static assets. Config lives in
+`wrangler.jsonc` (`npm run build` → `dist/`, uploaded by `npx wrangler deploy`).
+
+1. Connect this repository in the Cloudflare dashboard (**Workers & Pages →
+   Create → import the repo**), or run `npx wrangler deploy` from a checkout.
+2. Build command `npm run build`, deploy command `npx wrangler deploy`, and set
+   `NODE_VERSION` to `20` (or `22`).
+3. Add the secrets above (when you're ready to enable forms/newsletter).
+4. Every push to the main branch builds and deploys; the Worker serves both the
+   static pages and the `/api/*` endpoints.
 
 Once a custom domain is registered, update `SITE.url` / `SITE.displayUrl` in
 `src/consts.ts` and `site` in `astro.config.mjs`.
@@ -145,13 +153,9 @@ Once a custom domain is registered, update `SITE.url` / `SITE.displayUrl` in
 
 - **Visual CMS** for content editing (fast-follow) so volunteers can edit without
   touching files.
-- **Newsletter signup** wired to MailerLite (currently a graceful mailto
-  fallback in `SignupForm.astro`).
-- **Real group inbox** — replace the placeholder `hello@ourridge.ca`
-  with the shared address, and set `CONTACT_TO`.
-- **Custom domain** — register it, then update `consts.ts` and `astro.config.mjs`.
+- **Real content** — replace the placeholder copy and suggested events with the
+  real thing.
 - **Pre-made PDF downloads** under `public/downloads/` for the outreach kit.
-- **Turnstile** spam protection on the public forms.
 
 ---
 
