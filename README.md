@@ -55,8 +55,8 @@ theridge/
 ├─ src/
 │  ├─ components/         # reusable UI (RidgeMark, QRCode, cards, SignupForm…)
 │  ├─ content/            # the editable content (Markdown), see docs/editing-guide.md
-│  │  ├─ events/  news/  positions/  groups/  meetings/
-│  │  └─ config.ts        # content collection schemas (frontmatter fields)
+│  │  └─ events/  news/  positions/  groups/  meetings/
+│  ├─ content.config.ts   # content collection schemas (frontmatter fields)
 │  ├─ layouts/            # BaseLayout (site pages) and PrintLayout (/print routes)
 │  ├─ lib/                # small helpers (date formatting)
 │  ├─ pages/              # routes, including /outreach and the /print/* kit
