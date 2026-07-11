@@ -1,0 +1,29 @@
+---
+import { formatShort } from '../lib/dates';
+
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  category?: string;
+  summary?: string;
+}
+const { href, title, date, category, summary } = Astro.props;
+---
+<article class="news-card card">
+  <div class="news-top">
+    {category && <span class="tag">{category}</span>}
+    <time class="muted" datetime={date.toISOString()}>{formatShort(date)}</time>
+  </div>
+  <h3 class="news-title"><a href={href}>{title}</a></h3>
+  {summary && <p class="muted">{summary}</p>}
+  <a href={href} class="news-more">Read more →</a>
+</article>
+
+<style>
+  .news-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-1); font-size: var(--fs-sm); }
+  .news-title { font-size: var(--fs-lg); margin: 0 0 0.3rem; }
+  .news-title a { color: var(--heading); text-decoration: none; }
+  .news-title a:hover { color: var(--c-clay-ink); }
+  .news-more { font-weight: 600; font-size: var(--fs-sm); text-decoration: none; }
+</style>
