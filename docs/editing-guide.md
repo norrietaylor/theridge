@@ -17,7 +17,7 @@ Until then, this guide is all you need.
 ## How publishing works
 
 The website is **static**, it's rebuilt from these text files every time the
-project changes, and hosted on **Cloudflare Pages**.
+project changes, and hosted on **Cloudflare**.
 
 1. You add or edit a Markdown (`.md`) file in the right folder (see below).
 2. You save it to the project (commit/push, or use the GitHub website's
@@ -108,7 +108,7 @@ date: 2026-07-11           # required, the publish date
 category: Announcement     # Announcement | Development | Vision
 summary: One or two friendly sentences shown in the news list.
 author: Ron Taylor         # optional
-image: /images/welcome.jpg # optional, see "Adding images" below
+image: /img/welcome.jpg    # optional, see "Adding images" below
 pinned: false              # true keeps it at the top of the news list
 draft: false
 ---
@@ -168,13 +168,13 @@ draft: false
 
 ## Adding images
 
-1. Put the image file in the `public/` folder, a subfolder like
-   `public/images/` keeps things tidy.
+1. Put the image file in the `public/img/` folder (that's where the site's
+   photos live).
 2. Reference it in frontmatter by its path **starting with a slash**, dropping
-   the word `public`. So `public/images/welcome.jpg` becomes:
+   the word `public`. So `public/img/welcome.jpg` becomes:
 
    ```md
-   image: /images/welcome.jpg
+   image: /img/welcome.jpg
    ```
 
 Tips:
