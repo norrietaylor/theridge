@@ -22,15 +22,10 @@
  *   MAILERLITE_GROUP_ID   target list/group for new subscribers
  */
 
-interface Env {
-  ASSETS: { fetch: (request: Request) => Promise<Response> };
-  RESEND_API_KEY?: string;
-  CONTACT_TO?: string;
-  CONTACT_FROM?: string;
-  TURNSTILE_SECRET_KEY?: string;
-  MAILERLITE_API_KEY?: string;
-  MAILERLITE_GROUP_ID?: string;
-}
+import type { Env } from './types';
+import { verifyTurnstile } from './turnstile';
+import { handleCms } from './cms';
+import { serveMedia, handlePhotoSubmit } from './media';
 
 type Fields = Record<string, string | string[]>;
 
@@ -71,21 +66,6 @@ function str(fields: Fields, key: string): string {
   return (Array.isArray(v) ? v.join(', ') : v || '').toString().trim();
 }
 
-async function verifyTurnstile(env: Env, token: string, ip: string | null): Promise<boolean> {
-  if (!env.TURNSTILE_SECRET_KEY) return true; // not enforced unless a secret is set
-  if (!token) return false;
-  const body = new FormData();
-  body.append('secret', env.TURNSTILE_SECRET_KEY);
-  body.append('response', token);
-  if (ip) body.append('remoteip', ip);
-  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    method: 'POST',
-    body,
-  });
-  const data = (await res.json()) as { success?: boolean };
-  return !!data.success;
-}
-
 async function sendEmail(
   env: Env,
   opts: { subject: string; text: string; replyTo?: string },
@@ -118,7 +98,7 @@ async function handleFormEmail(
   const fields = await parseBody(request);
   if (str(fields, 'company')) return json({ ok: true }); // honeypot → pretend success
   const passed = await verifyTurnstile(
-    env,
+    env.TURNSTILE_SECRET_KEY,
     str(fields, 'cf-turnstile-response'),
     request.headers.get('CF-Connecting-IP'),
   );
@@ -200,6 +180,16 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
+    // CMS gateway (editor operations, Cloudflare Access + JWT gated).
+    if (url.pathname === '/cms' || url.pathname.startsWith('/cms/')) {
+      return handleCms(request, env);
+    }
+
+    // Public media served from R2 (uploaded photos).
+    if (url.pathname.startsWith('/media/')) {
+      return serveMedia(request, env);
+    }
+
     if (url.pathname.startsWith('/api/')) {
       if (request.method === 'OPTIONS') {
         return new Response(null, { status: 204 });
@@ -217,6 +207,8 @@ export default {
             return await handleFormEmail(request, env, RSVP);
           case '/api/subscribe':
             return await handleSubscribe(request, env);
+          case '/api/photo-submit':
+            return await handlePhotoSubmit(request, env);
           default:
             return json({ ok: false, reason: 'not-found' }, 404);
         }
