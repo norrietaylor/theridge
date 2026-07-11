@@ -3,7 +3,7 @@ title: "Send us your photos and stories"
 date: 2026-07-11
 category: Announcement
 summary: "This is your neighbourhood's site, and we'd love it to be full of the Ridge. Share your photos and short write-ups, and we'll feature them here."
-author: "The Ridge group"
+author: "Our Ridge"
 ---
 
 This site works best when it's made by all of us. If you've got a good photo of
