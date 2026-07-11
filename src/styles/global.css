@@ -1,8 +1,21 @@
 /* Global styles for The Ridge. Imports tokens, sets base typography, and defines
    a small, reusable class vocabulary used across every page. */
 @import './tokens.css';
+/* Theme fonts — each family only downloads when a theme that uses it is active. */
 @import '@fontsource-variable/fraunces';
 @import '@fontsource-variable/inter';
+@import '@fontsource/spectral/600.css';
+@import '@fontsource/work-sans/400.css';
+@import '@fontsource/work-sans/600.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/newsreader/600.css';
+@import '@fontsource/nunito-sans/400.css';
+@import '@fontsource/nunito-sans/600.css';
+@import '@fontsource/nunito-sans/700.css';
+
+:root { color-scheme: light; }
+:root[data-mode='dark'] { color-scheme: dark; }
 
 *,
 *::before,
@@ -134,7 +147,7 @@ li { margin-bottom: 0.35rem; }
 }
 .btn-primary { background: var(--c-clay); color: #fff; }
 .btn-primary:hover { background: var(--c-clay-dark); color: #fff; }
-.btn-secondary { background: transparent; color: var(--c-forest); border-color: var(--c-forest); }
+.btn-secondary { background: transparent; color: var(--heading); border-color: var(--heading); }
 .btn-secondary:hover { background: var(--c-forest); color: #fff; }
 .btn-ghost { background: rgba(255,255,255,0.14); color: #fff; border-color: rgba(255,255,255,0.5); }
 .btn-ghost:hover { background: rgba(255,255,255,0.24); color: #fff; }
@@ -164,7 +177,7 @@ li { margin-bottom: 0.35rem; }
   padding: 0.35rem 0.5rem;
   border-radius: var(--radius);
   background: var(--c-fern);
-  color: #4a3410;
+  color: var(--c-chip-ink);
   font-weight: 700;
   line-height: 1.05;
 }
@@ -181,7 +194,7 @@ li { margin-bottom: 0.35rem; }
   padding: 0.7em 0.9em;
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--c-cream);
   color: var(--text);
 }
 .input:focus, input:focus, textarea:focus, select:focus {

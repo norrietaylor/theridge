@@ -1,0 +1,113 @@
+---
+// Theme + light/dark picker. Sets data-theme / data-mode on <html>, persists
+// the choice to localStorage, and reflects the active selection. The initial
+// values are applied before paint by an inline script in BaseLayout (no flash).
+const THEMES = [
+  { id: 'natural', label: 'Natural', a: '#2e4b36', b: '#c4703a' },
+  { id: 'coastal', label: 'Coastal', a: '#155e63', b: '#e2734a' },
+  { id: 'modern', label: 'Modern', a: '#173d31', b: '#1f9d6b' },
+  { id: 'editorial', label: 'Editorial', a: '#b4552e', b: '#6e7a4b' },
+];
+---
+<div class="tp" id="theme-picker">
+  <button type="button" class="tp-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Change site theme">
+    <span class="tp-swatch" aria-hidden="true"></span>
+    <span class="tp-caret" aria-hidden="true">▾</span>
+  </button>
+
+  <div class="tp-panel" hidden>
+    <p class="tp-h">Palette</p>
+    <div class="tp-grid">
+      {THEMES.map((t) => (
+        <button type="button" class="tp-opt" data-theme-set={t.id} aria-pressed="false">
+          <span class="tp-sw" aria-hidden="true"><i style={`background:${t.a}`}></i><i style={`background:${t.b}`}></i></span>
+          <span>{t.label}</span>
+        </button>
+      ))}
+    </div>
+    <p class="tp-h">Mode</p>
+    <div class="tp-modes">
+      <button type="button" class="tp-mode" data-mode-set="light" aria-pressed="false">☀ Light</button>
+      <button type="button" class="tp-mode" data-mode-set="dark" aria-pressed="false">☾ Dark</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tp { position: relative; }
+  .tp-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1.5px solid var(--border); border-radius: var(--radius-pill);
+    padding: 6px 10px 6px 8px; cursor: pointer; color: var(--text);
+  }
+  .tp-toggle:hover { border-color: var(--heading); }
+  .tp-swatch { width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15);
+    background: linear-gradient(135deg, var(--brand) 0 50%, var(--c-clay) 50% 100%); }
+  .tp-caret { font-size: 10px; color: var(--text-muted); }
+
+  .tp-panel {
+    position: absolute; right: 0; top: calc(100% + 8px); z-index: 60;
+    width: 232px; background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow); padding: 14px;
+  }
+  .tp-h { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--text-muted); margin: 0 0 8px; }
+  .tp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .tp-opt, .tp-mode {
+    display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 14px; font-weight: 600;
+    background: transparent; border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 8px 10px; cursor: pointer; color: var(--text); text-align: left;
+  }
+  .tp-opt:hover, .tp-mode:hover { border-color: var(--heading); }
+  .tp-opt[aria-pressed='true'], .tp-mode[aria-pressed='true'] {
+    border-color: var(--c-clay); box-shadow: inset 0 0 0 1px var(--c-clay);
+  }
+  .tp-sw { display: inline-flex; border-radius: 5px; overflow: hidden; border: 1px solid rgba(0,0,0,.12); }
+  .tp-sw i { display: block; width: 12px; height: 18px; }
+  .tp-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tp-mode { justify-content: center; }
+</style>
+
+<script>
+  function initThemePicker() {
+    const root = document.documentElement;
+    const picker = document.getElementById('theme-picker');
+    if (!picker || picker.dataset.ready) return;
+    picker.dataset.ready = '1';
+    const toggle = picker.querySelector('.tp-toggle');
+    const panel = picker.querySelector('.tp-panel');
+
+    function reflect() {
+      const t = root.dataset.theme || 'natural';
+      const m = root.dataset.mode || 'light';
+      picker.querySelectorAll('[data-theme-set]').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-theme-set') === t)));
+      picker.querySelectorAll('[data-mode-set]').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-mode-set') === m)));
+    }
+    function open(o) {
+      panel.hidden = !o;
+      toggle.setAttribute('aria-expanded', String(o));
+    }
+
+    toggle.addEventListener('click', () => open(panel.hidden));
+    picker.querySelectorAll('[data-theme-set]').forEach((b) =>
+      b.addEventListener('click', () => {
+        root.dataset.theme = b.getAttribute('data-theme-set');
+        try { localStorage.setItem('ridge-theme', root.dataset.theme); } catch (e) {}
+        reflect();
+      }));
+    picker.querySelectorAll('[data-mode-set]').forEach((b) =>
+      b.addEventListener('click', () => {
+        root.dataset.mode = b.getAttribute('data-mode-set');
+        try { localStorage.setItem('ridge-mode', root.dataset.mode); } catch (e) {}
+        reflect();
+      }));
+    document.addEventListener('click', (e) => { if (!picker.contains(e.target)) open(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') open(false); });
+    reflect();
+  }
+  initThemePicker();
+  document.addEventListener('astro:page-load', initThemePicker);
+</script>
