@@ -1,0 +1,9 @@
+---
+// Cloudflare Turnstile widget (privacy-friendly, free spam protection).
+// Renders only when a public site key is provided at build time via the
+// PUBLIC_TURNSTILE_SITE_KEY environment variable. Place inside a <form>; the
+// widget injects a hidden `cf-turnstile-response` field that the Worker checks.
+// The Turnstile script itself is loaded once in BaseLayout (also key-gated).
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+{siteKey && <div class="cf-turnstile" data-sitekey={siteKey} style="margin: var(--space-2) 0;"></div>}

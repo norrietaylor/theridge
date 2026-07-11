@@ -1,15 +1,14 @@
 ---
 import { SITE } from '../consts';
-// Newsletter signup. Ships in a "not-yet-wired" state: until the MailerLite
-// endpoint/keys exist, it posts nowhere and instead shows a graceful mailto
-// fallback so neighbours are never met with a broken button.
-// When MailerLite is connected (fast-follow), set MAILERLITE_ACTION and switch
-// `wired` to true (or drive it from an env/config value).
+// Newsletter signup. Posts to the Worker's /api/subscribe endpoint (MailerLite).
+// The global form enhancer (BaseLayout → MailtoForm) handles the submit: on
+// success it shows a confirmation; if the back-end isn't configured yet it
+// falls back to opening a pre-filled email, so it's never a dead end.
 interface Props {
   variant?: 'inline' | 'panel';
   heading?: string;
   blurb?: string;
-  source?: string; // e.g. "home", "join", "flyer" — for later attribution
+  source?: string; // e.g. "home", "join" — recorded with the signup
 }
 const {
   variant = 'panel',
@@ -17,9 +16,6 @@ const {
   blurb = 'A friendly monthly note — events, walks and rides, and issues before the City. No spam, unsubscribe anytime.',
   source = 'site',
 } = Astro.props;
-
-const wired = false; // flip to true once MailerLite is connected
-const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Please add me to The Ridge mailing list')}&body=${encodeURIComponent('Name:\nStreet (optional):\nEmail:\n\n(You can also tell us which activities interest you — dog walks, people walks, bike rides, events, or the voice-to-the-City group.)')}`;
 ---
 <div class:list={['signup', variant === 'panel' ? 'panel-forest' : 'signup-inline']}>
   <div class="signup-copy">
@@ -27,23 +23,30 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Please add me
     <p class={variant === 'panel' ? '' : 'muted'}>{blurb}</p>
   </div>
 
-  <form class="signup-form" action={wired ? '/api/subscribe' : undefined} method="post" novalidate>
+  <form
+    class="signup-form"
+    data-endpoint="/api/subscribe"
+    data-mailto
+    data-to={SITE.email}
+    data-subject="Please add me to The Ridge mailing list"
+    data-success="You’re in — check your inbox for a quick confirmation email to finish signing up."
+  >
     <input type="hidden" name="source" value={source} />
+    <div class="visually-hidden" aria-hidden="true">
+      <label for={`su-company-${source}`}>Company (leave blank)</label>
+      <input id={`su-company-${source}`} name="company" type="text" tabindex="-1" autocomplete="off" />
+    </div>
     <div class="signup-row">
       <label class="visually-hidden" for={`su-name-${source}`}>Your name</label>
       <input id={`su-name-${source}`} name="name" type="text" placeholder="Your name" autocomplete="name" />
       <label class="visually-hidden" for={`su-email-${source}`}>Email address</label>
       <input id={`su-email-${source}`} name="email" type="email" required placeholder="you@email.com" autocomplete="email" />
-      {wired
-        ? <button type="submit" class="btn btn-primary">Join</button>
-        : <a class="btn btn-primary" href={mailto}>Email to join</a>}
+      <button type="submit" class="btn btn-primary">Join</button>
     </div>
-    {!wired && (
-      <p class="form-note" style="margin-top:.5rem">
-        Online signup is coming soon — for now, tap <strong>Email to join</strong> and we’ll add you by hand.
-        Prefer paper? Grab the <a href="/outreach">printable sign-up sheet</a>.
-      </p>
-    )}
+    <p class="form-note" style="margin-top:.5rem">
+      Double opt-in — we’ll send a confirmation first. Prefer paper? Grab the
+      <a href="/outreach">printable sign-up sheet</a>.
+    </p>
   </form>
 </div>
 
@@ -55,4 +58,6 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Please add me
   .signup-row .btn { flex: 0 0 auto; }
   .panel-forest .form-note { color: #d7ddd0; }
   .panel-forest input { border-color: transparent; }
+  .signup-form [data-form-status] { margin-top: var(--space-2); }
+  .panel-forest [data-form-status].is-success { color: var(--c-fern); }
 </style>

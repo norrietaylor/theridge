@@ -1,41 +1,32 @@
 ---
-// Progressive enhancement: turn a plain form into a "compose an email" action.
-// On submit of any `form[data-mailto]`, this builds a mailto: link from the
-// filled-in fields and opens the visitor's email app — no server needed. With
-// JavaScript off, the email link shown in each form's fallback note still works,
-// so a submit never hits a dead endpoint. Include <MailtoForm /> once on any
-// page that has such a form. Attributes read from the form:
-//   data-to       — recipient email
-//   data-subject  — email subject line
+// Progressive enhancement for the site's forms. A form opts in with:
+//   data-endpoint="/api/…"  the Worker endpoint to POST to (fetch)
+//   data-to / data-subject  recipient + subject for the email fallback
+//   data-success="…"        optional custom success message
+// On submit it POSTs to the endpoint and shows a success message. If the
+// back-end isn't configured yet (503) or the network fails, it falls back to
+// opening a pre-filled email — so a submit is never a dead end. With no
+// JavaScript, each form's visible "email us" link remains the path.
+// Rendered once globally from BaseLayout.
 ---
 <script>
-  function clean(s) {
-    return (s || '').replace(/\s+/g, ' ').trim();
-  }
+  function clean(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
   function labelFor(form, el) {
-    if (el.id) {
-      const l = form.querySelector('label[for="' + el.id + '"]');
-      if (l) return clean(l.textContent);
-    }
+    if (el.id) { const l = form.querySelector('label[for="' + el.id + '"]'); if (l) return clean(l.textContent); }
     return '';
   }
-  function wrapLabel(el) {
-    const l = el.closest('label');
-    return l ? clean(l.textContent) : '';
-  }
+  function wrapLabel(el) { const l = el.closest('label'); return l ? clean(l.textContent) : ''; }
   function groupLegend(form, name) {
     const el = form.querySelector('[name="' + name + '"]');
     const fs = el && el.closest('fieldset');
     const lg = fs && fs.querySelector('legend');
     return lg ? clean(lg.textContent) : '';
   }
-  function onSubmit(e) {
-    const form = e.currentTarget;
-    e.preventDefault();
+  function buildMailto(form) {
     const to = form.getAttribute('data-to') || '';
     const subject = form.getAttribute('data-subject') || 'Message from ourridge.ca';
     const lines = [];
-    const groups = {}; // checkbox/radio values grouped by field name
+    const groups = {};
     form.querySelectorAll('input, textarea, select').forEach((el) => {
       if (!el.name || el.type === 'hidden') return;
       if (el.type === 'checkbox' || el.type === 'radio') {
@@ -51,22 +42,69 @@
       const val = (el.value || '').trim();
       if (val) lines.push((labelFor(form, el) || el.name) + ': ' + val);
     });
-    Object.keys(groups).forEach((name) => {
-      lines.push((groupLegend(form, name) || name) + ': ' + groups[name].join(', '));
-    });
-    const href =
-      'mailto:' + to +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(lines.join('\n'));
-    window.location.href = href;
+    Object.keys(groups).forEach((n) => lines.push((groupLegend(form, n) || n) + ': ' + groups[n].join(', ')));
+    return 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
   }
-  function initMailtoForms() {
+  function statusEl(form) {
+    let s = form.querySelector('[data-form-status]');
+    if (!s) {
+      s = document.createElement('p');
+      s.setAttribute('data-form-status', '');
+      s.setAttribute('role', 'status');
+      s.setAttribute('aria-live', 'polite');
+      form.appendChild(s);
+    }
+    return s;
+  }
+  function setStatus(form, msg, kind) {
+    const s = statusEl(form);
+    s.textContent = msg;
+    s.className = '';
+    s.classList.add(kind === 'error' ? 'is-error' : kind === 'success' ? 'is-success' : 'is-info');
+  }
+  function succeed(form, msg) {
+    const s = statusEl(form);
+    Array.from(form.children).forEach((c) => { if (c !== s) c.style.display = 'none'; });
+    setStatus(form, msg, 'success');
+  }
+  async function onSubmit(e) {
+    const form = e.currentTarget;
+    e.preventDefault();
+    const endpoint = form.getAttribute('data-endpoint');
+    if (!endpoint) { window.location.href = buildMailto(form); return; }
+    const btn = form.querySelector('button[type="submit"]');
+    const prev = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    setStatus(form, 'Sending…', 'info');
+    try {
+      const res = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      let data = {};
+      try { data = await res.json(); } catch {}
+      if (res.ok && data.ok) {
+        succeed(form, form.getAttribute('data-success') || 'Thanks — we’ve got it! We’ll be in touch.');
+        return;
+      }
+      if (res.status === 503 || data.reason === 'not-configured') {
+        setStatus(form, 'Opening your email app…', 'info');
+        window.location.href = buildMailto(form);
+      } else if (data.reason === 'captcha') {
+        setStatus(form, 'Please complete the “I’m human” check and try again.', 'error');
+      } else {
+        setStatus(form, 'Something went wrong — please email us instead.', 'error');
+      }
+    } catch {
+      window.location.href = buildMailto(form); // network error → email fallback
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = prev; }
+    }
+  }
+  function init() {
     document.querySelectorAll('form[data-mailto]').forEach((form) => {
       if (form.dataset.mailtoInit) return;
       form.dataset.mailtoInit = '1';
       form.addEventListener('submit', onSubmit);
     });
   }
-  initMailtoForms();
-  document.addEventListener('astro:page-load', initMailtoForms);
+  init();
+  document.addEventListener('astro:page-load', init);
 </script>
