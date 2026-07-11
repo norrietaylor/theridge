@@ -11,7 +11,7 @@ whatYouCanDo:
 
 ## Background
 
-Like a lot of new neighbourhoods, the Ridge funnels most of its traffic onto one main access road. It worked fine when there were only a few homes. As more families arrive — with kids, dogs, strollers and bikes all trying to cross — the everyday business of getting to the other side has started to feel less comfortable, especially at busier times of day.
+Like a lot of new neighbourhoods, the Ridge funnels most of its traffic onto one main access road. It worked fine when there were only a few homes. As more families arrive, with kids, dogs, strollers and bikes all trying to cross, the everyday business of getting to the other side has started to feel less comfortable, especially at busier times of day.
 
 This isn't about blaming drivers. Most people slow down when the road tells them to. It's about designing the street so that slowing down and crossing safely is the natural thing to do.
 

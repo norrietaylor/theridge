@@ -21,13 +21,13 @@ for (const entry of events) {
 const months = [...byMonth.entries()];
 const hasSuggestions = events.some((entry) => entry.data.example);
 ---
-<BaseLayout title="Events" description="Upcoming events on The Ridge — dog walks, rides, potlucks and get-togethers for neighbours in South Courtenay, BC.">
+<BaseLayout title="Events" description="Upcoming events on The Ridge, dog walks, rides, potlucks and get-togethers for neighbours in South Courtenay, BC.">
   <section class="section">
     <div class="container">
       <p class="eyebrow">What's on</p>
       <h1>Events on the Ridge</h1>
       <p class="lead prose">
-        Here's what's coming up around the neighbourhood — walks, rides, work
+        Here's what's coming up around the neighbourhood, walks, rides, work
         mornings, and get-togethers in the park. Everyone's welcome, so come as
         you are and bring a neighbour.
       </p>
@@ -44,7 +44,7 @@ const hasSuggestions = events.some((entry) => entry.data.example);
           <p class="muted" style="margin-bottom:0;">
             We're getting regular Saturday dog walks, mid-week people walks, and
             evening bike rides going. Find the plan and meeting points on the
-            Community page — and come help start them.
+            Community page, and come help start them.
           </p>
         </div>
         <a class="btn btn-primary" href="/community">See Community Life</a>
@@ -58,14 +58,14 @@ const hasSuggestions = events.some((entry) => entry.data.example);
         <div class="panel suggest-banner" style="margin-bottom: var(--space-4);">
           <p style="margin:0;">
             <strong>A note on what's below:</strong> these are ideas to get us
-            started — nothing's locked in yet. See one you'd come to?
+            started, nothing's locked in yet. See one you'd come to?
             <a href="/contact">Tell us</a> and we'll help make it happen.
           </p>
         </div>
       )}
       {months.length === 0 ? (
         <p class="prose muted">
-          No events are on the calendar just yet — check back soon, or
+          No events are on the calendar just yet, check back soon, or
           <a href="/community">join a regular walk or ride</a> in the meantime.
           Got an idea for a get-together? <a href="/get-involved">We'd love your help</a>.
         </p>

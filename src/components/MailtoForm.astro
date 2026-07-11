@@ -5,7 +5,7 @@
 //   data-success="…"        optional custom success message
 // On submit it POSTs to the endpoint and shows a success message. If the
 // back-end isn't configured yet (503) or the network fails, it falls back to
-// opening a pre-filled email — so a submit is never a dead end. With no
+// opening a pre-filled email, so a submit is never a dead end. With no
 // JavaScript, each form's visible "email us" link remains the path.
 // Rendered once globally from BaseLayout.
 ---
@@ -81,7 +81,7 @@
       let data = {};
       try { data = await res.json(); } catch {}
       if (res.ok && data.ok) {
-        succeed(form, form.getAttribute('data-success') || 'Thanks — we’ve got it! We’ll be in touch.');
+        succeed(form, form.getAttribute('data-success') || 'Thanks, we’ve got it! We’ll be in touch.');
         return;
       }
       if (res.status === 503 || data.reason === 'not-configured') {
@@ -90,7 +90,7 @@
       } else if (data.reason === 'captcha') {
         setStatus(form, 'Please complete the “I’m human” check and try again.', 'error');
       } else {
-        setStatus(form, 'Something went wrong — please email us instead.', 'error');
+        setStatus(form, 'Something went wrong, please email us instead.', 'error');
       }
     } catch {
       window.location.href = buildMailto(form); // network error → email fallback

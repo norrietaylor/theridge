@@ -2,7 +2,7 @@
   "name": "theridge",
   "type": "module",
   "version": "0.1.0",
-  "description": "Community website for The Ridge neighbourhood in Courtenay, BC — built by residents, for residents.",
+  "description": "Community website for The Ridge neighbourhood in Courtenay, BC, built by residents, for residents.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

@@ -8,12 +8,12 @@ interface Props {
   variant?: 'inline' | 'panel';
   heading?: string;
   blurb?: string;
-  source?: string; // e.g. "home", "join" — recorded with the signup
+  source?: string; // e.g. "home", "join", recorded with the signup
 }
 const {
   variant = 'panel',
   heading = 'Get Ridge news & events by email',
-  blurb = 'A friendly monthly note — events, walks and rides, and issues before the City. No spam, unsubscribe anytime.',
+  blurb = 'A friendly monthly note, events, walks and rides, and issues before the City. No spam, unsubscribe anytime.',
   source = 'site',
 } = Astro.props;
 ---
@@ -29,7 +29,7 @@ const {
     data-mailto
     data-to={SITE.email}
     data-subject="Please add me to The Ridge mailing list"
-    data-success="You’re in — check your inbox for a quick confirmation email to finish signing up."
+    data-success="You’re in, check your inbox for a quick confirmation email to finish signing up."
   >
     <input type="hidden" name="source" value={source} />
     <div class="visually-hidden" aria-hidden="true">
@@ -44,7 +44,7 @@ const {
       <button type="submit" class="btn btn-primary">Join</button>
     </div>
     <p class="form-note" style="margin-top:.5rem">
-      Double opt-in — we’ll send a confirmation first. Prefer paper? Grab the
+      Double opt-in, we’ll send a confirmation first. Prefer paper? Grab the
       <a href="/outreach">printable sign-up sheet</a>.
     </p>
   </form>

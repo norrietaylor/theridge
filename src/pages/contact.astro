@@ -1,5 +1,5 @@
 ---
-// Contact — a branded form that posts to /api/contact once that endpoint is
+// Contact, a branded form that posts to /api/contact once that endpoint is
 // wired. Until then, a prominent email fallback keeps neighbours from hitting a
 // dead end. Includes a visually-hidden honeypot ("company") to deter bots.
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -10,25 +10,25 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for T
 ---
 <BaseLayout
   title="Contact"
-  description="Get in touch with the neighbours behind The Ridge — questions about events, the voice to the City, or anything else."
+  description="Get in touch with the neighbours behind The Ridge, questions about events, the voice to the City, or anything else."
 >
   <section class="section">
     <div class="container container-narrow">
       <p class="eyebrow">Contact</p>
       <h1>Get in touch</h1>
       <p class="lead">
-        Questions, ideas, or something you'd like us to raise? Drop us a line —
+        Questions, ideas, or something you'd like us to raise? Drop us a line, 
         real neighbours read every message.
       </p>
 
       <div class="panel email-fallback">
         <p style="margin:0">
           <strong>Prefer email?</strong> Write to
-          <a href={mailto}>{SITE.email}</a> — it comes straight to the group inbox.
+          <a href={mailto}>{SITE.email}</a>, it comes straight to the group inbox.
         </p>
       </div>
 
-      <form class="contact-form" data-endpoint="/api/contact" data-mailto data-to={SITE.email} data-subject="Message for The Ridge" data-success="Thanks — your message is on its way. We’ll be in touch soon.">
+      <form class="contact-form" data-endpoint="/api/contact" data-mailto data-to={SITE.email} data-subject="Message for The Ridge" data-success="Thanks, your message is on its way. We’ll be in touch soon.">
         <div class="visually-hidden" aria-hidden="true">
           <label for="c-company">Company (leave this blank)</label>
           <input id="c-company" name="company" type="text" tabindex="-1" autocomplete="off" />
@@ -71,9 +71,9 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for T
     <div class="container container-narrow">
       <h2>Who to reach for what</h2>
       <ul class="who-list">
-        <li><strong>Events &amp; community</strong> — walks, rides, get-togethers, or an idea for something new.</li>
-        <li><strong>Voice to the City</strong> — an issue you'd like the neighbourhood to follow, or to help with a submission.</li>
-        <li><strong>General</strong> — anything else, including helping out or fixing something on this site.</li>
+        <li><strong>Events &amp; community</strong>, walks, rides, get-togethers, or an idea for something new.</li>
+        <li><strong>Voice to the City</strong>, an issue you'd like the neighbourhood to follow, or to help with a submission.</li>
+        <li><strong>General</strong>, anything else, including helping out or fixing something on this site.</li>
       </ul>
       <p class="muted">
         Want to pitch in more regularly? See <a href="/get-involved">get involved</a>.
