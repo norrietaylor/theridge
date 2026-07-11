@@ -165,12 +165,12 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
     justify-content: center;
     padding: var(--space-6) var(--space-5);
     background:
-      linear-gradient(180deg, color-mix(in srgb, var(--c-forest) 46%, transparent), color-mix(in srgb, var(--c-forest) 84%, transparent)),
+      linear-gradient(180deg, rgba(18, 20, 17, 0.24) 0%, rgba(18, 20, 17, 0.52) 55%, rgba(18, 20, 17, 0.74) 100%),
       url('/img/ridge-sunset.jpg') center 58% / cover no-repeat;
   }
   .hero-mark { margin-bottom: var(--space-3); }
-  .hero h1 { max-width: 20ch; margin-bottom: var(--space-2); }
-  .hero-lead { font-size: var(--fs-lg); max-width: 54ch; color: #eef0e7; margin-bottom: var(--space-3); }
+  .hero h1 { max-width: 20ch; margin-bottom: var(--space-2); text-shadow: 0 1px 14px rgba(0, 0, 0, 0.45); }
+  .hero-lead { font-size: var(--fs-lg); max-width: 54ch; color: #f2f1ea; margin-bottom: var(--space-3); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
   .hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-2); }
   .more-link { margin-top: var(--space-3); font-weight: 600; }
   .cta-strip {
