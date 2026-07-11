@@ -21,6 +21,13 @@ export const SITE = {
   },
 } as const;
 
+// Subscription URL for the events feed. The `webcal://` scheme is what iOS,
+// macOS and desktop calendar apps recognise: tapping it opens the Calendar
+// app's "subscribe" flow directly. A plain https link to the .ics makes iOS
+// Safari try (and fail) to download the file. Subscribing once means new
+// events appear on the subscriber's own calendar automatically.
+export const EVENTS_WEBCAL = `${SITE.url.replace(/^https?:/, 'webcal:')}/events.ics`;
+
 // Primary navigation, shown in the header and footer.
 export const NAV: { label: string; href: string }[] = [
   { label: 'Home', href: '/' },

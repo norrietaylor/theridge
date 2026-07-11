@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { formatLong } from '../../lib/dates';
-import { SITE } from '../../consts';
+import { SITE, EVENTS_WEBCAL } from '../../consts';
 import Turnstile from '../../components/Turnstile.astro';
 
 export async function getStaticPaths() {
@@ -55,7 +55,7 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
       </ul>
 
       <p style="margin-top: var(--space-3);">
-        <a class="btn btn-secondary" href="/events.ics">Add to calendar</a>
+        <a class="btn btn-secondary" href={EVENTS_WEBCAL}>Subscribe to the calendar</a>
       </p>
 
       <div class="prose" style="margin-top: var(--space-4);">
