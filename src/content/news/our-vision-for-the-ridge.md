@@ -1,6 +1,6 @@
 ---
 title: "Our vision for the Ridge"
-date: 2026-05-04
+date: 2026-07-11
 category: Vision
 summary: "Why this young neighbourhood on the ridge feels like its own place, and what we hope to build together, as neighbours and as one voice with the City."
 author: "Ron Taylor"
