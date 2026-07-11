@@ -17,6 +17,13 @@
     "not_found_handling": "404-page",
     "binding": "ASSETS"
   },
+  // Non-secret runtime variable: where contact/volunteer/RSVP mail is delivered.
+  // Committed here so it can't be missed. The actual secrets (RESEND_API_KEY,
+  // MAILERLITE_API_KEY, TURNSTILE_SECRET_KEY) are set as Worker secrets under
+  // Settings -> Variables and Secrets (runtime), never as build variables.
+  "vars": {
+    "CONTACT_TO": "hello@ourridge.ca"
+  },
   // Workers observability (Logs + Traces) for the Worker's /api/* invocations.
   "observability": {
     "enabled": false,
