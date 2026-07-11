@@ -20,19 +20,13 @@ const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
     </div>
   </section>
 
-  <!-- Through the seasons -->
+  <!-- A neighbourhood in bloom -->
   <section class="section" style="padding-top:0;">
     <div class="container">
-      <div class="photo-band">
-        <figure>
-          <img src="/img/ridge-garden.jpg" width="1200" height="1600" alt="A deep-red dahlia in bloom in a Ridge front-garden bed." loading="lazy" />
-          <figcaption>Front-garden colour in high summer.</figcaption>
-        </figure>
-        <figure>
-          <img src="/img/ridge-winter.jpg" width="1200" height="1600" alt="A bundled-up child playing in fresh snow on a Ridge street in winter." loading="lazy" />
-          <figcaption>First snow on the Ridge.</figcaption>
-        </figure>
-      </div>
+      <figure class="photo-feature">
+        <img src="/img/ridge-garden.jpg" width="1200" height="1600" alt="A deep-red dahlia in bloom in a Ridge front-garden bed." loading="lazy" />
+        <figcaption>Front-garden colour on the Ridge in high summer.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -126,9 +120,8 @@ const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
 </BaseLayout>
 
 <style>
-  .photo-band { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
-  .photo-band figure { margin: 0; }
-  .photo-band img {
+  .photo-feature { margin: 0 auto; max-width: 460px; }
+  .photo-feature img {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
@@ -136,13 +129,12 @@ const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
     box-shadow: var(--shadow-sm);
     display: block;
   }
-  .photo-band figcaption {
+  .photo-feature figcaption {
     text-align: center;
     font-size: var(--fs-sm);
     color: var(--text-muted);
     margin-top: var(--space-1);
   }
-  @media (max-width: 560px) { .photo-band { grid-template-columns: 1fr; } }
   .group-head {
     display: flex;
     align-items: center;
