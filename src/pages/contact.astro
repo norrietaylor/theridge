@@ -6,11 +6,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Turnstile from '../components/Turnstile.astro';
 import { SITE } from '../consts';
 
-const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for The Ridge')}`;
+const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for Our Ridge')}`;
 ---
 <BaseLayout
   title="Contact"
-  description="Get in touch with the neighbours behind The Ridge, questions about events, the voice to the City, or anything else."
+  description="Get in touch with the neighbours behind Our Ridge, questions about events, the voice to the City, or anything else."
 >
   <section class="section">
     <div class="container container-narrow">
@@ -27,7 +27,7 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Message for T
         </p>
       </div>
 
-      <form class="contact-form" data-endpoint="/api/contact" data-mailto data-to={SITE.email} data-subject="Message for The Ridge" data-success="Thanks, your message is on its way. We’ll be in touch soon.">
+      <form class="contact-form" data-endpoint="/api/contact" data-mailto data-to={SITE.email} data-subject="Message for Our Ridge" data-success="Thanks, your message is on its way. We’ll be in touch soon.">
         <div class="visually-hidden" aria-hidden="true">
           <label for="c-company">Company (leave this blank)</label>
           <input id="c-company" name="company" type="text" tabindex="-1" autocomplete="off" />
