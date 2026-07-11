@@ -1,0 +1,72 @@
+---
+// Progressive enhancement: turn a plain form into a "compose an email" action.
+// On submit of any `form[data-mailto]`, this builds a mailto: link from the
+// filled-in fields and opens the visitor's email app — no server needed. With
+// JavaScript off, the email link shown in each form's fallback note still works,
+// so a submit never hits a dead endpoint. Include <MailtoForm /> once on any
+// page that has such a form. Attributes read from the form:
+//   data-to       — recipient email
+//   data-subject  — email subject line
+---
+<script>
+  function clean(s) {
+    return (s || '').replace(/\s+/g, ' ').trim();
+  }
+  function labelFor(form, el) {
+    if (el.id) {
+      const l = form.querySelector('label[for="' + el.id + '"]');
+      if (l) return clean(l.textContent);
+    }
+    return '';
+  }
+  function wrapLabel(el) {
+    const l = el.closest('label');
+    return l ? clean(l.textContent) : '';
+  }
+  function groupLegend(form, name) {
+    const el = form.querySelector('[name="' + name + '"]');
+    const fs = el && el.closest('fieldset');
+    const lg = fs && fs.querySelector('legend');
+    return lg ? clean(lg.textContent) : '';
+  }
+  function onSubmit(e) {
+    const form = e.currentTarget;
+    e.preventDefault();
+    const to = form.getAttribute('data-to') || '';
+    const subject = form.getAttribute('data-subject') || 'Message from ourridge.ca';
+    const lines = [];
+    const groups = {}; // checkbox/radio values grouped by field name
+    form.querySelectorAll('input, textarea, select').forEach((el) => {
+      if (!el.name || el.type === 'hidden') return;
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        if (el.checked) (groups[el.name] = groups[el.name] || []).push(wrapLabel(el) || el.value);
+        return;
+      }
+      if (el.tagName === 'SELECT') {
+        const opt = el.options[el.selectedIndex];
+        const val = opt ? clean(opt.text) : '';
+        if (val) lines.push((labelFor(form, el) || el.name) + ': ' + val);
+        return;
+      }
+      const val = (el.value || '').trim();
+      if (val) lines.push((labelFor(form, el) || el.name) + ': ' + val);
+    });
+    Object.keys(groups).forEach((name) => {
+      lines.push((groupLegend(form, name) || name) + ': ' + groups[name].join(', '));
+    });
+    const href =
+      'mailto:' + to +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(lines.join('\n'));
+    window.location.href = href;
+  }
+  function initMailtoForms() {
+    document.querySelectorAll('form[data-mailto]').forEach((form) => {
+      if (form.dataset.mailtoInit) return;
+      form.dataset.mailtoInit = '1';
+      form.addEventListener('submit', onSubmit);
+    });
+  }
+  initMailtoForms();
+  document.addEventListener('astro:page-load', initMailtoForms);
+</script>

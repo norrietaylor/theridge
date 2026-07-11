@@ -31,7 +31,9 @@ function esc(value: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  const events = (await getCollection('events', ({ data }) => !data.draft)).sort(
+  // Only confirmed events belong in a calendar people subscribe to — leave out
+  // drafts and suggested/example events.
+  const events = (await getCollection('events', ({ data }) => !data.draft && !data.example)).sort(
     (a, b) => a.data.start.getTime() - b.data.start.getTime(),
   );
 

@@ -3,6 +3,7 @@
 // (with the same email fallback + honeypot pattern as Contact), and a warm
 // welcome for new residents.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MailtoForm from '../components/MailtoForm.astro';
 import { SITE } from '../consts';
 
 const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('I’d like to help out on The Ridge')}&body=${encodeURIComponent('Name:\nEmail:\nWhat I’d like to help with:\nWhen I’m usually free:\n')}`;
@@ -75,13 +76,7 @@ const roles = [
         </p>
       </div>
 
-      <form class="volunteer-form" action="/api/volunteer" method="post">
-        <!-- Honeypot: hidden from people, tempting to bots. -->
-        <div class="visually-hidden" aria-hidden="true">
-          <label for="v-company">Company (leave this blank)</label>
-          <input id="v-company" name="company" type="text" tabindex="-1" autocomplete="off" />
-        </div>
-
+      <form class="volunteer-form" data-mailto data-to={SITE.email} data-subject="I'd like to help out on The Ridge">
         <div class="field">
           <label for="v-name">Your name</label>
           <input id="v-name" name="name" type="text" autocomplete="name" required />
@@ -106,10 +101,10 @@ const roles = [
           <input id="v-availability" name="availability" type="text" placeholder="e.g. weekends, weekday evenings" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Count me in</button>
+        <button type="submit" class="btn btn-primary">Compose email</button>
         <p class="form-note" style="margin-top:var(--space-2)">
-          We're switching on online form delivery shortly — for now, the
-          <a href={mailto}>email option</a> is the surest way to reach us.
+          This opens a pre-filled message in your email app (built-in signup is
+          coming soon). No email app? Just write to <a href={mailto}>{SITE.email}</a>.
         </p>
       </form>
     </div>
@@ -148,6 +143,8 @@ const roles = [
       </div>
     </div>
   </section>
+
+  <MailtoForm />
 </BaseLayout>
 
 <style>
