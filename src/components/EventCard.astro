@@ -1,0 +1,39 @@
+---
+import { monthAbbr, dayNum, formatLong } from '../lib/dates';
+
+interface Props {
+  href: string;
+  title: string;
+  start: Date;
+  time?: string;
+  location?: string;
+  summary?: string;
+}
+const { href, title, start, time, location, summary } = Astro.props;
+---
+<article class="event-card card">
+  <a href={href} class="event-link">
+    <span class="datechip" aria-hidden="true">
+      <span class="m">{monthAbbr(start)}</span>
+      <span class="d">{dayNum(start)}</span>
+    </span>
+    <span class="event-body">
+      <h3 class="event-title">{title}</h3>
+      <p class="event-meta muted">
+        <span>{formatLong(start)}</span>
+        {time && <span> · {time}</span>}
+        {location && <span> · {location}</span>}
+      </p>
+      {summary && <p class="event-summary">{summary}</p>}
+    </span>
+  </a>
+</article>
+
+<style>
+  .event-card { padding: var(--space-2); }
+  .event-link { display: flex; gap: var(--space-2); align-items: flex-start; text-decoration: none; color: inherit; }
+  .event-title { margin: 0 0 0.15rem; font-size: var(--fs-lg); }
+  .event-meta { margin: 0 0 0.3rem; font-size: var(--fs-sm); }
+  .event-summary { margin: 0; }
+  .event-link:hover .event-title { color: var(--c-clay-ink); }
+</style>

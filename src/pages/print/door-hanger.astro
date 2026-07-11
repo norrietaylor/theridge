@@ -1,0 +1,81 @@
+---
+// Printable door-hanger / poster for The Ridge outreach kit.
+// Taller, narrower and near-wordless: a big QR does the work. Hang it on a
+// doorknob or pin it to a community board so a quick scan gets someone on the list.
+import PrintLayout from '../../layouts/PrintLayout.astro';
+import QRCode from '../../components/QRCode.astro';
+import RidgeMark from '../../components/RidgeMark.astro';
+import { SITE } from '../../consts';
+---
+<PrintLayout title="Door-hanger">
+  <div class="hanger">
+    <!-- decorative doorknob cut-out (trim by hand if hanging on a knob) -->
+    <div class="hole" aria-hidden="true"></div>
+
+    <div class="hanger-head">
+      <RidgeMark variant="light" height={46} />
+    </div>
+
+    <div class="hanger-body">
+      <p class="hanger-tag">Neighbours of the Ridge &mdash; join us</p>
+
+      <div class="qr-wrap">
+        <QRCode value={`${SITE.url}/join?src=door`} size={240} label="Scan to join The Ridge mailing list" />
+      </div>
+
+      <p class="scan">Scan to join our mailing list</p>
+      <p class="short-url">{SITE.displayUrl}/join</p>
+
+      <p class="hanger-foot">Events &middot; walks &middot; rides &middot; a voice with the City</p>
+      <p class="hanger-email">{SITE.email}</p>
+    </div>
+  </div>
+</PrintLayout>
+
+<style>
+  .hanger {
+    max-width: 108mm;
+    margin-inline: auto;
+    border: 2px solid var(--c-forest);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .hole {
+    width: 34px; height: 34px;
+    border: 2px solid var(--c-sage);
+    border-radius: 50%;
+    margin: 9mm auto 6mm;
+  }
+
+  .hanger-head {
+    background: var(--c-forest);
+    text-align: center;
+    padding: 1rem 1rem 1.15rem;
+  }
+
+  .hanger-body {
+    background: #fff;
+    text-align: center;
+    padding: 1.6rem 1.25rem 2rem;
+  }
+  .hanger-tag {
+    font-family: var(--font-heading);
+    color: var(--c-forest);
+    font-size: 1.4rem; font-weight: 600; line-height: 1.2;
+    margin: 0 0 1.3rem;
+  }
+
+  .qr-wrap {
+    display: inline-block; background: #fff; line-height: 0;
+    padding: 0.5rem; border: 1px solid var(--c-line); border-radius: var(--radius);
+  }
+
+  .scan { margin: 1.1rem 0 0.2rem; font-weight: 600; color: var(--c-clay-ink); }
+  .short-url {
+    margin: 0; font-size: 1.35rem; font-weight: 700;
+    color: var(--c-forest); letter-spacing: 0.01em;
+  }
+  .hanger-foot { margin: 1.3rem 0 0.2rem; color: var(--c-stone); font-size: 0.92rem; }
+  .hanger-email { margin: 0; color: var(--c-stone); font-size: 0.82rem; }
+</style>

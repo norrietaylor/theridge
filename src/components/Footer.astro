@@ -1,0 +1,75 @@
+---
+import RidgeMark from './RidgeMark.astro';
+import { NAV, SITE } from '../consts';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <RidgeMark variant="light" height={44} />
+      <p class="footer-tag">Made by residents, for residents — {SITE.location}.</p>
+    </div>
+
+    <nav aria-label="Footer">
+      <h2 class="footer-h">Explore</h2>
+      <ul>
+        {NAV.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="footer-h">Get in touch</h2>
+      <ul class="plain">
+        <li><a href="/join">Join the mailing list</a></li>
+        <li><a href="/contact">Contact us</a></li>
+        <li><a href="/outreach">Printable outreach kit</a></li>
+        <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      </ul>
+      {(SITE.social.facebook || SITE.social.instagram) && (
+        <ul class="social plain">
+          {SITE.social.facebook && <li><a href={SITE.social.facebook}>Facebook</a></li>}
+          {SITE.social.instagram && <li><a href={SITE.social.instagram}>Instagram</a></li>}
+        </ul>
+      )}
+    </div>
+  </div>
+
+  <div class="container footer-legal">
+    <p>© {year} The Ridge community group. A volunteer, non-commercial neighbourhood initiative — not affiliated with the property developer.</p>
+    <p><a href="/privacy">Privacy</a></p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--c-forest);
+    color: #e7e3d8;
+    margin-top: var(--space-6);
+    padding-block: var(--space-5) var(--space-3);
+  }
+  .footer-grid {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+  @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; } }
+  .footer-tag { color: #c9d2c4; margin-top: var(--space-2); max-width: 34ch; }
+  .footer-h { font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.08em; color: #fff; margin-bottom: var(--space-2); }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; }
+  .site-footer li { margin-bottom: 0.5rem; }
+  .site-footer a { color: #e7e3d8; text-decoration: none; }
+  .site-footer a:hover { color: #fff; text-decoration: underline; }
+  .social { margin-top: var(--space-2); display: flex; gap: var(--space-2); }
+  .footer-legal {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-size: var(--fs-sm);
+    color: #b9c2b4;
+  }
+  .footer-legal a { color: #e7e3d8; }
+</style>

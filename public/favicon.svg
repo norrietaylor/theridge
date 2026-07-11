@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" role="img" aria-label="The Ridge">
+  <rect width="50" height="50" rx="11" fill="#2e4b36"/>
+  <circle cx="25" cy="20" r="5.5" fill="#e0a458"/>
+  <path d="M3 39 L16 25 L25 33 L35 22 L47 39 Z" fill="#8fa9b8" opacity="0.85"/>
+  <path d="M2 44 L14 33 L23 40 L34 30 L48 44 L48 48 L2 48 Z" fill="#f7f3ec"/>
+</svg>

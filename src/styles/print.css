@@ -1,0 +1,70 @@
+/* Print styles for the outreach kit routes (/print/*).
+   Imported by PrintLayout. Sets page size and hides all screen chrome so each
+   print route is print-ready straight from the browser (and for PDF export). */
+@import './tokens.css';
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+
+@page {
+  size: Letter portrait;
+  margin: 14mm;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--c-bark);
+  background: #fff;
+  line-height: 1.4;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.print-sheet {
+  width: 100%;
+  max-width: 190mm;
+  margin-inline: auto;
+  padding: 8mm 0;
+}
+
+h1, h2, h3 { font-family: var(--font-heading); color: var(--c-forest); line-height: 1.1; }
+
+.print-hero { color: var(--c-forest); }
+.print-accent { color: var(--c-clay-ink); }
+
+/* On screen, show a subtle frame + a "Print / Save as PDF" hint so volunteers
+   understand the page; both are hidden when actually printing. */
+.screen-only { }
+@media print {
+  .screen-only { display: none !important; }
+  .print-sheet { padding: 0; max-width: none; }
+}
+
+.print-toolbar {
+  max-width: 190mm;
+  margin: 1rem auto;
+  padding: 0.75rem 1rem;
+  background: var(--c-paper);
+  border: 1px dashed var(--c-sage);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  color: var(--c-stone);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.print-toolbar .btn {
+  display: inline-block;
+  background: var(--c-clay);
+  color: #fff;
+  padding: 0.5em 1em;
+  border-radius: var(--radius-pill);
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}

@@ -1,0 +1,27 @@
+---
+import '../styles/print.css';
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · The Ridge (print)</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="print-toolbar screen-only">
+      <span>Print preview — this page is designed for paper. Use “Print” and choose your printer, or “Save as PDF”.</span>
+      <button type="button" onclick="window.print()" class="btn">Print / Save as PDF</button>
+    </div>
+    <div class="print-sheet">
+      <slot />
+    </div>
+  </body>
+</html>

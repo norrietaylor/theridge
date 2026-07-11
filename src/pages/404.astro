@@ -1,0 +1,39 @@
+---
+// 404 — a warm not-found page that points people back to the useful places.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RidgeMark from '../components/RidgeMark.astro';
+---
+<BaseLayout
+  title="Page not found"
+  description="We couldn't find that page on The Ridge — here's the way back."
+>
+  <section class="section">
+    <div class="container container-narrow center notfound">
+      <RidgeMark height={52} class="nf-mark" />
+      <p class="eyebrow">Off the trail</p>
+      <h1>We couldn't find that page</h1>
+      <p class="lead">
+        Looks like this path doesn't lead anywhere on the Ridge — maybe a typo, or
+        a page that's moved. Let's get you back on track.
+      </p>
+      <div class="nf-ctas">
+        <a class="btn btn-primary" href="/">Back home</a>
+        <a class="btn btn-secondary" href="/events">Upcoming events</a>
+        <a class="btn btn-secondary" href="/join">Join the list</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound { display: flex; flex-direction: column; align-items: center; }
+  .nf-mark { margin-bottom: var(--space-3); }
+  .notfound .lead { max-width: 50ch; }
+  .nf-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+    margin-top: var(--space-2);
+  }
+</style>

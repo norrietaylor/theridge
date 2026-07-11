@@ -1,0 +1,170 @@
+---
+// Home — the front door of The Ridge. A balanced hub: connect with neighbours
+// and add your voice with the City. Pulls the next few events and latest news
+// from the content collections, degrading gracefully when they're empty.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RidgeMark from '../components/RidgeMark.astro';
+import EventCard from '../components/EventCard.astro';
+import NewsCard from '../components/NewsCard.astro';
+import SignupForm from '../components/SignupForm.astro';
+import { getCollection } from 'astro:content';
+import { isUpcoming } from '../lib/dates';
+
+const upcomingEvents = (await getCollection('events', ({ data }) => !data.draft))
+  .filter((entry) => isUpcoming(entry.data.start))
+  .sort((a, b) => a.data.start.getTime() - b.data.start.getTime())
+  .slice(0, 3);
+
+const latestNews = (await getCollection('news', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+<BaseLayout title="Home">
+  <!-- Hero -->
+  <section class="section">
+    <div class="container">
+      <div class="panel-forest hero">
+        <RidgeMark variant="light" height={56} class="hero-mark" />
+        <h1>A neighbourhood that looks out for each other</h1>
+        <p class="hero-lead">
+          A neighbourhood on the ridge in South Courtenay — parks, trails, and
+          neighbours looking out for each other.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="/join">Join the list</a>
+          <a class="btn btn-ghost" href="/events">Upcoming events</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's happening -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">What's happening</p>
+      <h2 class="section-title">Coming up around the Ridge</h2>
+      <p class="lead">Walks, rides, work parties and get-togethers — come as you are, all welcome.</p>
+      {upcomingEvents.length > 0 ? (
+        <div class="grid">
+          {upcomingEvents.map((entry) => (
+            <EventCard
+              href={`/events/${entry.id}`}
+              title={entry.data.title}
+              start={entry.data.start}
+              time={entry.data.time}
+              location={entry.data.location}
+              summary={entry.data.summary}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="card card--pad-lg">
+          <p class="muted" style="margin:0">
+            Nothing on the calendar just yet — check back soon, or
+            <a href="/join">add your name to the list</a> and we'll let you know
+            the moment something's planned.
+          </p>
+        </div>
+      )}
+      <p class="more-link"><a href="/events">See all events →</a></p>
+    </div>
+  </section>
+
+  <!-- Balanced hub: two jobs -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Two things at once</p>
+      <h2 class="section-title">One neighbourhood, two ways to take part</h2>
+      <div class="grid cols-2">
+        <article class="card card--pad-lg">
+          <h3>Connect with neighbours</h3>
+          <p>
+            Dog walks, people walks, bike rides and community events — small, easy
+            ways to meet the folks a few doors down and enjoy the trails together.
+          </p>
+          <p><a class="btn btn-secondary" href="/community">Find your people</a></p>
+        </article>
+        <article class="card card--pad-lg">
+          <h3>A united voice</h3>
+          <p>
+            Decisions about parks, roads and what gets built here go through the
+            City of Courtenay. Together we can follow the issues and weigh in as
+            one neighbourhood.
+          </p>
+          <p><a class="btn btn-secondary" href="/voice">See what's before the City</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest news -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">From the Ridge</p>
+      <h2 class="section-title">Latest news</h2>
+      {latestNews.length > 0 ? (
+        <div class="grid cols-3">
+          {latestNews.map((entry) => (
+            <NewsCard
+              href={`/news/${entry.id}`}
+              title={entry.data.title}
+              date={entry.data.date}
+              category={entry.data.category}
+              summary={entry.data.summary}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="card card--pad-lg">
+          <p class="muted" style="margin:0">
+            No posts yet — announcements, updates and vision pieces will land here.
+          </p>
+        </div>
+      )}
+      <p class="more-link"><a href="/news">All news →</a></p>
+    </div>
+  </section>
+
+  <!-- New to the Ridge strip -->
+  <section class="section">
+    <div class="container">
+      <div class="panel cta-strip">
+        <div>
+          <h2 class="section-title">New to the Ridge?</h2>
+          <p class="muted" style="margin:0">
+            Just moved in, or want to lend a hand? Here's the friendly way to get oriented and get involved.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="/get-involved">Start here</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signup -->
+  <section class="section">
+    <div class="container">
+      <SignupForm variant="panel" source="home" />
+      <p class="form-note" style="margin-top:var(--space-2)">
+        Not online much, or want to sign up a neighbour? Grab the
+        <a href="/outreach">printable outreach kit</a> — a paper sign-up sheet and flyer you can hand out door to door.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { text-align: left; }
+  .hero-mark { margin-bottom: var(--space-3); }
+  .hero h1 { max-width: 20ch; margin-bottom: var(--space-2); }
+  .hero-lead { font-size: var(--fs-lg); max-width: 54ch; color: #eef0e7; margin-bottom: var(--space-3); }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .more-link { margin-top: var(--space-3); font-weight: 600; }
+  .cta-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .cta-strip .btn { flex: 0 0 auto; }
+</style>

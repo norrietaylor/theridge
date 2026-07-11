@@ -1,0 +1,154 @@
+---
+// About — the story of the Ridge and its "island" identity, who's behind the
+// effort, and how the group operates. Warm, specific in feel but vague on
+// contested numbers, per the content rules.
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="About"
+  description="The Ridge is a distinct, neighbourly community on the ridge in South Courtenay, BC — the story behind it and the residents making it happen."
+>
+  <!-- Intro -->
+  <section class="section">
+    <div class="container container-narrow">
+      <p class="eyebrow">About</p>
+      <h1>Our little island on the ridge</h1>
+      <p class="lead">
+        The Ridge is a young, self-contained neighbourhood in South Courtenay —
+        tucked up on the rise with ridge and ocean views, threaded with trails,
+        and full of people who wave hello.
+      </p>
+    </div>
+  </section>
+
+  <!-- Story / island identity -->
+  <section class="section-sm">
+    <div class="container container-narrow prose">
+      <h2>A neighbourhood with its own feel</h2>
+      <p>
+        People here often call the Ridge a bit of an island — not cut off, just
+        distinct. It's a planned community with its own shape and rhythm, set
+        apart enough that it feels like a place of its own, yet a quick trip from
+        the rest of Courtenay when you need it.
+      </p>
+      <p>
+        What ties it together is the land and the mix of people. Trails wind
+        between the homes and out toward the views. There are parks to wander, a
+        playground for the little ones, and playing fields for a kickabout on a
+        summer evening. Morning and evening you'll find dog walkers, strollers,
+        and cyclists making the loop.
+      </p>
+      <p>
+        It's an all-ages place, too. Young families putting down roots share the
+        streets with retirees who've chosen the Ridge for its quiet and its
+        outlook. That blend — kids on bikes and neighbours swapping garden tips —
+        is a big part of what makes it feel like home.
+      </p>
+    </div>
+  </section>
+
+  <!-- Orientation / map placeholder -->
+  <section class="section-sm">
+    <div class="container">
+      <p class="eyebrow">Find your way around</p>
+      <h2 class="section-title">A neighbourhood map is on the way</h2>
+      <div class="panel map-placeholder" role="img" aria-label="Placeholder for a neighbourhood map of The Ridge, coming soon">
+        <span class="map-pin" aria-hidden="true">◹</span>
+        <p class="muted">
+          We're putting together a simple map of the Ridge — trails, parks, the
+          playground and playing fields, and where the walks and rides set off from.
+          Check back soon.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who's behind this -->
+  <section class="section-sm">
+    <div class="container container-narrow prose">
+      <h2>Who's behind this</h2>
+      <p>
+        This is a resident-led effort — volunteer, non-commercial, and run by
+        neighbours in their spare time. It was started by <strong>Ron Taylor</strong>,
+        a resident who wanted an easy way for people on the Ridge to stay in touch
+        and to speak up together, with a handful of helpers pitching in along the way.
+      </p>
+      <p>
+        We're independent of the property developer. This site and the group behind
+        it aren't affiliated with, or speaking for, any builder or company — it's
+        simply neighbours organising for themselves. There's always room for more
+        hands, so if that sounds like you, we'd love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <!-- How we operate / values -->
+  <section class="section-sm">
+    <div class="container">
+      <p class="eyebrow">How we operate</p>
+      <h2 class="section-title">Our values</h2>
+      <div class="grid cols-3">
+        <article class="card card--pad-lg">
+          <h3>Welcoming</h3>
+          <p class="muted" style="margin:0">
+            Everyone on the Ridge belongs here — new arrivals and long-timers,
+            all ages, come as you are.
+          </p>
+        </article>
+        <article class="card card--pad-lg">
+          <h3>Practical</h3>
+          <p class="muted" style="margin:0">
+            We keep things simple and useful: real events, clear information, and
+            small steps that add up.
+          </p>
+        </article>
+        <article class="card card--pad-lg">
+          <h3>Constructive</h3>
+          <p class="muted" style="margin:0">
+            When we bring things to the City, we do it respectfully and with
+            solutions in mind — good neighbours, good faith.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTAs -->
+  <section class="section">
+    <div class="container">
+      <div class="panel cta-strip">
+        <div>
+          <h2 class="section-title">Want to be part of it?</h2>
+          <p class="muted" style="margin:0">Join the list for news and events, or roll up your sleeves and help out.</p>
+        </div>
+        <div class="cta-buttons">
+          <a class="btn btn-primary" href="/join">Join the list</a>
+          <a class="btn btn-secondary" href="/get-involved">Get involved</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .map-placeholder {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 200px;
+    background:
+      repeating-linear-gradient(135deg, rgba(124,144,130,0.08) 0 12px, transparent 12px 24px),
+      var(--surface);
+    border-style: dashed;
+  }
+  .map-pin { font-size: 3rem; line-height: 1; color: var(--c-sage); }
+  .map-placeholder p { margin: 0; max-width: 48ch; }
+  .cta-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .cta-buttons { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+</style>

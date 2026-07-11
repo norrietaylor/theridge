@@ -1,0 +1,175 @@
+---
+// Get Involved — volunteer roles, a sign-up form that posts to /api/volunteer
+// (with the same email fallback + honeypot pattern as Contact), and a warm
+// welcome for new residents.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+
+const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('I’d like to help out on The Ridge')}&body=${encodeURIComponent('Name:\nEmail:\nWhat I’d like to help with:\nWhen I’m usually free:\n')}`;
+
+const roles = [
+  {
+    title: 'Event help',
+    body: 'Lend a hand setting up, welcoming people, or bringing snacks to a walk, ride or get-together.',
+  },
+  {
+    title: 'Communications & newsletter',
+    body: 'Help write the friendly monthly note, share what’s coming up, and keep neighbours in the loop.',
+  },
+  {
+    title: 'Outreach & door-knocking',
+    body: 'Drop off flyers and sign-up sheets, and say hello to neighbours who aren’t online yet.',
+  },
+  {
+    title: 'City liaison',
+    body: 'Follow what’s happening at the City of Courtenay and help the neighbourhood weigh in.',
+  },
+  {
+    title: 'Welcoming new neighbours',
+    body: 'Meet new arrivals, point them to the trails and parks, and help them feel at home fast.',
+  },
+];
+---
+<BaseLayout
+  title="Get Involved"
+  description="Roll up your sleeves on The Ridge — volunteer roles, a quick sign-up, and a warm welcome for new residents."
+>
+  <section class="section">
+    <div class="container container-narrow">
+      <p class="eyebrow">Get involved</p>
+      <h1>Lend a hand on the Ridge</h1>
+      <p class="lead">
+        This whole thing runs on neighbours giving a little time. There's no
+        commitment too small — pick what suits you, and we'll take it from there.
+      </p>
+    </div>
+  </section>
+
+  <!-- Roles -->
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="section-title">Ways to help</h2>
+      <div class="grid cols-2">
+        {roles.map((role) => (
+          <article class="card card--pad-lg">
+            <h3>{role.title}</h3>
+            <p class="muted" style="margin:0">{role.body}</p>
+          </article>
+        ))}
+      </div>
+      <p class="form-note" style="margin-top:var(--space-3)">
+        Not sure where you'd fit? That's fine — sign up below and we'll find a good match together.
+      </p>
+    </div>
+  </section>
+
+  <!-- Volunteer form -->
+  <section class="section-sm">
+    <div class="container container-narrow">
+      <h2>Put your name down</h2>
+
+      <div class="panel email-fallback">
+        <p style="margin:0">
+          <strong>Prefer email?</strong> Just write to
+          <a href={mailto}>{SITE.email}</a> and tell us what you'd like to help with.
+        </p>
+      </div>
+
+      <form class="volunteer-form" action="/api/volunteer" method="post">
+        <!-- Honeypot: hidden from people, tempting to bots. -->
+        <div class="visually-hidden" aria-hidden="true">
+          <label for="v-company">Company (leave this blank)</label>
+          <input id="v-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="v-name">Your name</label>
+          <input id="v-name" name="name" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label for="v-email">Email address</label>
+          <input id="v-email" name="email" type="email" autocomplete="email" required />
+        </div>
+
+        <fieldset class="field interests">
+          <legend>What are you interested in?</legend>
+          <label class="check"><input type="checkbox" name="interests" value="events" /> Event help</label>
+          <label class="check"><input type="checkbox" name="interests" value="communications" /> Communications &amp; newsletter</label>
+          <label class="check"><input type="checkbox" name="interests" value="outreach" /> Outreach &amp; door-knocking</label>
+          <label class="check"><input type="checkbox" name="interests" value="city-liaison" /> City liaison</label>
+          <label class="check"><input type="checkbox" name="interests" value="welcoming" /> Welcoming new neighbours</label>
+        </fieldset>
+
+        <div class="field">
+          <label for="v-availability">When are you usually free?</label>
+          <input id="v-availability" name="availability" type="text" placeholder="e.g. weekends, weekday evenings" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Count me in</button>
+        <p class="form-note" style="margin-top:var(--space-2)">
+          We're switching on online form delivery shortly — for now, the
+          <a href={mailto}>email option</a> is the surest way to reach us.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Welcome new residents -->
+  <section class="section-sm">
+    <div class="container container-narrow prose">
+      <h2>Welcome, new residents</h2>
+      <p>
+        Just moved to the Ridge? Welcome — we're glad you're here. The quickest
+        way to settle in is to get out on the trails, say hello, and join a walk
+        or ride. <a href="/join">Add your name to the list</a> and you'll hear
+        about everything coming up.
+      </p>
+      <p>
+        Want to help spread the word the old-fashioned way? The
+        <a href="/outreach">printable outreach kit</a> has a flyer and a paper
+        sign-up sheet you can share with neighbours who aren't online.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTAs -->
+  <section class="section">
+    <div class="container">
+      <div class="panel cta-strip">
+        <div>
+          <h2 class="section-title">Two quick next steps</h2>
+          <p class="muted" style="margin:0">Join the list to stay in the loop, or reach out with a question first.</p>
+        </div>
+        <div class="cta-buttons">
+          <a class="btn btn-primary" href="/join">Join the list</a>
+          <a class="btn btn-secondary" href="/contact">Contact us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .email-fallback { margin-bottom: var(--space-4); border-left: 4px solid var(--c-clay); }
+  .interests { border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-3); }
+  .interests legend { font-weight: 600; font-size: var(--fs-sm); padding-inline: 0.4rem; }
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 500;
+    margin-bottom: var(--space-2);
+    font-size: var(--fs-base);
+  }
+  .check:last-child { margin-bottom: 0; }
+  .check input { width: auto; }
+  .cta-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .cta-buttons { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+</style>
