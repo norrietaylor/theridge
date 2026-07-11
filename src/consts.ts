@@ -6,13 +6,13 @@ export const SITE = {
   name: 'The Ridge',
   // Short, friendly tagline used in the header and metadata.
   tagline: 'A neighbourhood on the ridge — South Courtenay, BC',
-  // The live site URL. Update this to the custom domain once registered.
-  url: 'https://theridge.pages.dev',
+  // The live site URL — the community's own domain.
+  url: 'https://ourridge.ca',
   // Displayed short URL for print materials (no https:// prefix).
-  displayUrl: 'theridge.pages.dev',
+  displayUrl: 'ourridge.ca',
   // Group inbox — where contact/volunteer/RSVP forms send, and how neighbours reach us.
-  // TODO: replace with the real shared group email once created (see follow-up issues).
-  email: 'hello@theridge.pages.dev',
+  // TODO: create this shared mailbox on the domain (see follow-up issues).
+  email: 'hello@ourridge.ca',
   location: 'The Ridge, South Courtenay, British Columbia',
   // Optional social links — leave blank to hide.
   social: {

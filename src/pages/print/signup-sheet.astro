@@ -1,0 +1,112 @@
+---
+// Printable door-to-door sign-up sheet for The Ridge outreach kit.
+// Volunteers print this, knock on doors, and collect names on paper — the way
+// we reach neighbours who aren't online. Completed sheets go to Ron to add to
+// the mailing list.
+import PrintLayout from '../../layouts/PrintLayout.astro';
+import QRCode from '../../components/QRCode.astro';
+import RidgeMark from '../../components/RidgeMark.astro';
+import { SITE } from '../../consts';
+
+// A dozen blank rows to fill in at the door.
+const rows = Array.from({ length: 12 }, (_, i) => i + 1);
+---
+<PrintLayout title="Sign-up sheet">
+  <div class="sheet">
+    <header class="sheet-head">
+      <div class="head-text">
+        <RidgeMark height={40} />
+        <h1>Join The Ridge &mdash; neighbour sign-up</h1>
+        <p class="intro">
+          We&rsquo;re neighbours getting to know each other and speaking up together with
+          the City. Add your details and we&rsquo;ll send occasional news, events, and
+          walks &amp; rides you&rsquo;re welcome to join.
+        </p>
+        <p class="consent">
+          By signing, you agree we may email you occasional Ridge news and events.
+          Unsubscribe anytime.
+        </p>
+      </div>
+
+      <div class="head-qr">
+        <QRCode value={`${SITE.url}/join?src=sheet`} size={112} label="Scan to join The Ridge mailing list online" />
+        <span>Prefer online? Scan to join at {SITE.displayUrl}/join</span>
+      </div>
+    </header>
+
+    <table class="sheet-table">
+      <colgroup>
+        <col style="width:6%" />
+        <col style="width:26%" />
+        <col style="width:19%" />
+        <col style="width:27%" />
+        <col style="width:22%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Street</th>
+          <th>Email</th>
+          <th>Interests <small>circle any</small></th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((n) => (
+          <tr>
+            <td class="num">{n}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="interests"><small>walks &middot; rides &middot; events &middot; City voice</small></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <footer class="sheet-foot">
+      <p>
+        Thanks for canvassing! Hand your completed sheet to <strong>Ron Taylor</strong> and
+        he&rsquo;ll add everyone to the list. Questions? {SITE.email}
+      </p>
+    </footer>
+  </div>
+</PrintLayout>
+
+<style>
+  .sheet { display: flex; flex-direction: column; }
+
+  .sheet-head {
+    display: flex; gap: 1.5rem; justify-content: space-between; align-items: flex-start;
+    border-bottom: 2px solid var(--c-sage);
+    padding-bottom: 1rem;
+  }
+  .head-text { flex: 1 1 auto; }
+  .head-text h1 { font-size: 1.9rem; margin: 0.4rem 0 0.35rem; }
+  .intro { margin: 0 0 0.5rem; color: var(--c-stone); max-width: 62ch; }
+  .consent {
+    margin: 0; font-size: 0.85rem; font-weight: 600; color: var(--c-clay-ink);
+    background: var(--c-paper); border-left: 3px solid var(--c-clay);
+    padding: 0.45rem 0.65rem; border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .head-qr { flex: 0 0 auto; width: 132px; text-align: center; }
+  .head-qr span { display: block; font-size: 0.7rem; color: var(--c-stone); margin-top: 0.35rem; line-height: 1.3; }
+
+  .sheet-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 1.1rem; }
+  .sheet-table th, .sheet-table td {
+    border: 1px solid var(--c-bark);
+    padding: 0.4rem 0.5rem; text-align: left; vertical-align: middle;
+  }
+  .sheet-table th {
+    background: var(--c-paper); font-family: var(--font-heading);
+    color: var(--c-forest); font-size: 0.92rem;
+  }
+  .sheet-table th small { display: block; font-weight: 400; color: var(--c-stone); font-size: 0.68rem; }
+  .sheet-table td { height: 12mm; font-size: 0.85rem; }
+  .sheet-table .num { text-align: center; color: var(--c-stone); font-weight: 600; }
+  .interests small { color: var(--c-stone); font-size: 0.72rem; }
+
+  .sheet-foot { margin-top: 0.85rem; font-size: 0.85rem; color: var(--c-stone); }
+  .sheet-foot p { margin: 0; }
+</style>

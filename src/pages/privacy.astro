@@ -1,0 +1,79 @@
+---
+// Privacy — plain-language note on what we collect and how we treat it. Marked
+// as a starting draft for the volunteer group to confirm.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+
+const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('Privacy question')}`;
+---
+<BaseLayout
+  title="Privacy"
+  description="How The Ridge handles your details: what our newsletter and forms collect, where it lives, and your right to unsubscribe."
+>
+  <section class="section">
+    <div class="container container-narrow prose">
+      <p class="eyebrow">Privacy</p>
+      <h1>Your details, handled with care</h1>
+
+      <div class="panel draft-note">
+        <p style="margin:0">
+          <strong>A starting draft.</strong> This is our plain-language privacy
+          note, written to get us going. The volunteer group will review and
+          confirm the wording — if anything here matters to you, please
+          <a href={mailto}>ask us</a>.
+        </p>
+      </div>
+
+      <p class="lead">
+        We're neighbours, not marketers. We only ask for what we need to keep you
+        in the loop, and we never sell your information.
+      </p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li><strong>Newsletter &amp; join list:</strong> your name and email address.</li>
+        <li><strong>Optional extras:</strong> your street or address, and the activities you're interested in — only if you choose to tell us.</li>
+        <li><strong>Contact &amp; volunteer forms:</strong> your name, email, and whatever you write in your message.</li>
+      </ul>
+
+      <h2>Where it lives</h2>
+      <p>
+        Your details sit in two places: our mailing list (the tool we use to send
+        the newsletter) and our group email inbox. Only the volunteers helping run
+        the Ridge can see them.
+      </p>
+
+      <h2>How we use it</h2>
+      <p>
+        We use your information to send you Ridge news and event updates, to reply
+        to you, and to organise the walks, rides and community activities you've
+        shown interest in. That's it.
+      </p>
+
+      <h2>We never sell your data</h2>
+      <p>
+        We don't sell, rent, or trade your information, and we don't share it with
+        the property developer or any business. We'll only ever share details if
+        the law requires it.
+      </p>
+
+      <h2>Unsubscribing (your CASL rights)</h2>
+      <p>
+        Canada's anti-spam law (CASL) gives you the right to stop hearing from us
+        whenever you like. Every newsletter includes an unsubscribe link, or you
+        can simply <a href={mailto}>email us</a> and we'll take you off the list.
+        You can also ask us what we hold about you, or ask us to delete it.
+      </p>
+
+      <h2>Reaching us</h2>
+      <p>
+        Questions about any of this? Write to <a href={mailto}>{SITE.email}</a>.
+        A real neighbour will get back to you.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .draft-note { border-left: 4px solid var(--c-fern); margin-bottom: var(--space-4); }
+</style>

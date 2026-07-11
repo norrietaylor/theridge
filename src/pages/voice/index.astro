@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { formatLong, isUpcoming } from '../../lib/dates';
+
+// Current issues, most recently updated first.
+const positions = (await getCollection('positions', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.updated.getTime() - a.data.updated.getTime(),
+);
+
+// Upcoming City meetings only, soonest first.
+const meetings = (await getCollection('meetings', ({ data }) => !data.draft))
+  .filter((m) => isUpcoming(m.data.date))
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+// Map a position status to its badge class.
+const statusClass = (status: string) =>
+  status === 'Active' ? 'status-active' : status === 'Resolved' ? 'status-resolved' : 'status-watching';
+---
+<BaseLayout
+  title="Voice to the City"
+  description="How neighbours on the Ridge speak to the City of Courtenay with one clear, constructive voice — current issues, upcoming meetings, and a plain-language guide to weighing in."
+>
+  <!-- Intro -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Voice to the City</p>
+      <h1>One neighbourhood, one clear voice</h1>
+      <div class="panel-forest intro">
+        <p class="lead" style="color:#f3efe6">The Ridge is growing, and the decisions that shape it are made at the City of Courtenay. One resident writing in is easy to overlook. A whole neighbourhood speaking together — calmly, reasonably, and with facts — is much harder to ignore.</p>
+        <p>This is where we keep track of the issues that affect our streets, when the City is meeting, and how you can add your voice. When we show up together, we earn a real say in our own neighbourhood and a genuine sense of ownership over where we live. None of this is about being against anyone — it's about being <em>for</em> the place we share.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current issues -->
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="section-title">Current issues</h2>
+      <p class="muted">Where the neighbours' group is focusing right now. Each one is a constructive priority — background, our position, and what we're asking the City.</p>
+
+      {positions.length > 0 ? (
+        <div class="grid cols-2 issues">
+          {positions.map((entry) => (
+            <article class="card issue stack">
+              <div class="issue-top">
+                <h3 class="issue-title"><a href={`/voice/${entry.id}`}>{entry.data.title}</a></h3>
+                <span class={`status ${statusClass(entry.data.status)}`}>{entry.data.status}</span>
+              </div>
+              <p class="muted">{entry.data.summary}</p>
+              {entry.data.whatYouCanDo && entry.data.whatYouCanDo.length > 0 && (
+                <div class="do">
+                  <p class="do-label">What you can do</p>
+                  <ul>
+                    {entry.data.whatYouCanDo.map((item) => <li>{item}</li>)}
+                  </ul>
+                </div>
+              )}
+              <p class="issue-more"><a href={`/voice/${entry.id}`}>Read the full position →</a></p>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="muted">No active issues listed right now. Check back soon.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Upcoming meetings -->
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="section-title">Upcoming City meetings</h2>
+      <p class="muted">These are the moments where decisions get made. The dates below are <strong>examples to confirm</strong> against the City of Courtenay's official calendar — always check before you plan to attend.</p>
+
+      {meetings.length > 0 ? (
+        <ul class="meetings">
+          {meetings.map((m) => (
+            <li class="card meeting">
+              <div class="meeting-body">
+                <p class="meeting-when"><strong>{formatLong(m.data.date)}</strong>{m.data.kind && <span class="tag meeting-kind">{m.data.kind}</span>}</p>
+                <p class="meeting-title muted">{m.data.title}</p>
+                {m.data.note && <p class="meeting-note muted">{m.data.note}</p>}
+              </div>
+              {m.data.agendaUrl && (
+                <a class="btn btn-secondary meeting-link" href={m.data.agendaUrl} target="_blank" rel="noopener">City calendar &amp; agendas →</a>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="muted">No upcoming meetings posted right now. We'll add City of Courtenay dates as they're confirmed.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- How to weigh in -->
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="section-title">How to weigh in</h2>
+      <p class="lead">You don't need to be an expert or a regular at City Hall. Here's the plain-language version of how a resident makes their voice count.</p>
+
+      <div class="grid cols-2 guide">
+        <article class="panel stack">
+          <h3>Write to Mayor &amp; Council</h3>
+          <p>A short, polite email is one of the simplest and most effective things you can do. Say who you are and that you live on the Ridge, describe the one thing you're writing about, and make a clear, specific ask. A few honest sentences from a real neighbour carry real weight — and dozens of them carry much more.</p>
+          <p class="muted">Correspondence to Council is usually received through the City of Courtenay's website. Keep a copy of what you send.</p>
+        </article>
+
+        <article class="panel stack">
+          <h3>Speak at a meeting</h3>
+          <p>Council meetings often include a chance for residents to speak, sometimes by signing up ahead of time. It can feel daunting, so keep it simple: introduce yourself, make one point, and be respectful of the time limit. You can bring notes. If speaking isn't for you, a written submission counts too.</p>
+          <p class="muted">Check the meeting agenda in advance to see how and when public input is handled.</p>
+        </article>
+
+        <article class="panel stack">
+          <h3>Know your representatives</h3>
+          <p>The City of Courtenay is led by a Mayor and Council who are elected to represent all of us. You don't need to know them personally to write to them — they expect to hear from residents. Understanding who they are and how the City is organized makes it easier to direct your message to the right place.</p>
+          <p class="muted">The City's website lists Council members and how to reach them.</p>
+        </article>
+
+        <article class="panel stack">
+          <h3>Watch for deadlines</h3>
+          <p>Many decisions have a window for public comment, and once it closes it's much harder to have a say. That's the single biggest reason we run a mailing list — so nobody misses the moment that matters. When something relevant is coming up, we'll flag it with enough notice to act.</p>
+          <p class="muted">Timing is everything. Early and polite beats late and loud.</p>
+        </article>
+      </div>
+
+      <div class="panel-forest weigh-cta">
+        <div>
+          <h2>Don't miss the moment that matters</h2>
+          <p>Join the list to hear about issues in time to weigh in — or reach out if you'd like to help shape what we ask for.</p>
+        </div>
+        <div class="weigh-actions">
+          <a class="btn btn-ghost" href="/join">Hear about issues in time</a>
+          <a class="btn btn-ghost" href="/contact">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro > :last-child { margin-bottom: 0; }
+  .intro p { color: #e7ded0; }
+
+  .issues { margin-top: var(--space-3); }
+  .issue-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2); }
+  .issue-title { margin: 0; font-size: var(--fs-lg); }
+  .issue-title a { color: var(--heading); text-decoration: none; }
+  .issue-title a:hover { color: var(--c-clay-ink); }
+  .issue-top .status { flex: 0 0 auto; margin-top: 0.15rem; }
+  .do-label { font-weight: 600; font-size: var(--fs-sm); margin: 0 0 0.35rem; color: var(--c-clay-ink); }
+  .do ul { margin: 0; }
+  .do li { font-size: var(--fs-sm); }
+  .issue-more { margin: 0; font-weight: 600; font-size: var(--fs-sm); }
+  .issue-more a { text-decoration: none; }
+
+  .meetings { list-style: none; padding: 0; margin: var(--space-3) 0 0; display: grid; gap: var(--space-3); }
+  .meeting { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+  .meeting-body { min-width: 0; }
+  .meeting-when { margin: 0 0 0.25rem; display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+  .meeting-kind { font-weight: 600; }
+  .meeting-title { margin: 0 0 0.25rem; }
+  .meeting-note { margin: 0; font-size: var(--fs-sm); }
+  .meeting-link { flex: 0 0 auto; }
+
+  .guide { margin-top: var(--space-3); }
+  .guide .stack > :last-child { margin-bottom: 0; }
+  .guide h3 { margin-bottom: var(--space-1); }
+
+  .weigh-cta {
+    margin-top: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .weigh-cta h2 { margin-bottom: var(--space-1); }
+  .weigh-cta p { margin: 0; color: #e7ded0; max-width: 46ch; }
+  .weigh-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+</style>

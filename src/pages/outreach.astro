@@ -1,0 +1,98 @@
+---
+// The outreach kit hub — a warm landing page that hands volunteers the printable
+// materials for spreading the word about The Ridge, plus a short door-knocking guide.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+
+const materials = [
+  {
+    title: 'One-page flyer',
+    href: '/print/flyer',
+    blurb:
+      'A warm one-pager that explains who we are and how to join, with a scan-to-join QR code. Great for coffee-shop boards, mailboxes, and community notice boards.',
+  },
+  {
+    title: 'Door-hanger / poster',
+    href: '/print/door-hanger',
+    blurb:
+      'Big QR, few words. Hang it on a doorknob or pin it to a board so a quick scan gets a neighbour onto the mailing list.',
+  },
+  {
+    title: 'Door-to-door sign-up sheet',
+    href: '/print/signup-sheet',
+    blurb:
+      'A printable sheet with room for a dozen neighbours to add their name, street and email while you chat at the door. Includes a consent line.',
+  },
+];
+---
+<BaseLayout
+  title="Outreach kit"
+  description="Free printable flyers, a door-hanger and a sign-up sheet to help neighbours spread the word about The Ridge."
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Printable outreach kit</p>
+      <h1>Help spread the word on the Ridge</h1>
+      <p class="lead">
+        The best invitations still happen face to face. This kit gives you everything
+        you need to introduce a neighbour to The Ridge &mdash; whether they&rsquo;re online
+        or not. Print what you like, share it, and help our little community grow.
+      </p>
+      <p>
+        Everything here is free to print at home. Open a sheet, then choose
+        <strong>Print</strong> or <strong>Save as PDF</strong> from your browser &mdash;
+        each page is already sized for a standard Letter sheet.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="section-title">Grab a sheet and print it</h2>
+      <p class="muted">Each link opens a clean, paper-ready page with a print button at the top.</p>
+
+      <div class="grid cols-3" style="margin-top: var(--space-3)">
+        {materials.map((m) => (
+          <article class="card card--pad-lg stack">
+            <h3>{m.title}</h3>
+            <p class="muted">{m.blurb}</p>
+            <p class="form-note">Opens a print-ready page &mdash; then Print or Save as PDF.</p>
+            <p><a class="btn btn-primary" href={m.href}>Open &amp; print</a></p>
+          </article>
+        ))}
+      </div>
+
+      <p class="form-note" style="margin-top: var(--space-3)">
+        Pre-made PDF copies may also be added under <code>/downloads/</code> for easy sharing &mdash;
+        check there if you&rsquo;d rather grab a finished file than print from the browser.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container container-narrow">
+      <div class="panel stack">
+        <h2>How to canvass door-to-door</h2>
+        <p class="muted">A friendly knock goes a long way. Here&rsquo;s the short version:</p>
+        <ol class="stack-tight">
+          <li><strong>Pack light.</strong> Bring the <a href="/print/signup-sheet">sign-up sheet</a> and a few <a href="/print/flyer">flyers</a> on a clipboard.</li>
+          <li><strong>Be friendly, keep it short.</strong> Introduce yourself, mention you live nearby, and invite &mdash; never pressure.</li>
+          <li><strong>Remember who&rsquo;s not online.</strong> Plenty of neighbours don&rsquo;t use social media &mdash; the paper sheet is how we reach them.</li>
+          <li><strong>Nobody home?</strong> Tuck a flyer by the door so they can join on their own time.</li>
+          <li><strong>Hand it in.</strong> Give your completed sheet to <strong>Ron</strong> and he&rsquo;ll add everyone to the list.</li>
+        </ol>
+        <p class="form-note">
+          The sign-up sheet already includes a consent line, so neighbours know they&rsquo;re
+          agreeing to occasional email &mdash; and can unsubscribe anytime.
+        </p>
+        <p>
+          Questions, or want a stack printed for you? Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .stack-tight > li + li { margin-top: var(--space-2); }
+</style>
