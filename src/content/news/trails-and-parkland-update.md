@@ -3,7 +3,7 @@ title: "Following the trails and parkland conversation"
 date: 2026-07-10
 category: Development
 summary: "As the Ridge fills in, questions about trail connections and neighbourhood green space are coming up. Here's what we're watching, and why it's worth paying attention now."
-author: "The Ridge group"
+author: "Our Ridge"
 ---
 
 One of the things people love most about living here is being able to step out the door and onto a trail. As the neighbourhood continues to build out, how those trails connect, to each other, to green space, and to the wider paths around South Courtenay, is a conversation worth having early, while things are still taking shape.

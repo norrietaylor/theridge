@@ -3,7 +3,7 @@
 // public URL used by QR codes and the calendar feed.
 
 export const SITE = {
-  name: 'The Ridge',
+  name: 'Our Ridge',
   // Short, friendly tagline used in the header and metadata.
   tagline: 'A neighbourhood on the ridge, South Courtenay, BC',
   // The live site URL, the community's own domain.

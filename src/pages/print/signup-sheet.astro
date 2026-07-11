@@ -1,5 +1,5 @@
 ---
-// Printable door-to-door sign-up sheet for The Ridge outreach kit.
+// Printable door-to-door sign-up sheet for the Our Ridge outreach kit.
 // Volunteers print this, knock on doors, and collect names on paper, the way
 // we reach neighbours who aren't online. Completed sheets go to Ron to add to
 // the mailing list.
@@ -16,7 +16,7 @@ const rows = Array.from({ length: 12 }, (_, i) => i + 1);
     <header class="sheet-head">
       <div class="head-text">
         <RidgeMark height={40} />
-        <h1>Join The Ridge &mdash; neighbour sign-up</h1>
+        <h1>Join Our Ridge &mdash; neighbour sign-up</h1>
         <p class="intro">
           We&rsquo;re neighbours getting to know each other and speaking up together with
           the City. Add your details and we&rsquo;ll send occasional news, events, and
@@ -29,7 +29,7 @@ const rows = Array.from({ length: 12 }, (_, i) => i + 1);
       </div>
 
       <div class="head-qr">
-        <QRCode value={`${SITE.url}/join?src=sheet`} size={112} label="Scan to join The Ridge mailing list online" />
+        <QRCode value={`${SITE.url}/join?src=sheet`} size={112} label="Scan to join Our Ridge's mailing list online" />
         <span>Prefer online? Scan to join at {SITE.displayUrl}/join</span>
       </div>
     </header>
