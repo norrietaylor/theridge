@@ -160,6 +160,7 @@ li { margin-bottom: 0.35rem; }
   border-radius: var(--radius-pill);
   background: rgba(124, 144, 130, 0.18);
   color: var(--c-cedar);
+  white-space: nowrap;
 }
 .status { display: inline-block; font-size: var(--fs-sm); font-weight: 600; padding: 0.15em 0.65em; border-radius: var(--radius-pill); }
 .status-active { background: #d8ead9; color: #23502c; }
