@@ -13,5 +13,23 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
+  },
+  // Workers observability (Logs + Traces). Note: these apply to Worker code
+  // invocations — for the current assets-only deploy there is no Worker to
+  // observe, so this takes effect once a Worker entry (`main`) is added (issue #4).
+  "observability": {
+    "enabled": false,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
   }
 }
