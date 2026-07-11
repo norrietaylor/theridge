@@ -1,9 +1,9 @@
 ---
-// The Ridge — original community wordmark.
-// A simple layered "ridge line" motif (three ridges + a low sun) beside the
-// wordmark. Purely inline SVG so it prints crisply and needs no image request.
+// The Ridge — community wordmark. A layered ridge-line motif + wordmark.
+// Themeable: the ink uses `currentColor` (so it follows the surrounding text
+// colour and the light/dark theme), and the sun uses the --c-fern token.
 // Props:
-//   variant: 'dark' (default, for light backgrounds) | 'light' (for dark backgrounds)
+//   variant: 'dark' (default — inherits the parent text colour) | 'light' (forced white, for dark backgrounds)
 //   showText: include the "THE RIDGE" wordmark (default true)
 //   height: pixel height of the lockup (default 40)
 interface Props {
@@ -13,27 +13,24 @@ interface Props {
   class?: string;
 }
 const { variant = 'dark', showText = true, height = 40, class: cls } = Astro.props;
-
-const ink = variant === 'light' ? '#ffffff' : '#2e4b36';
-const ridgeFar = variant === 'light' ? 'rgba(255,255,255,0.45)' : '#8fa9b8';
-const ridgeMid = variant === 'light' ? 'rgba(255,255,255,0.7)' : '#7c9082';
-const ridgeNear = variant === 'light' ? '#ffffff' : '#2e4b36';
-const sun = '#e0a458';
 const width = showText ? Math.round(height * 4.6) : height;
+const forceWhite = variant === 'light';
 ---
-
-<span class:list={['ridge-mark', cls]} style={`display:inline-flex;align-items:center;height:${height}px`} aria-hidden="true">
+<span
+  class:list={['ridge-mark', cls]}
+  style={`display:inline-flex;align-items:center;height:${height}px${forceWhite ? ';color:#fff' : ''}`}
+  aria-hidden="true"
+>
   <svg width={width} height={height} viewBox={showText ? '0 0 230 50' : '0 0 50 50'} fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
-    <!-- icon: circular badge with a low sun and three overlapping ridges -->
-    <circle cx="25" cy="25" r="24" fill="none" stroke={ink} stroke-width="1.5" opacity="0.35" />
-    <circle cx="25" cy="21" r="6" fill={sun} />
-    <path d="M2 40 L15 26 L24 34 L34 22 L48 40 Z" fill={ridgeFar} opacity="0.8" />
-    <path d="M2 42 L13 31 L22 38 L33 28 L48 42 Z" fill={ridgeMid} opacity="0.9" />
-    <path d="M1 45 L12 36 L21 42 L32 34 L49 45 L49 49 L1 49 Z" fill={ridgeNear} />
+    <circle cx="25" cy="25" r="24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.32" />
+    <circle cx="25" cy="21" r="6" fill="var(--c-fern, #e0a458)" />
+    <path d="M2 40 L15 26 L24 34 L34 22 L48 40 Z" fill="currentColor" opacity="0.4" />
+    <path d="M2 42 L13 31 L22 38 L33 28 L48 42 Z" fill="currentColor" opacity="0.65" />
+    <path d="M1 45 L12 36 L21 42 L32 34 L49 45 L49 49 L1 49 Z" fill="currentColor" />
     {showText && (
       <g>
-        <text x="60" y="26" font-family="'Fraunces Variable', Fraunces, Georgia, serif" font-size="17" font-weight="600" letter-spacing="0.14em" fill={ink}>THE</text>
-        <text x="60" y="44" font-family="'Fraunces Variable', Fraunces, Georgia, serif" font-size="20" font-weight="600" letter-spacing="0.04em" fill={ink}>RIDGE</text>
+        <text x="60" y="26" font-family="var(--font-heading)" font-size="17" font-weight="600" letter-spacing="0.14em" fill="currentColor">THE</text>
+        <text x="60" y="44" font-family="var(--font-heading)" font-size="20" font-weight="600" letter-spacing="0.04em" fill="currentColor">RIDGE</text>
       </g>
     )}
   </svg>
