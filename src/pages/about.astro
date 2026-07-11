@@ -21,6 +21,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
+  <!-- Vista -->
+  <section class="section-sm">
+    <div class="container">
+      <figure class="about-photo">
+        <img
+          src="/img/ridge-mountains.jpg"
+          width="1800"
+          height="1350"
+          alt="Snow-capped Comox Valley mountains and autumn colour beyond the forest, seen from the Ridge."
+          loading="lazy"
+        />
+        <figcaption>Looking out from the Ridge toward the mountains beyond the Comox Valley.</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- Story / island identity -->
   <section class="section-sm">
     <div class="container container-narrow prose">
@@ -131,6 +147,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  .about-photo { margin: 0; }
+  .about-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    display: block;
+  }
+  .about-photo figcaption {
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    margin-top: var(--space-2);
+  }
   .map-placeholder {
     display: flex;
     align-items: center;
