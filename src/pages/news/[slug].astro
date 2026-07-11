@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { formatLong } from '../../lib/dates';
+
+export async function getStaticPaths() {
+  const items = await getCollection('news');
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+---
+<BaseLayout title={data.title} description={data.summary}>
+  <section class="section">
+    <div class="container container-narrow">
+      <p class="back"><a href="/news">← All news</a></p>
+
+      <article class="stack">
+        <header class="article-head">
+          <div class="article-meta">
+            <span class="tag">{data.category}</span>
+            <time class="muted" datetime={data.date.toISOString()}>{formatLong(data.date)}</time>
+          </div>
+          <h1>{data.title}</h1>
+          {data.author && <p class="byline muted">By {data.author}</p>}
+          {data.summary && <p class="lead">{data.summary}</p>}
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <div class="panel signup-cta stack">
+        <h2>Get these updates by email</h2>
+        <p class="muted">Join the neighbours' list for a friendly note now and then — events, walks, and issues before the City while there's still time to weigh in.</p>
+        <p><a class="btn btn-primary" href="/join">Join the list</a></p>
+      </div>
+
+      <p class="back back-bottom"><a href="/news">← Back to all news</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .back { font-weight: 600; font-size: var(--fs-sm); margin-bottom: var(--space-3); }
+  .back-bottom { margin-top: var(--space-4); }
+  .article-head { margin-bottom: var(--space-2); }
+  .article-meta { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-2); }
+  .article-head h1 { margin-bottom: var(--space-1); }
+  .byline { margin: 0 0 var(--space-2); font-size: var(--fs-sm); }
+  .signup-cta { margin-top: var(--space-5); }
+  .signup-cta h2 { margin-bottom: 0; }
+</style>

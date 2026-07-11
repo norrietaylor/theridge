@@ -1,0 +1,25 @@
+---
+// Build-time QR code -> inline SVG. No runtime JS, prints crisp at any size.
+import QRCode from 'qrcode';
+
+interface Props {
+  /** The URL or text the QR should encode. */
+  value: string;
+  /** Rendered size in px (the SVG scales to this). */
+  size?: number;
+  class?: string;
+  /** Accessible label; defaults to a generic description. */
+  label?: string;
+}
+const { value, size = 160, class: cls, label = 'QR code' } = Astro.props;
+
+const svg = await QRCode.toString(value, {
+  type: 'svg',
+  margin: 1,
+  color: { dark: '#2b2a26', light: '#00000000' },
+  errorCorrectionLevel: 'M',
+});
+// Strip the fixed width/height so CSS controls the size.
+const sized = svg.replace(/<svg /, '<svg width="100%" height="100%" ');
+---
+<span class:list={['qr', cls]} style={`display:inline-block;width:${size}px;height:${size}px`} role="img" aria-label={label} set:html={sized} />
