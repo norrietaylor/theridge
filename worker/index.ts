@@ -159,7 +159,7 @@ async function handleSubscribe(request: Request, env: Env): Promise<Response> {
 }
 
 const CONTACT = (f: Fields) => ({
-  subject: `Contact form: ${str(f, 'topic') || 'General'} — The Ridge`,
+  subject: `Contact form: ${str(f, 'topic') || 'General'}, The Ridge`,
   text: [
     'New message via ourridge.ca/contact',
     '',
@@ -173,7 +173,7 @@ const CONTACT = (f: Fields) => ({
 });
 
 const VOLUNTEER = (f: Fields) => ({
-  subject: 'New volunteer sign-up — The Ridge',
+  subject: 'New volunteer sign-up, The Ridge',
   text: [
     'Someone would like to help out (via ourridge.ca/get-involved)',
     '',
@@ -185,7 +185,7 @@ const VOLUNTEER = (f: Fields) => ({
 });
 
 const RSVP = (f: Fields) => ({
-  subject: `RSVP: ${str(f, 'event') || 'event'} — The Ridge`,
+  subject: `RSVP: ${str(f, 'event') || 'event'}, The Ridge`,
   text: [
     `RSVP via ourridge.ca for: ${str(f, 'event')}`,
     '',

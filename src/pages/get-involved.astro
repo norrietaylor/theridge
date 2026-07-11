@@ -1,5 +1,5 @@
 ---
-// Get Involved — volunteer roles, a sign-up form that posts to /api/volunteer
+// Get Involved, volunteer roles, a sign-up form that posts to /api/volunteer
 // (with the same email fallback + honeypot pattern as Contact), and a warm
 // welcome for new residents.
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -33,7 +33,7 @@ const roles = [
 ---
 <BaseLayout
   title="Get Involved"
-  description="Roll up your sleeves on The Ridge — volunteer roles, a quick sign-up, and a warm welcome for new residents."
+  description="Roll up your sleeves on The Ridge, volunteer roles, a quick sign-up, and a warm welcome for new residents."
 >
   <section class="section">
     <div class="container container-narrow">
@@ -41,7 +41,7 @@ const roles = [
       <h1>Lend a hand on the Ridge</h1>
       <p class="lead">
         This whole thing runs on neighbours giving a little time. There's no
-        commitment too small — pick what suits you, and we'll take it from there.
+        commitment too small, pick what suits you, and we'll take it from there.
       </p>
     </div>
   </section>
@@ -59,7 +59,7 @@ const roles = [
         ))}
       </div>
       <p class="form-note" style="margin-top:var(--space-3)">
-        Not sure where you'd fit? That's fine — sign up below and we'll find a good match together.
+        Not sure where you'd fit? That's fine, sign up below and we'll find a good match together.
       </p>
     </div>
   </section>
@@ -76,7 +76,7 @@ const roles = [
         </p>
       </div>
 
-      <form class="volunteer-form" data-endpoint="/api/volunteer" data-mailto data-to={SITE.email} data-subject="I'd like to help out on The Ridge" data-success="Thanks for putting your name down — we’ll be in touch about how you can help.">
+      <form class="volunteer-form" data-endpoint="/api/volunteer" data-mailto data-to={SITE.email} data-subject="I'd like to help out on The Ridge" data-success="Thanks for putting your name down, we’ll be in touch about how you can help.">
         <div class="visually-hidden" aria-hidden="true">
           <label for="v-company">Company (leave this blank)</label>
           <input id="v-company" name="company" type="text" tabindex="-1" autocomplete="off" />
@@ -119,7 +119,7 @@ const roles = [
     <div class="container container-narrow prose">
       <h2>Welcome, new residents</h2>
       <p>
-        Just moved to the Ridge? Welcome — we're glad you're here. The quickest
+        Just moved to the Ridge? Welcome, we're glad you're here. The quickest
         way to settle in is to get out on the trails, say hello, and join a walk
         or ride. <a href="/join">Add your name to the list</a> and you'll hear
         about everything coming up.

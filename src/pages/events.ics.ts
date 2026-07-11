@@ -31,7 +31,7 @@ function esc(value: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  // Only confirmed events belong in a calendar people subscribe to — leave out
+  // Only confirmed events belong in a calendar people subscribe to, leave out
   // drafts and suggested/example events.
   const events = (await getCollection('events', ({ data }) => !data.draft && !data.example)).sort(
     (a, b) => a.data.start.getTime() - b.data.start.getTime(),
@@ -43,7 +43,7 @@ export const GET: APIRoute = async () => {
     'PRODID:-//The Ridge//Community Events//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    `X-WR-CALNAME:${esc(`${SITE.name} — Events`)}`,
+    `X-WR-CALNAME:${esc(`${SITE.name} Events`)}`,
   ];
 
   for (const entry of events) {
@@ -51,7 +51,7 @@ export const GET: APIRoute = async () => {
     // DTEND is exclusive for all-day events, so the day after the final day.
     const dtStart = ymd(start);
     const dtEnd = ymd(addDays(end ?? start, 1));
-    const description = time ? `${time} — ${summary}` : summary;
+    const description = time ? `${time}, ${summary}` : summary;
 
     lines.push(
       'BEGIN:VEVENT',
