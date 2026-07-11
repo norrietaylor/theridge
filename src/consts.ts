@@ -34,6 +34,7 @@ export const NAV: { label: string; href: string }[] = [
   { label: 'About', href: '/about' },
   { label: 'Events', href: '/events' },
   { label: 'Community', href: '/community' },
+  { label: 'Photos', href: '/gallery' },
   { label: 'News', href: '/news' },
   { label: 'Voice to the City', href: '/voice' },
   { label: 'Get Involved', href: '/get-involved' },

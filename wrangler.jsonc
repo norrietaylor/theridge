@@ -22,8 +22,24 @@
   // MAILERLITE_API_KEY, TURNSTILE_SECRET_KEY) are set as Worker secrets under
   // Settings -> Variables and Secrets (runtime), never as build variables.
   "vars": {
-    "CONTACT_TO": "hello@ourridge.ca"
+    "CONTACT_TO": "hello@ourridge.ca",
+    // CMS gateway: non-secret repo coordinates (public info). The secrets
+    // (GH_APP_PRIVATE_KEY, GH_APP_ID, GH_APP_INSTALLATION_ID, CF_ACCESS_AUD,
+    // CF_ACCESS_TEAM_DOMAIN) are set under Settings -> Variables and Secrets
+    // (runtime), never as build variables. See docs/cms-setup.md.
+    "GH_OWNER": "norrietaylor",
+    "GH_REPO": "theridge",
+    "GH_BRANCH": "main"
   },
+  // R2 bucket for CMS media (uploaded photos). Binaries live here; content
+  // metadata stays in git. Create the bucket once: `wrangler r2 bucket create
+  // theridge-media` (requires R2 enabled on the account). Served at /media/*.
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "theridge-media"
+    }
+  ],
   // Workers observability (Logs + Traces) for the Worker's /api/* invocations.
   "observability": {
     "enabled": false,

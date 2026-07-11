@@ -55,6 +55,8 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
               location={entry.data.location}
               summary={entry.data.summary}
               example={entry.data.example}
+              image={entry.data.image}
+              imageAlt={entry.data.imageAlt}
             />
           ))}
         </div>
@@ -116,6 +118,8 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
               date={entry.data.date}
               category={entry.data.category}
               summary={entry.data.summary}
+              image={entry.data.image}
+              imageAlt={entry.data.imageAlt}
             />
           ))}
         </div>

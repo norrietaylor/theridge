@@ -1,0 +1,194 @@
+---
+import { SITE } from '../consts';
+import Turnstile from './Turnstile.astro';
+// Resident photo submission. The photo is downscaled in the browser (canvas,
+// longest edge ≤ 2000px, re-encoded JPEG q0.85, which also strips EXIF/GPS)
+// then POSTed as multipart/form-data to the Worker's /api/photo-submit, along
+// with the Turnstile token. Submissions land in a moderation queue and are
+// reviewed before they appear in the gallery. This form does NOT use the
+// global data-mailto enhancer, it has its own submit handler below.
+---
+<form class="photo-form" data-email={SITE.email}>
+  <div class="visually-hidden" aria-hidden="true">
+    <label for="photo-company">Company (leave blank)</label>
+    <input id="photo-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="field">
+    <label for="photo-file">Your photo</label>
+    <input id="photo-file" name="photo" type="file" accept="image/jpeg,image/png,image/webp" required />
+    <p class="form-note">JPEG, PNG or WebP. Large photos are resized automatically before sending.</p>
+  </div>
+
+  <div class="field">
+    <label for="photo-caption">Caption <span class="muted">(optional)</span></label>
+    <input id="photo-caption" name="caption" type="text" placeholder="What's in the photo, or where it was taken" />
+  </div>
+
+  <div class="field">
+    <label for="photo-credit">Your name <span class="muted">(shown as the photo credit)</span></label>
+    <input id="photo-credit" name="credit" type="text" autocomplete="name" />
+  </div>
+
+  <div class="field">
+    <label for="photo-email">Email <span class="muted">(optional, in case we need to check with you)</span></label>
+    <input id="photo-email" name="email" type="email" autocomplete="email" />
+  </div>
+
+  <Turnstile />
+
+  <p class="form-note">
+    Please only share photos you took yourself or have permission to share. Every
+    photo is reviewed before it appears in the gallery.
+  </p>
+
+  <button type="submit" class="btn btn-primary">Share photo</button>
+</form>
+
+<script>
+  const MAX_EDGE = 2000;
+  const JPEG_QUALITY = 0.85;
+
+  function loadImage(file) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('decode failed')); };
+      img.src = url;
+    });
+  }
+
+  // Downscale to a max longest-edge and re-encode as JPEG. Returns the original
+  // file if anything goes wrong so a submit is never blocked by the resize step.
+  async function downscale(file) {
+    if (!file || !/^image\//.test(file.type) || typeof document.createElement('canvas').toBlob !== 'function') {
+      return file;
+    }
+    try {
+      const img = await loadImage(file);
+      const w = img.naturalWidth || img.width;
+      const h = img.naturalHeight || img.height;
+      if (!w || !h) return file;
+      const scale = Math.min(1, MAX_EDGE / Math.max(w, h));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(w * scale);
+      canvas.height = Math.round(h * scale);
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return file;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const blob = await new Promise((res) => canvas.toBlob(res, 'image/jpeg', JPEG_QUALITY));
+      return blob || file;
+    } catch {
+      return file;
+    }
+  }
+
+  function statusEl(form) {
+    let s = form.querySelector('[data-form-status]');
+    if (!s) {
+      s = document.createElement('p');
+      s.setAttribute('data-form-status', '');
+      s.setAttribute('role', 'status');
+      s.setAttribute('aria-live', 'polite');
+      form.appendChild(s);
+    }
+    return s;
+  }
+  function setStatus(form, msg, kind) {
+    const s = statusEl(form);
+    s.textContent = msg;
+    s.className = '';
+    s.classList.add(kind === 'error' ? 'is-error' : kind === 'success' ? 'is-success' : 'is-info');
+  }
+  function succeed(form, msg) {
+    const s = statusEl(form);
+    Array.from(form.children).forEach((c) => { if (c !== s) c.style.display = 'none'; });
+    setStatus(form, msg, 'success');
+  }
+  function resetTurnstile() {
+    try { window.turnstile && window.turnstile.reset(); } catch {}
+  }
+  function showEmailFallback(form) {
+    const s = statusEl(form);
+    const email = form.getAttribute('data-email') || '';
+    const mailto = 'mailto:' + email + '?subject=' + encodeURIComponent('Photo for The Ridge gallery') +
+      '&body=' + encodeURIComponent('Hi,\n\nHere is a photo for the community gallery (please attach it to this email).\n\nCaption:\nName for the credit:\n');
+    s.className = '';
+    s.classList.add('is-info');
+    s.innerHTML = 'Photo uploads aren’t switched on just yet. Please email your photo to ' +
+      '<a href="' + mailto + '">' + email + '</a> and we’ll add it.';
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const fileInput = form.querySelector('input[type="file"]');
+    const file = fileInput && fileInput.files && fileInput.files[0];
+    if (!file) { setStatus(form, 'Please choose a photo to share.', 'error'); return; }
+
+    const btn = form.querySelector('button[type="submit"]');
+    const prev = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    setStatus(form, 'Preparing your photo…', 'info');
+
+    try {
+      const image = await downscale(file);
+      const fd = new FormData(form);
+      if (image !== file) {
+        const base = (file.name || 'photo').replace(/\.[^.]+$/, '');
+        fd.set('photo', image, base + '.jpg');
+      }
+      // The visible "your name" field is both the public credit and how the
+      // reviewer knows who sent it, so populate both fields the endpoint reads.
+      const credit = fd.get('credit');
+      if (credit && !fd.get('name')) fd.set('name', credit);
+
+      setStatus(form, 'Sending…', 'info');
+      const res = await fetch('/api/photo-submit', {
+        method: 'POST',
+        body: fd,
+        headers: { Accept: 'application/json' },
+      });
+      let data = {};
+      try { data = await res.json(); } catch {}
+
+      if (res.ok && data.ok) {
+        succeed(form, 'Thanks, we’ve got it! We’ll review it and add it to the gallery soon.');
+        return;
+      }
+      if (res.status === 503 || data.reason === 'not-configured') {
+        showEmailFallback(form);
+        return;
+      }
+      if (data.reason === 'captcha') {
+        setStatus(form, 'Please complete the “I’m human” check and try again.', 'error');
+      } else {
+        setStatus(form, 'Sorry, we couldn’t accept that photo. Please try another image.', 'error');
+      }
+      resetTurnstile();
+    } catch {
+      showEmailFallback(form);
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = prev; }
+    }
+  }
+
+  function init() {
+    document.querySelectorAll('form.photo-form').forEach((form) => {
+      if (form.dataset.photoInit) return;
+      form.dataset.photoInit = '1';
+      form.addEventListener('submit', onSubmit);
+    });
+  }
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>
+
+<style>
+  .photo-form input[type="file"] {
+    padding: 0.55em 0.6em;
+    background: var(--c-cream);
+  }
+  .photo-form .btn { margin-top: var(--space-1); }
+</style>

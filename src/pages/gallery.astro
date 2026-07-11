@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Published gallery photos, ordered by the editors' `order`, then newest first.
+// Binaries live in R2 (served at /media/...); each entry is a small Markdown
+// file so the gallery stays versioned in git.
+const photos = (await getCollection('gallery', ({ data }) => !data.draft)).sort((a, b) => {
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+  return b.data.date.getTime() - a.data.date.getTime();
+});
+---
+<BaseLayout
+  title="Photos"
+  description="A community photo gallery from The Ridge in South Courtenay, BC, shared by neighbours."
+>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Community photos</p>
+      <h1>The Ridge, through our eyes</h1>
+      <p class="lead prose">
+        Sunsets over the mountains, dogs on the trail, gardens in bloom, our
+        corner of South Courtenay as neighbours see it. Got a good one? We'd
+        love to add it.
+      </p>
+      <p style="margin-top: var(--space-3);">
+        <a class="btn btn-primary" href="/submit-photo">Share a photo</a>
+      </p>
+
+      {photos.length === 0 ? (
+        <div class="panel gallery-empty" style="margin-top: var(--space-4);">
+          <p style="margin-bottom: var(--space-2);">No photos yet, be the first to share one.</p>
+          <a class="btn btn-secondary" href="/submit-photo">Share a photo</a>
+        </div>
+      ) : (
+        <div class="gallery-grid" style="margin-top: var(--space-4);">
+          {photos.map((photo) => (
+            <figure class="gphoto">
+              <img
+                src={photo.data.image}
+                alt={photo.data.alt || photo.data.caption || ''}
+                loading="lazy"
+              />
+              {(photo.data.caption || photo.data.credit) && (
+                <figcaption>
+                  {photo.data.caption && <span class="gcap">{photo.data.caption}</span>}
+                  {photo.data.credit && <span class="gcredit">Photo: {photo.data.credit}</span>}
+                </figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .gallery-empty {
+    text-align: center;
+    border-style: dashed;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-3);
+  }
+  .gphoto {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+  }
+  .gphoto img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .gphoto figcaption {
+    padding: var(--space-2);
+    font-size: var(--fs-sm);
+  }
+  .gcap { display: block; }
+  .gcredit { display: block; color: var(--text-muted); margin-top: 0.2rem; }
+</style>
