@@ -23,7 +23,7 @@ export function formatShort(d: Date): string {
   return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 }
 
-/** e.g. "July 2026" — used to group events by month */
+/** e.g. "July 2026", used to group events by month */
 export function monthYear(d: Date): string {
   return `${MONTHS_LONG[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
