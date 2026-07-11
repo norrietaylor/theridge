@@ -40,7 +40,7 @@ export const GET: APIRoute = async () => {
   const lines: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//The Ridge//Community Events//EN',
+    'PRODID:-//Our Ridge//Community Events//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     `X-WR-CALNAME:${esc(`${SITE.name} Events`)}`,
