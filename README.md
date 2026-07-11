@@ -17,7 +17,7 @@ neighbourhood.
 
 ## Tech at a glance
 
-- **[Astro 5](https://astro.build/)**, static site generator, plain CSS, no
+- **[Astro 7](https://astro.build/)**, static site generator, plain CSS, no
   heavy framework.
 - **Static output**, deployed to **[Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/)** with static assets.
 - A small **Cloudflare Worker** (`worker/index.ts`) serves the site and powers the
@@ -31,7 +31,7 @@ You don't need a database or a server, the whole site is files.
 
 ## Run it locally
 
-You'll need [Node.js](https://nodejs.org/) 18 or newer.
+You'll need [Node.js](https://nodejs.org/) **22.12 or newer** (Astro 7 requires it).
 
 ```bash
 npm install     # install dependencies (first time only)
@@ -133,19 +133,23 @@ Secrets live only in the environment, never commit them. Local secrets go in a
 
 ## Deploy to Cloudflare
 
-The site deploys to **Cloudflare Workers** with static assets. Config lives in
-`wrangler.jsonc` (`npm run build` → `dist/`, uploaded by `npx wrangler deploy`).
+The site runs on **Cloudflare Workers** with static assets. Config lives in
+`wrangler.jsonc` (`npm run build` → `dist/`).
 
-1. Connect this repository in the Cloudflare dashboard (**Workers & Pages →
-   Create → import the repo**), or run `npx wrangler deploy` from a checkout.
-2. Build command `npm run build`, deploy command `npx wrangler deploy`, and set
-   `NODE_VERSION` to `20` (or `22`).
-3. Add the secrets above (when you're ready to enable forms/newsletter).
-4. Every push to the main branch builds and deploys; the Worker serves both the
-   static pages and the `/api/*` endpoints.
+Deploys are **automatic**: the repository is connected to **Cloudflare Workers
+Builds**, so every push to `main` builds the site and deploys the Worker, which
+serves both the static pages and the `/api/*` endpoints. Pull requests get
+preview URLs.
 
-Once a custom domain is registered, update `SITE.url` / `SITE.displayUrl` in
-`src/consts.ts` and `site` in `astro.config.mjs`.
+- **Build command:** `npm run build` &nbsp;•&nbsp; **output directory:** `dist`
+- **`NODE_VERSION` build variable:** set to `22`. Astro 7 requires Node
+  ≥ 22.12; an older value (e.g. `20`) will fail the build.
+- **Manual deploy** from a local checkout, if ever needed: `npx wrangler deploy`.
+- Add the secrets above when you're ready to enable forms/newsletter.
+
+The live site is **ourridge.ca**, set once in `SITE.url` / `SITE.displayUrl`
+(`src/consts.ts`) and `site` (`astro.config.mjs`). Update those two places if the
+domain ever changes.
 
 ---
 
