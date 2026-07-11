@@ -1,0 +1,62 @@
+/*
+  Design tokens for The Ridge — "natural & warm".
+  Change a value here and it updates everywhere. All text/background pairings
+  below are chosen to meet WCAG AA contrast for their intended use.
+*/
+:root {
+  /* ---- Brand palette ---- */
+  --c-forest: #2e4b36;      /* primary — headers, primary buttons, footer */
+  --c-cedar: #1f3325;       /* primary dark — hover/pressed, deep text */
+  --c-sage: #7c9082;        /* secondary accent — borders, tags, motifs */
+  --c-clay: #c4703a;        /* warm accent — CTAs, links */
+  --c-clay-dark: #a85c2b;   /* warm accent, pressed state */
+  --c-fern: #e0a458;        /* soft highlight — date chips */
+  --c-mist: #8fa9b8;        /* cool accent — ocean/mountain motifs, info */
+  --c-paper: #f7f3ec;       /* page background */
+  --c-cream: #fffdf8;       /* card surface */
+  --c-bark: #2b2a26;        /* body text */
+  --c-stone: #5c574e;       /* muted / secondary text */
+  --c-line: #e3dcce;        /* hairline borders on paper */
+
+  /* Accessible link/CTA text tone (darker clay) for text on light backgrounds */
+  --c-clay-ink: #9c5324;
+
+  /* ---- Semantic roles ---- */
+  --bg: var(--c-paper);
+  --surface: var(--c-cream);
+  --text: var(--c-bark);
+  --text-muted: var(--c-stone);
+  --heading: var(--c-forest);
+  --link: var(--c-clay-ink);
+  --border: var(--c-line);
+  --brand: var(--c-forest);
+
+  /* ---- Typography ---- */
+  --font-heading: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-base: 1.125rem;      /* 18px */
+  --fs-sm: 0.9375rem;       /* 15px */
+  --fs-lg: 1.375rem;        /* 22px */
+  --fs-xl: 1.75rem;
+  --fs-2xl: 2.25rem;
+  --fs-3xl: clamp(2.5rem, 5vw, 3.5rem);
+  --lh-body: 1.6;
+  --lh-tight: 1.15;
+  --measure: 65ch;
+
+  /* ---- Space & shape ---- */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --shadow: 0 1px 2px rgba(43, 42, 38, 0.06), 0 8px 24px rgba(43, 42, 38, 0.08);
+  --shadow-sm: 0 1px 3px rgba(43, 42, 38, 0.1);
+  --container: 1120px;
+  --container-narrow: 760px;
+}
