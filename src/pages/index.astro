@@ -61,8 +61,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
       ) : (
         <div class="card card--pad-lg">
           <p class="muted" style="margin:0">
-            Nothing on the calendar just yet, check back soon, or
-            <a href="/join">add your name to the list</a> and we'll let you know
+            Nothing on the calendar just yet, check back soon, or <a href="/join">add your name to the list</a> and we'll let you know
             the moment something's planned.
           </p>
         </div>
@@ -151,15 +150,24 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
     <div class="container">
       <SignupForm variant="panel" source="home" />
       <p class="form-note" style="margin-top:var(--space-2)">
-        Not online much, or want to sign up a neighbour? Grab the
-        <a href="/outreach">printable outreach kit</a>, a paper sign-up sheet and flyer you can hand out door to door.
+        Not online much, or want to sign up a neighbour? Grab the <a href="/outreach">printable outreach kit</a>, a paper sign-up sheet and flyer you can hand out door to door.
       </p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .hero { text-align: left; }
+  .hero {
+    text-align: left;
+    min-height: 460px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-6) var(--space-5);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--c-forest) 46%, transparent), color-mix(in srgb, var(--c-forest) 84%, transparent)),
+      url('/img/ridge-sunset.jpg') center 58% / cover no-repeat;
+  }
   .hero-mark { margin-bottom: var(--space-3); }
   .hero h1 { max-width: 20ch; margin-bottom: var(--space-2); }
   .hero-lead { font-size: var(--fs-lg); max-width: 54ch; color: #eef0e7; margin-bottom: var(--space-3); }
