@@ -7,6 +7,7 @@ summary: "A couple of hours of light litter-picking and trail care to keep our s
 coordinator: "volunteer needed"
 bring: "Work gloves and sturdy shoes. Bags, grabbers, and a few extra gloves will be provided."
 rsvp: true
+example: true
 ---
 
 The trails and parkland are one of the best things about living on the ridge, and it only takes a little regular care to keep them that way. Join neighbours for a friendly morning of litter-picking, clearing overgrown edges, and tidying the paths we all share.

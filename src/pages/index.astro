@@ -54,6 +54,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
               time={entry.data.time}
               location={entry.data.location}
               summary={entry.data.summary}
+              example={entry.data.example}
             />
           ))}
         </div>
@@ -65,6 +66,11 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
             the moment something's planned.
           </p>
         </div>
+      )}
+      {upcomingEvents.some((entry) => entry.data.example) && (
+        <p class="form-note" style="margin-top: var(--space-2);">
+          These are early ideas to get us started — nothing's locked in yet. See one you'd come to? <a href="/contact">Tell us.</a>
+        </p>
       )}
       <p class="more-link"><a href="/events">See all events →</a></p>
     </div>
