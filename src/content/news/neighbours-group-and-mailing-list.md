@@ -1,6 +1,6 @@
 ---
 title: "Introducing the neighbours' group, and a mailing list to match"
-date: 2026-06-10
+date: 2026-07-09
 category: Announcement
 summary: "We've started a simple, open group for everyone who lives on the Ridge, plus a friendly email list so no one misses a walk, an event, or an issue before the City."
 author: "The Ridge group"

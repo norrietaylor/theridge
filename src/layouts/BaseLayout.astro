@@ -19,7 +19,10 @@ const {
 
 const pageTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} · ${SITE.tagline}`;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
-const ogImage = image ? new URL(image, SITE.url).href : undefined;
+// Social share image: use the page's own if given, otherwise the branded
+// default card, so a shared link always shows a preview tile (1200x630).
+const ogImage = new URL(image ?? '/img/og-default.jpg', SITE.url).href;
+const ogImageAlt = `${SITE.name}, a neighbourhood in South Courtenay, BC`;
 const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 <!doctype html>
@@ -55,8 +58,15 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     {turnstileKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
   </head>
   <body>
