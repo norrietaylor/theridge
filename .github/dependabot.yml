@@ -14,6 +14,11 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    ignore:
+      # Skip automatic major-version bumps (e.g. Astro 5 -> 7 broke the build);
+      # do majors manually after testing.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   # Keep GitHub Actions versions current.
   - package-ecosystem: "github-actions"
     directory: "/"
