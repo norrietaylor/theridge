@@ -27,6 +27,24 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      /* Apply the saved theme + light/dark mode before paint (no flash). */
+      (function () {
+        try {
+          var r = document.documentElement;
+          var t = localStorage.getItem('ridge-theme');
+          var m = localStorage.getItem('ridge-mode');
+          r.dataset.theme = t === 'coastal' || t === 'modern' || t === 'editorial' ? t : 'natural';
+          if (m !== 'light' && m !== 'dark') {
+            m = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          r.dataset.mode = m;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'natural';
+          document.documentElement.dataset.mode = 'light';
+        }
+      })();
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

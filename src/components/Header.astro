@@ -1,5 +1,6 @@
 ---
 import RidgeMark from './RidgeMark.astro';
+import ThemePicker from './ThemePicker.astro';
 import { NAV, HEADER_CTA } from '../consts';
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(href + '/'));
@@ -11,20 +12,25 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path === href
     </a>
 
     <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-    <label for="nav-toggle" class="nav-burger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </label>
 
-    <nav class="site-nav" aria-label="Primary">
-      <ul>
-        {NAV.map((item) => (
-          <li>
-            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
-          </li>
-        ))}
-        <li class="nav-cta"><a href={HEADER_CTA.href} class="btn btn-primary">{HEADER_CTA.label}</a></li>
-      </ul>
-    </nav>
+    <div class="header-right">
+      <nav class="site-nav" aria-label="Primary">
+        <ul>
+          {NAV.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+            </li>
+          ))}
+          <li class="nav-cta"><a href={HEADER_CTA.href} class="btn btn-primary">{HEADER_CTA.label}</a></li>
+        </ul>
+      </nav>
+
+      <ThemePicker />
+
+      <label for="nav-toggle" class="nav-burger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </label>
+    </div>
   </div>
 </header>
 
@@ -33,7 +39,8 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path === href
     position: sticky;
     top: 0;
     z-index: 40;
-    background: rgba(247, 243, 236, 0.92);
+    background: var(--c-paper);
+    background: color-mix(in srgb, var(--c-paper) 90%, transparent);
     backdrop-filter: saturate(1.1) blur(6px);
     border-bottom: 1px solid var(--border);
   }
@@ -44,7 +51,8 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path === href
     gap: var(--space-3);
     min-height: 68px;
   }
-  .brand { display: inline-flex; text-decoration: none; }
+  .brand { display: inline-flex; text-decoration: none; color: var(--heading); }
+  .header-right { display: flex; align-items: center; gap: var(--space-3); }
   .site-nav ul {
     list-style: none;
     display: flex;
@@ -77,7 +85,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path === href
     .nav-burger span {
       height: 2.5px;
       width: 24px;
-      background: var(--c-forest);
+      background: var(--heading);
       border-radius: 2px;
       margin-inline: auto;
     }
@@ -92,7 +100,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path === href
       padding: var(--space-2) var(--space-3) var(--space-3);
     }
     .site-nav ul { flex-direction: column; align-items: stretch; gap: var(--space-2); }
-    .nav-toggle:checked ~ .site-nav { display: block; }
+    .nav-toggle:checked ~ .header-right .site-nav { display: block; }
     .nav-cta a { display: inline-block; }
   }
 </style>
