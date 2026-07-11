@@ -190,6 +190,10 @@ li { margin-bottom: 0.35rem; }
 }
 textarea { min-height: 7rem; resize: vertical; }
 .form-note { font-size: var(--fs-sm); color: var(--text-muted); }
+[data-form-status] { margin-top: var(--space-2); font-weight: 600; }
+[data-form-status].is-success { color: var(--c-forest); }
+[data-form-status].is-error { color: var(--c-clay-ink); }
+[data-form-status].is-info { color: var(--text-muted); }
 
 /* ---------- Accessibility ---------- */
 :focus-visible { outline: 3px solid var(--c-clay); outline-offset: 2px; }

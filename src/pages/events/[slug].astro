@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { formatLong } from '../../lib/dates';
 import { SITE } from '../../consts';
-import MailtoForm from '../../components/MailtoForm.astro';
+import Turnstile from '../../components/Turnstile.astro';
 
 export async function getStaticPaths() {
   const items = await getCollection('events');
@@ -68,7 +68,12 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
           <p class="muted">
             A quick RSVP helps us plan numbers — but no pressure, drop-ins are always welcome.
           </p>
-          <form class="rsvp-form" data-mailto data-to={SITE.email} data-subject={`RSVP: ${title}`}>
+          <form class="rsvp-form" data-endpoint="/api/rsvp" data-mailto data-to={SITE.email} data-subject={`RSVP: ${title}`} data-success="You’re on the list — thanks! See you there.">
+            <input type="hidden" name="event" value={title} />
+            <div class="visually-hidden" aria-hidden="true">
+              <label for="rsvp-company">Company (leave blank)</label>
+              <input id="rsvp-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+            </div>
             <div class="field">
               <label for="rsvp-name">Your name</label>
               <input id="rsvp-name" name="name" type="text" required autocomplete="name" />
@@ -86,10 +91,10 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
               <textarea id="rsvp-note" name="note"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Compose RSVP email</button>
+            <Turnstile />
+            <button type="submit" class="btn btn-primary">Send RSVP</button>
             <p class="form-note" style="margin-top: var(--space-2);">
-              This opens a pre-filled RSVP in your email app (one-click RSVPs are
-              coming soon). No email app? Write to <a href={rsvpMailto}>{SITE.email}</a>.
+              Prefer email? Send your RSVP to <a href={rsvpMailto}>{SITE.email}</a>.
             </p>
           </form>
         </div>
@@ -107,8 +112,6 @@ const interestMailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`I'd c
       )}
     </div>
   </section>
-
-  <MailtoForm />
 </BaseLayout>
 
 <style>
