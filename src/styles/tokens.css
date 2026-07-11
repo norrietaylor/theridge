@@ -1,27 +1,38 @@
 /*
-  Design tokens for The Ridge — "natural & warm".
-  Change a value here and it updates everywhere. All text/background pairings
-  below are chosen to meet WCAG AA contrast for their intended use.
+  Design tokens for The Ridge.
+
+  The site is themeable: a palette ("theme") and a light/dark "mode" are set as
+  data attributes on <html> (data-theme, data-mode) by the theme picker. Every
+  component reads the semantic + palette variables below, so switching a theme
+  or mode re-skins the whole site with no per-component changes.
+
+  Themes:  natural (default) · coastal · modern · editorial
+  Modes:   light (default) · dark
+
+  Contrast: button/link/text pairings are chosen to meet WCAG AA for their use.
 */
+
 :root {
-  /* ---- Brand palette ---- */
-  --c-forest: #2e4b36;      /* primary — headers, primary buttons, footer */
-  --c-cedar: #1f3325;       /* primary dark — hover/pressed, deep text */
-  --c-sage: #7c9082;        /* secondary accent — borders, tags, motifs */
-  --c-clay: #c4703a;        /* warm accent — CTAs, links */
-  --c-clay-dark: #a85c2b;   /* warm accent, pressed state */
-  --c-fern: #e0a458;        /* soft highlight — date chips */
-  --c-mist: #8fa9b8;        /* cool accent — ocean/mountain motifs, info */
-  --c-paper: #f7f3ec;       /* page background */
-  --c-cream: #fffdf8;       /* card surface */
-  --c-bark: #2b2a26;        /* body text */
-  --c-stone: #5c574e;       /* muted / secondary text */
-  --c-line: #e3dcce;        /* hairline borders on paper */
+  /* ---- NATURAL · light (default) ---- */
+  --c-forest: #2e4b36;   /* primary / heading / panel + footer bg */
+  --c-cedar: #1f3325;    /* nav text, deep accents */
+  --c-sage: #7c9082;     /* secondary accent, tags */
+  --c-clay: #c4703a;     /* CTA button bg (white text) */
+  --c-clay-dark: #a85c2b;/* CTA hover */
+  --c-clay-ink: #9c5324; /* link / accent text on light bg */
+  --c-fern: #e0a458;     /* chip / date highlight */
+  --c-chip-ink: #4a3410; /* text on the fern chip */
+  --c-mist: #8fa9b8;     /* cool accent */
+  --c-paper: #f7f3ec;    /* page background */
+  --c-cream: #fffdf8;    /* card / input surface */
+  --c-bark: #2b2a26;     /* body text */
+  --c-stone: #5c574e;    /* muted text */
+  --c-line: #e3dcce;     /* borders */
 
-  /* Accessible link/CTA text tone (darker clay) for text on light backgrounds */
-  --c-clay-ink: #9c5324;
+  --font-heading: 'Fraunces Variable', 'Fraunces', Georgia, serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  /* ---- Semantic roles ---- */
+  /* ---- semantic roles (follow the palette above) ---- */
   --bg: var(--c-paper);
   --surface: var(--c-cream);
   --text: var(--c-bark);
@@ -31,12 +42,10 @@
   --border: var(--c-line);
   --brand: var(--c-forest);
 
-  /* ---- Typography ---- */
-  --font-heading: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --fs-base: 1.125rem;      /* 18px */
-  --fs-sm: 0.9375rem;       /* 15px */
-  --fs-lg: 1.375rem;        /* 22px */
+  /* ---- Typography scale ---- */
+  --fs-base: 1.125rem;
+  --fs-sm: 0.9375rem;
+  --fs-lg: 1.375rem;
   --fs-xl: 1.75rem;
   --fs-2xl: 2.25rem;
   --fs-3xl: clamp(2.5rem, 5vw, 3.5rem);
@@ -45,18 +54,141 @@
   --measure: 65ch;
 
   /* ---- Space & shape ---- */
-  --space-1: 0.5rem;
-  --space-2: 1rem;
-  --space-3: 1.5rem;
-  --space-4: 2rem;
-  --space-5: 3rem;
-  --space-6: 4rem;
-  --space-7: 6rem;
-  --radius: 12px;
-  --radius-lg: 20px;
-  --radius-pill: 999px;
-  --shadow: 0 1px 2px rgba(43, 42, 38, 0.06), 0 8px 24px rgba(43, 42, 38, 0.08);
-  --shadow-sm: 0 1px 3px rgba(43, 42, 38, 0.1);
+  --space-1: 0.5rem;  --space-2: 1rem;   --space-3: 1.5rem;
+  --space-4: 2rem;    --space-5: 3rem;   --space-6: 4rem;  --space-7: 6rem;
+  --radius: 12px;  --radius-lg: 20px;  --radius-pill: 999px;
+  --shadow: 0 1px 2px rgba(20, 18, 14, 0.06), 0 8px 24px rgba(20, 18, 14, 0.10);
+  --shadow-sm: 0 1px 3px rgba(20, 18, 14, 0.12);
   --container: 1120px;
   --container-narrow: 760px;
+}
+
+/* ============ NATURAL · dark ============ */
+:root[data-theme='natural'][data-mode='dark'] {
+  --c-forest: #2e4b36;   /* panels/footer stay a deep green, lighter than bg */
+  --c-cedar: #dde3da;    /* nav text (light on dark) */
+  --c-sage: #90a597;
+  --c-clay: #c4703a;
+  --c-clay-dark: #a85c2b;
+  --c-clay-ink: #e9a46f; /* links on dark */
+  --c-fern: #e0a458;
+  --c-chip-ink: #4a3410;
+  --c-mist: #8fa9b8;
+  --c-paper: #18211b;
+  --c-cream: #212c24;
+  --c-bark: #e7e4da;
+  --c-stone: #a7a99c;
+  --c-line: #35423a;
+  --heading: #eaf1ea;
+}
+
+/* ============ COASTAL ============ */
+:root[data-theme='coastal'] {
+  --c-forest: #155e63;
+  --c-cedar: #0e464b;
+  --c-sage: #6e9aa0;
+  --c-clay: #c15a32;
+  --c-clay-dark: #a94d29;
+  --c-clay-ink: #b4552e;
+  --c-fern: #e7c98b;
+  --c-chip-ink: #4a3410;
+  --c-mist: #7fb0c4;
+  --c-paper: #edf1ef;
+  --c-cream: #ffffff;
+  --c-bark: #1b2a2e;
+  --c-stone: #4c5d61;
+  --c-line: #dae2e0;
+  --font-heading: 'Spectral', Georgia, serif;
+  --font-body: 'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+:root[data-theme='coastal'][data-mode='dark'] {
+  --c-forest: #17636a;
+  --c-cedar: #d7e6e4;
+  --c-sage: #6e9aa0;
+  --c-clay: #c15a32;
+  --c-clay-dark: #a94d29;
+  --c-clay-ink: #f1966e;
+  --c-fern: #e7c98b;
+  --c-chip-ink: #3a2e12;
+  --c-mist: #7fb0c4;
+  --c-paper: #10201f;
+  --c-cream: #172d2c;
+  --c-bark: #e6efee;
+  --c-stone: #9fb4b3;
+  --c-line: #294140;
+  --heading: #e6f1f0;
+}
+
+/* ============ MODERN ============ */
+:root[data-theme='modern'] {
+  --c-forest: #173d31;
+  --c-cedar: #0f2a22;
+  --c-sage: #9db3aa;
+  --c-clay: #178a5c;
+  --c-clay-dark: #12734b;
+  --c-clay-ink: #126b47;
+  --c-fern: #cdead9;
+  --c-chip-ink: #12503a;
+  --c-mist: #8fb0a4;
+  --c-paper: #fbfbf9;
+  --c-cream: #ffffff;
+  --c-bark: #14181c;
+  --c-stone: #5a6470;
+  --c-line: #e7e9e6;
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+:root[data-theme='modern'][data-mode='dark'] {
+  --c-forest: #1c4a3b;
+  --c-cedar: #dce7e2;
+  --c-sage: #8fb0a4;
+  --c-clay: #178a5c;
+  --c-clay-dark: #12734b;
+  --c-clay-ink: #4ccb95;
+  --c-fern: #cdead9;
+  --c-chip-ink: #12503a;
+  --c-mist: #8fb0a4;
+  --c-paper: #0f1417;
+  --c-cream: #171d22;
+  --c-bark: #edf1f3;
+  --c-stone: #9aa6ae;
+  --c-line: #28312f;
+  --heading: #edf3ef;
+}
+
+/* ============ EDITORIAL ============ */
+:root[data-theme='editorial'] {
+  --c-forest: #45372a;   /* deep warm brown for panels/footer/heading */
+  --c-cedar: #362a20;
+  --c-sage: #6e7a4b;     /* olive secondary */
+  --c-clay: #b4552e;     /* terracotta CTA */
+  --c-clay-dark: #9c4526;
+  --c-clay-ink: #a24a27;
+  --c-fern: #d89a3c;     /* mustard chip */
+  --c-chip-ink: #463207;
+  --c-mist: #9d8b72;
+  --c-paper: #fbf6ef;
+  --c-cream: #ffffff;
+  --c-bark: #2a2622;
+  --c-stone: #6e6153;
+  --c-line: #ebe2d4;
+  --font-heading: 'Newsreader', Georgia, serif;
+  --font-body: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+:root[data-theme='editorial'][data-mode='dark'] {
+  --c-forest: #52422f;
+  --c-cedar: #e7dccb;
+  --c-sage: #8a9560;
+  --c-clay: #b4552e;
+  --c-clay-dark: #9c4526;
+  --c-clay-ink: #da8b5f;
+  --c-fern: #d89a3c;
+  --c-chip-ink: #3a2a08;
+  --c-mist: #9d8b72;
+  --c-paper: #201a14;
+  --c-cream: #2b231b;
+  --c-bark: #f1e9dd;
+  --c-stone: #a99b88;
+  --c-line: #3a2f24;
+  --heading: #f1e4d4;
 }
