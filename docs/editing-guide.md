@@ -17,7 +17,7 @@ Until then, this guide is all you need.
 ## How publishing works
 
 The website is **static**, it's rebuilt from these text files every time the
-project changes, and hosted on **Cloudflare Pages**.
+project changes, and hosted on **Cloudflare Workers**.
 
 1. You add or edit a Markdown (`.md`) file in the right folder (see below).
 2. You save it to the project (commit/push, or use the GitHub website's
