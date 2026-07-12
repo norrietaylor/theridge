@@ -81,7 +81,11 @@ a minute).
 [`docs/editing-guide.md`](docs/editing-guide.md). It covers adding events, news,
 City issues, groups and meetings, how images work, and the house style.
 
-A visual editor (CMS) for click-and-type editing is planned as a fast-follow.
+A **visual CMS** for click-and-type editing is live at `/admin`: allow-listed
+editors sign in by email code (Cloudflare Access, no GitHub account needed) and
+edit events, news, groups, City issues and a photo gallery with live preview,
+photo upload and a publish button. One-time setup is documented in
+[`docs/cms-setup.md`](docs/cms-setup.md).
 
 ---
 
@@ -155,8 +159,6 @@ domain ever changes.
 
 ## Roadmap / follow-ups
 
-- **Visual CMS** for content editing (fast-follow) so volunteers can edit without
-  touching files.
 - **Real content**, replace the placeholder copy and suggested events with the
   real thing.
 - **Pre-made PDF downloads** under `public/downloads/` for the outreach kit.
