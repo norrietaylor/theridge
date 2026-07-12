@@ -4,8 +4,8 @@ import { glob } from 'astro/loaders';
 /*
   Content collections = the editable "data" of the site. Each folder under
   src/content/ holds Markdown files; the frontmatter fields below are validated
-  at build time so bad data is caught early and the future CMS can present the
-  right form fields.
+  at build time so bad data is caught early and the CMS (worker/cms.ts) presents
+  the right form fields.
 */
 
 // Community events (also feed the home page and the .ics calendar).
