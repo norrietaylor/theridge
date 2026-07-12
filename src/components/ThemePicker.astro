@@ -19,9 +19,8 @@ const THEMES = [
     <p class="tp-h">Palette</p>
     <div class="tp-grid">
       {THEMES.map((t) => (
-        <button type="button" class="tp-opt" data-theme-set={t.id} aria-pressed="false">
-          <span class="tp-sw" aria-hidden="true"><i style={`background:${t.a}`}></i><i style={`background:${t.b}`}></i></span>
-          <span>{t.label}</span>
+        <button type="button" class="tp-opt" data-theme-set={t.id} aria-pressed="false" aria-label={`${t.label} palette`} title={t.label}>
+          <span class="tp-sw" aria-hidden="true" style={`--a:${t.a}; --b:${t.b}`}></span>
         </button>
       ))}
     </div>
@@ -53,20 +52,28 @@ const THEMES = [
   }
   .tp-h { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .09em;
     text-transform: uppercase; color: var(--text-muted); margin: 0 0 8px; }
-  .tp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-  .tp-opt, .tp-mode {
-    display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 14px; font-weight: 600;
+  .tp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+  .tp-opt {
+    display: block; padding: 5px; background: transparent;
+    border: 1.5px solid var(--border); border-radius: 11px; cursor: pointer;
+    transition: border-color .12s ease;
+  }
+  .tp-mode {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font: inherit; font-size: 14px; font-weight: 600;
     background: transparent; border: 1.5px solid var(--border); border-radius: 10px;
-    padding: 8px 10px; cursor: pointer; color: var(--text); text-align: left;
+    padding: 8px 10px; cursor: pointer; color: var(--text);
   }
   .tp-opt:hover, .tp-mode:hover { border-color: var(--heading); }
   .tp-opt[aria-pressed='true'], .tp-mode[aria-pressed='true'] {
     border-color: var(--c-clay); box-shadow: inset 0 0 0 1px var(--c-clay);
   }
-  .tp-sw { display: inline-flex; border-radius: 5px; overflow: hidden; border: 1px solid rgba(0,0,0,.12); }
-  .tp-sw i { display: block; width: 12px; height: 18px; }
+  .tp-sw {
+    display: block; width: 100%; aspect-ratio: 1 / 1; border-radius: 7px;
+    border: 1px solid rgba(0, 0, 0, .15);
+    background: linear-gradient(135deg, var(--a) 0 50%, var(--b) 50% 100%);
+  }
   .tp-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .tp-mode { justify-content: center; }
 </style>
 
 <script>
