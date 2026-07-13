@@ -2,12 +2,13 @@
 title: Trail & Parkland Tidy-Up Morning
 start: 2026-08-08
 time: "9:30 AM – 11:30 AM"
-location: "Meet at the trailhead by the main park"
-summary: "A couple of hours of light litter-picking and trail care to keep our shared paths and parkland looking their best."
-coordinator: "volunteer needed"
+location: Meet at the trailhead by the main park
+summary: A couple of hours of light litter-picking and trail care to keep our shared paths and parkland looking their best.
+coordinator: volunteer needed
 bring: "Work gloves and sturdy shoes. Bags, grabbers, and a few extra gloves will be provided."
 rsvp: true
 example: true
+draft: true
 ---
 
 The trails and parkland are one of the best things about living on the ridge, and it only takes a little regular care to keep them that way. Join neighbours for a friendly morning of litter-picking, clearing overgrown edges, and tidying the paths we all share.
