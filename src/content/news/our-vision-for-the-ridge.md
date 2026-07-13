@@ -1,10 +1,11 @@
 ---
-title: "Our vision for the Ridge"
+title: Our vision for the Ridge
 date: 2026-07-11
 category: Vision
-summary: "Why this young neighbourhood on the ridge feels like its own place, and what we hope to build together, as neighbours and as one voice with the City."
-author: "Ron Taylor"
+summary: "A young neighbourhood on the ridge, finding its feet and its voice—together with each other and with the City."
+author: Ron Taylor
 pinned: true
+draft: false
 ---
 
 The Ridge sits a little apart from the rest of South Courtenay, up on the rise, with trees at the edges and the mountains and ocean showing themselves on a clear day. It is a young neighbourhood, still finding its feet, with families, retirees, first-time owners and long-time Islanders all landing here within a few short years. That mix is the whole point. We get to decide, together, what kind of place this becomes.
