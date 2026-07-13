@@ -8,9 +8,11 @@
  * installation access token, which is cached in module scope until ~1 minute
  * before it expires.
  *
- * Commits are stamped with two identities: the committer is always the bot
- * ("The Ridge CMS"), and the author is the signed-in editor, so history shows
- * who actually made each change.
+ * Commits are stamped with a non-identifying author/committer (both the bot's
+ * role address) so no editor PII lands in the PUBLIC repo history. The caller
+ * (worker/cms.ts) is responsible for keeping any real editor identity out of the
+ * author fields and commit message; per-editor accountability lives only in
+ * private server-side audit logs.
  *
  * Required env (see docs/cms-setup.md):
  *   GH_APP_ID               GitHub App ID (JWT issuer)
@@ -27,7 +29,8 @@ const GH_API = 'https://api.github.com';
 const GH_ACCEPT = 'application/vnd.github+json';
 const GH_USER_AGENT = 'theridge-cms';
 
-// The commit committer is always the bot; the author is the editor (per call).
+// Committer is always the bot. The author (passed per call) is a non-identifying
+// label with this same role address — never the editor's personal email.
 const COMMITTER = { name: 'The Ridge CMS', email: 'cms@ourridge.ca' };
 
 export interface GhFile {

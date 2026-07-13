@@ -216,8 +216,15 @@ export async function handleCms(request: Request, env: Env): Promise<Response> {
   }
 
   const method = request.method;
-  const authorName = identity.name || identity.email;
-  const authorEmail = identity.email;
+  // The repo is PUBLIC. Never write the editor's email (PII) into commit
+  // author/committer or messages. Attribute to a generic, non-identifying CMS
+  // author; keep real accountability in server-side logs only (see audit()).
+  const editorEmail = identity.email; // audit logging only — never committed
+  const authorName =
+    identity.name && !identity.name.includes('@') ? identity.name : 'Ridge editor';
+  const authorEmail = 'cms@ourridge.ca'; // role address, not personal PII
+  const audit = (action: string, path: string) =>
+    console.log(`cms audit: ${action} ${path} by ${editorEmail}`);
   const sub = parts.slice(1); // segments after 'cms'
 
   try {
@@ -280,10 +287,11 @@ export async function handleCms(request: Request, env: Env): Promise<Response> {
         const data = (payload.data || {}) as FmData;
         const body = typeof payload.body === 'string' ? payload.body : '';
         const content = serializeFrontmatter(data, body);
+        audit('update', path);
         const res = await putFile(env, token, {
           path,
           content,
-          message: `cms: update ${type}/${id} (via ${authorEmail})`,
+          message: `cms: update ${type}/${id}`,
           sha: payload.sha,
           authorName,
           authorEmail,
@@ -294,10 +302,11 @@ export async function handleCms(request: Request, env: Env): Promise<Response> {
       if (method === 'DELETE') {
         const payload = (await request.json().catch(() => ({}))) as { sha?: string };
         if (!payload.sha) return json({ error: 'sha-required' }, 400);
+        audit('delete', path);
         await deleteFile(env, token, {
           path,
           sha: payload.sha,
-          message: `cms: delete ${type}/${id} (via ${authorEmail})`,
+          message: `cms: delete ${type}/${id}`,
           authorName,
           authorEmail,
         });
@@ -382,10 +391,11 @@ export async function handleCms(request: Request, env: Env): Promise<Response> {
           draft: false,
         };
         const content = serializeFrontmatter(data, '');
+        audit('approve', `src/content/gallery/${id}.md`);
         await putFile(env, token, {
           path: `src/content/gallery/${id}.md`,
           content,
-          message: `cms: approve photo ${id} (via ${authorEmail})`,
+          message: `cms: approve photo ${id}`,
           authorName,
           authorEmail,
         });
