@@ -9,7 +9,7 @@ coordinatorEmail: hello@ourridge.ca
 bring: "A helmet, lights for the ride home, and a water bottle."
 rsvp: true
 example: true
-draft: false
+draft: true
 ---
 
 We roll out from the playground for a gentle evening loop on the neighbourhood's quiet streets and connector paths. It is a no-drop, no-hurry ride, we stay together, keep it flat and friendly, and there is always someone happy to sweep at the back.
