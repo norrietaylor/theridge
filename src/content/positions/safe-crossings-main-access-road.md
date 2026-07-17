@@ -1,12 +1,13 @@
 ---
-title: "Safe crossings & traffic calming on our main access road"
+title: Safe crossings & traffic calming on our main access road
 status: Active
 updated: 2026-07-08
 summary: "As more families move in, the road most of us use to get in and out of the neighbourhood is getting busier. We're asking the City for safe, well-marked crossings and sensible traffic calming before it becomes a problem."
 whatYouCanDo:
   - "Send a short, polite note to Mayor & Council describing where you feel unsafe crossing, and why."
-  - "Tell us about near-misses or trouble spots so we can map them and share the pattern with the City."
-  - "Add your name to the list so you hear about any City meeting where this comes up."
+  - Tell us about near-misses or trouble spots so we can map them and share the pattern with the City.
+  - Volunteer to be a liaison with the City for the Ridge
+draft: false
 ---
 
 ## Background
