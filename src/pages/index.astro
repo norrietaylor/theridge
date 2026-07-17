@@ -38,6 +38,33 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
     </div>
   </section>
 
+  <!-- Balanced hub: two jobs -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Purpose</p>
+      <h2 class="section-title">One neighbourhood, two ways to take part</h2>
+      <div class="grid cols-2">
+        <article class="card card--pad-lg">
+          <h3>Connect with neighbours</h3>
+          <p>
+            Dog walks, people walks, bike rides and community events, small, easy
+            ways to meet the folks a few doors down and enjoy the trails together.
+          </p>
+          <p><a class="btn btn-secondary" href="/events">Find your people</a></p>
+        </article>
+        <article class="card card--pad-lg">
+          <h3>A united voice</h3>
+          <p>
+            Decisions about parks, roads and what gets built here go through the
+            City of Courtenay. Together we can follow the issues and weigh in as
+            one neighbourhood.
+          </p>
+          <p><a class="btn btn-secondary" href="/voice">See what's before the City</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- What's happening -->
   <section class="section">
     <div class="container">
@@ -74,33 +101,6 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
         </p>
       )}
       <p class="more-link"><a href="/events">See all events →</a></p>
-    </div>
-  </section>
-
-  <!-- Balanced hub: two jobs -->
-  <section class="section">
-    <div class="container">
-      <p class="eyebrow">Two things at once</p>
-      <h2 class="section-title">One neighbourhood, two ways to take part</h2>
-      <div class="grid cols-2">
-        <article class="card card--pad-lg">
-          <h3>Connect with neighbours</h3>
-          <p>
-            Dog walks, people walks, bike rides and community events, small, easy
-            ways to meet the folks a few doors down and enjoy the trails together.
-          </p>
-          <p><a class="btn btn-secondary" href="/events">Find your people</a></p>
-        </article>
-        <article class="card card--pad-lg">
-          <h3>A united voice</h3>
-          <p>
-            Decisions about parks, roads and what gets built here go through the
-            City of Courtenay. Together we can follow the issues and weigh in as
-            one neighbourhood.
-          </p>
-          <p><a class="btn btn-secondary" href="/voice">See what's before the City</a></p>
-        </article>
-      </div>
     </div>
   </section>
 
