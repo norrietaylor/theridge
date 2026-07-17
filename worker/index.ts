@@ -5,7 +5,6 @@
  * of POST endpoints under /api/*:
  *   /api/contact    → emails the group inbox (Resend)
  *   /api/volunteer  → emails the group inbox (Resend)
- *   /api/household  → emails the group inbox (Resend)
  *   /api/rsvp       → emails the event coordinator/inbox (Resend)
  *   /api/subscribe  → adds a subscriber to the newsletter (MailerLite)
  *
@@ -165,17 +164,6 @@ const VOLUNTEER = (f: Fields) => ({
   ].join('\n'),
 });
 
-const HOUSEHOLD = (f: Fields) => ({
-  subject: 'New household sign-up, The Ridge',
-  text: [
-    'A household would like to join the association (via ourridge.ca)',
-    '',
-    `Name:    ${str(f, 'name')}`,
-    `Address: ${str(f, 'address')}`,
-    `Email:   ${str(f, 'email')}`,
-  ].join('\n'),
-});
-
 const RSVP = (f: Fields) => ({
   subject: `RSVP: ${str(f, 'event') || 'event'}, The Ridge`,
   text: [
@@ -215,8 +203,6 @@ export default {
             return await handleFormEmail(request, env, CONTACT);
           case '/api/volunteer':
             return await handleFormEmail(request, env, VOLUNTEER);
-          case '/api/household':
-            return await handleFormEmail(request, env, HOUSEHOLD);
           case '/api/rsvp':
             return await handleFormEmail(request, env, RSVP);
           case '/api/subscribe':
