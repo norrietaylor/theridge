@@ -1,19 +1,12 @@
 ---
-// Home, the front door of Our Ridge. A balanced hub: connect with neighbours
-// and add your voice with the City. Pulls the next few events and latest news
-// from the content collections, degrading gracefully when they're empty.
+// Home, the front door of Our Ridge. Tracks where we're at in forming a
+// resident-led association, and pulls the latest news from the content
+// collection, degrading gracefully when it's empty.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RidgeMark from '../components/RidgeMark.astro';
-import EventCard from '../components/EventCard.astro';
 import NewsCard from '../components/NewsCard.astro';
 import SignupForm from '../components/SignupForm.astro';
 import { getCollection } from 'astro:content';
-import { isUpcoming } from '../lib/dates';
-
-const upcomingEvents = (await getCollection('events', ({ data }) => !data.draft))
-  .filter((entry) => isUpcoming(entry.data.start))
-  .sort((a, b) => a.data.start.getTime() - b.data.start.getTime())
-  .slice(0, 3);
 
 const latestNews = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
@@ -25,82 +18,98 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
     <div class="container">
       <div class="panel-forest hero">
         <RidgeMark variant="light" height={56} class="hero-mark" />
-        <h1>A neighbourhood that looks out for each other</h1>
+        <h1>Building the Ridge Neighbourhood Association together</h1>
         <p class="hero-lead">
-          A neighbourhood on the ridge in South Courtenay, parks, trails, and
-          neighbours looking out for each other.
+          We're in the early stages of forming a resident-led association to
+          strengthen connection and advocacy in the Ridge.
         </p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="/join">Join the list</a>
-          <a class="btn btn-ghost" href="/events">Upcoming events</a>
+          <a class="btn btn-primary" href="/get-involved">Get involved</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- What's happening -->
+  <!-- About this effort -->
   <section class="section">
     <div class="container">
-      <p class="eyebrow">What's happening</p>
-      <h2 class="section-title">Coming up around the Ridge</h2>
-      <p class="lead">Walks, rides, work parties and get-togethers, come as you are, all welcome.</p>
-      {upcomingEvents.length > 0 ? (
-        <div class="grid">
-          {upcomingEvents.map((entry) => (
-            <EventCard
-              href={`/events/${entry.id}`}
-              title={entry.data.title}
-              start={entry.data.start}
-              time={entry.data.time}
-              location={entry.data.location}
-              summary={entry.data.summary}
-              example={entry.data.example}
-              image={entry.data.image}
-              imageAlt={entry.data.imageAlt}
-            />
-          ))}
-        </div>
-      ) : (
-        <div class="card card--pad-lg">
-          <p class="muted" style="margin:0">
-            Nothing on the calendar just yet, check back soon, or <a href="/join">add your name to the list</a> and we'll let you know
-            the moment something's planned.
-          </p>
-        </div>
-      )}
-      {upcomingEvents.some((entry) => entry.data.example) && (
-        <p class="form-note" style="margin-top: var(--space-2);">
-          These are early ideas to get us started, nothing's locked in yet. See one you'd come to? <a href="/contact">Tell us.</a>
-        </p>
-      )}
-      <p class="more-link"><a href="/events">See all events →</a></p>
+      <p class="eyebrow">About this effort</p>
+      <h2 class="section-title">Connecting neighbours and strengthening our voice with the City of Courtenay</h2>
+      <p class="lead">
+        This effort aims to build stronger connections among Our Ridge
+        residents and create a clear, organized way to advocate with the City
+        on issues that affect our neighbourhood.
+      </p>
+      <h3>A resident-led initiative, working toward formal recognition</h3>
+      <p>
+        This is a volunteer, non-commercial effort led by neighbours for
+        neighbours. While Ron and Sarah Taylor are coordinating things right
+        now, the goal is to create a formal neighbourhood association that
+        can be recognized by the City of Courtenay, with:
+      </p>
+      <ul>
+        <li>An elected executive that meets regularly (at least once a year).</li>
+        <li>
+          A clear membership structure and the ability to share approximate
+          membership numbers.
+        </li>
+        <li>An annual general meeting (AGM) with recorded minutes.</li>
+        <li>
+          Demonstrated member engagement before submitting responses on
+          development referrals, Official Community Plan (OCP) updates, or
+          rezoning applications.
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- Balanced hub: two jobs -->
-  <section class="section">
+  <!-- Where we're at -->
+  <section class="section" style="padding-top:0;">
     <div class="container">
-      <p class="eyebrow">Two things at once</p>
-      <h2 class="section-title">One neighbourhood, two ways to take part</h2>
-      <div class="grid cols-2">
-        <article class="card card--pad-lg">
-          <h3>Connect with neighbours</h3>
-          <p>
-            Dog walks, people walks, bike rides and community events, small, easy
-            ways to meet the folks a few doors down and enjoy the trails together.
-          </p>
-          <p><a class="btn btn-secondary" href="/community">Find your people</a></p>
-        </article>
-        <article class="card card--pad-lg">
-          <h3>A united voice</h3>
-          <p>
-            Decisions about parks, roads and what gets built here go through the
-            City of Courtenay. Together we can follow the issues and weigh in as
-            one neighbourhood.
-          </p>
-          <p><a class="btn btn-secondary" href="/voice">See what's before the City</a></p>
-        </article>
-      </div>
+      <p class="eyebrow">Where we're at</p>
+      <h2 class="section-title">Our progress so far</h2>
+      <p class="lead">
+        We're building this step by step. Here's where each part of the
+        process stands right now:
+      </p>
+      <ol class="steps" role="list">
+        <li class="step">
+          <span class="step-num" aria-hidden="true">1</span>
+          <div class="step-body">
+            <p class="step-title">Establish a founding group</p>
+            <span class="status status-active">In progress</span>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">2</span>
+          <div class="step-body">
+            <p class="step-title">Draft purpose, values, and bylaws</p>
+            <span class="status status-active">In progress</span>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">3</span>
+          <div class="step-body">
+            <p class="step-title">Collect initial member sign-ups and contact info</p>
+            <span class="status status-active">Happening now</span>
+            <p class="step-action"><a href="/get-involved">Get involved →</a></p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">4</span>
+          <div class="step-body">
+            <p class="step-title">Elect an interim board and roles</p>
+            <span class="status status-watching">Upcoming</span>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">5</span>
+          <div class="step-body">
+            <p class="step-title">Launch regular meetings and working groups</p>
+            <span class="status status-watching">Upcoming</span>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -177,6 +186,22 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
   .hero-lead { font-size: var(--fs-lg); max-width: 54ch; color: #f2f1ea; margin-bottom: var(--space-3); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
   .hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-2); }
   .more-link { margin-top: var(--space-3); font-weight: 600; }
+  .steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+  .step { display: flex; gap: var(--space-3); align-items: flex-start; }
+  .step-num {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background: var(--c-forest);
+    color: #fff;
+    font-weight: 700;
+  }
+  .step-title { font-weight: 600; margin: 0 0 0.3rem; }
+  .step-action { margin: 0.4rem 0 0; }
   .cta-strip {
     display: flex;
     align-items: center;

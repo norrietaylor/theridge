@@ -10,6 +10,10 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent('I’d like to
 
 const roles = [
   {
+    title: 'Association membership',
+    body: 'Sign on as a founding member and have a say as we build a formal, City-recognized neighbourhood association.',
+  },
+  {
     title: 'Event help',
     body: 'Lend a hand setting up, welcoming people, or bringing snacks to a walk, ride or get-together.',
   },
@@ -42,6 +46,8 @@ const roles = [
       <p class="lead">
         This whole thing runs on neighbours giving a little time. There's no
         commitment too small, pick what suits you, and we'll take it from there.
+        Just here to sign on as a member? That counts too, tick Association
+        membership below and you're in.
       </p>
     </div>
   </section>
@@ -92,6 +98,7 @@ const roles = [
 
         <fieldset class="field interests">
           <legend>What are you interested in?</legend>
+          <label class="check"><input type="checkbox" name="interests" value="association-membership" /> Association membership</label>
           <label class="check"><input type="checkbox" name="interests" value="events" /> Event help</label>
           <label class="check"><input type="checkbox" name="interests" value="communications" /> Communications &amp; newsletter</label>
           <label class="check"><input type="checkbox" name="interests" value="outreach" /> Outreach &amp; door-knocking</label>

@@ -153,9 +153,9 @@ const CONTACT = (f: Fields) => ({
 });
 
 const VOLUNTEER = (f: Fields) => ({
-  subject: 'New volunteer sign-up, The Ridge',
+  subject: 'New sign-up, The Ridge',
   text: [
-    'Someone would like to help out (via ourridge.ca/get-involved)',
+    'Someone signed up to help out or join (via ourridge.ca/get-involved)',
     '',
     `Name:         ${str(f, 'name')}`,
     `Email:        ${str(f, 'email')}`,
