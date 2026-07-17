@@ -12,6 +12,9 @@ permissions:
 
 jobs:
   build:
+    # The main ruleset requires a status check named "CI"; GitHub reports the
+    # check under the job's display name, so this must stay "CI".
+    name: CI
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
