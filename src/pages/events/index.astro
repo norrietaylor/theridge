@@ -38,18 +38,6 @@ const hasSuggestions = events.some((entry) => entry.data.example);
       <p class="form-note" style="margin-top: var(--space-1);">
         Subscribe once and new events show up on your own phone or laptop calendar automatically. Opens in your calendar app.
       </p>
-
-      <div class="panel callout" style="margin-top: var(--space-4);">
-        <div>
-          <h2 style="margin-top:0;">Looking for the regular walks &amp; rides?</h2>
-          <p class="muted" style="margin-bottom:0;">
-            We're getting regular Saturday dog walks, mid-week people walks, and
-            evening bike rides going. Find the plan and meeting points on the
-            Community page, and come help start them.
-          </p>
-        </div>
-        <a class="btn btn-primary" href="/community">See Community Life</a>
-      </div>
     </div>
   </section>
 
@@ -66,7 +54,7 @@ const hasSuggestions = events.some((entry) => entry.data.example);
       )}
       {months.length === 0 ? (
         <p class="prose muted">
-          No events are on the calendar just yet, check back soon, or <a href="/community">join a regular walk or ride</a> in the meantime.
+          No events are on the calendar just yet, check back soon.
           Got an idea for a get-together? <a href="/get-involved">We'd love your help</a>.
         </p>
       ) : (
@@ -98,14 +86,6 @@ const hasSuggestions = events.some((entry) => entry.data.example);
 </BaseLayout>
 
 <style>
-  .callout {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-  }
-  .callout .btn { flex: 0 0 auto; }
   .month-heading {
     padding-bottom: var(--space-1);
     border-bottom: 2px solid var(--border);
