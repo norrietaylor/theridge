@@ -5,7 +5,7 @@ category: Vision
 summary: "Early survey feedback highlights a valid concern: that a good‑intentioned neighbourhood association could easily become something the community doesn’t want—a small group making decisions for everyone, with the scope creeping beyond the original intent. To avoid this, we’re looking at a formal structure with tight bylaws that would:\n\nClearly establish the rights and constraints of the elected board and executive.\n\nDefine who can be a member and how membership works.\n\nSet out how submissions to the City will be handled."
 author: Sarah Taylor
 pinned: true
-draft: true
+draft: false
 ---
 
 ### Clear limits in the bylaws
