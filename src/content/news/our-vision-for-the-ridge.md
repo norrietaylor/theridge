@@ -4,7 +4,7 @@ date: 2026-07-11
 category: Vision
 summary: "A young neighbourhood on the ridge, finding its feet and its voice—together with each other and with the City."
 author: Ron Taylor
-pinned: true
+pinned: false
 draft: false
 ---
 
