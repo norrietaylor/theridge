@@ -1,11 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-
-// Recurring community groups, in the order the organisers chose.
-const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
-  (a, b) => a.data.order - b.data.order,
-);
 ---
 <BaseLayout title="Community" description="Community life on The Ridge, regular dog walks, people walks and bike rides, and the everyday good-neighbour habits that keep our trails and parkland welcoming.">
   <section class="section">
@@ -13,9 +7,7 @@ const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
       <p class="eyebrow">Community life</p>
       <h1>How neighbours connect on the Ridge</h1>
       <p class="lead prose">
-        A neighbourhood is really just the people in it. Alongside our one-off <a href="/events">events</a>, we're getting a handful of regular walks and
-        rides going so we cross paths week to week, on the trails, around the
-        parkland, and out on the quiet streets. Everyone's welcome, whatever your pace.
+        The Ridge is more than a collection of houses – it’s a place to build ongoing connections. This space is for neighbours to start and grow small groups that meet regularly, whether that’s walking, riding, sharing hobbies, or just catching up. As more groups form, we create more chances to see each other week after week, on the trails, in the parkland, and along our quiet streets. Everyone’s welcome to join in or to start something new that fits your interests and pace.
       </p>
     </div>
   </section>
@@ -37,64 +29,6 @@ const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
         <img src="/img/ridge-garden.jpg" width="1200" height="1600" alt="A deep-red dahlia in bloom in a Ridge front-garden bed." loading="lazy" />
         <figcaption>Front-garden colour on the Ridge in high summer.</figcaption>
       </figure>
-    </div>
-  </section>
-
-  <section class="section" style="padding-top:0;">
-    <div class="container">
-      <h2 class="section-title">Regular walks &amp; rides</h2>
-      <p class="muted" style="margin-bottom: var(--space-3);">
-        No sign-up, no fee, just turn up at the meeting point and join in.
-      </p>
-
-      {groups.length === 0 ? (
-        <p class="prose muted">
-          We're just getting our regular groups going. If you'd like to help start
-          one, <a href="/get-involved">we'd love to hear from you</a>.
-        </p>
-      ) : (
-        <div class="grid cols-3">
-          {groups.map((group) => (
-            <article class="card group-card">
-              <div class="group-head">
-                <h3 style="margin:0;">{group.data.name}</h3>
-                <span class="tag">{group.data.kind}</span>
-              </div>
-              <dl class="group-facts">
-                <div>
-                  <dt>When</dt>
-                  <dd>{group.data.schedule}</dd>
-                </div>
-                <div>
-                  <dt>Meet at</dt>
-                  <dd>{group.data.meetingPoint}</dd>
-                </div>
-                <div>
-                  <dt>Coordinator</dt>
-                  <dd>
-                    {group.data.coordinator
-                      ? group.data.coordinator
-                      : <span class="muted">volunteer needed</span>}
-                  </dd>
-                </div>
-              </dl>
-              <p class="group-summary">{group.data.summary}</p>
-            </article>
-          ))}
-        </div>
-      )}
-
-      <div class="panel start-group" style="margin-top: var(--space-4);">
-        <div>
-          <h2 style="margin-top:0;">Fancy starting a group?</h2>
-          <p class="muted" style="margin-bottom:0;">
-            A running club, a garden swap, a book night, a stroller walk, if you'd
-            enjoy it, chances are a few neighbours would too. We'll help you spread
-            the word and find a first handful of people.
-          </p>
-        </div>
-        <a class="btn btn-primary" href="/get-involved">Start a group</a>
-      </div>
     </div>
   </section>
 
@@ -159,32 +93,6 @@ const groups = (await getCollection('groups', ({ data }) => !data.draft)).sort(
     color: var(--text-muted);
     margin-top: var(--space-1);
   }
-  .group-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--space-2);
-    margin-bottom: var(--space-2);
-  }
-  .group-head .tag { flex-shrink: 0; }
-  .group-facts { margin: 0 0 var(--space-2); }
-  .group-facts > div { display: flex; gap: var(--space-1); margin-bottom: 0.35rem; }
-  .group-facts dt {
-    flex: 0 0 6.5rem;
-    font-weight: 600;
-    font-size: var(--fs-sm);
-    color: var(--text-muted);
-  }
-  .group-facts dd { margin: 0; }
-  .group-summary { margin: 0; }
-  .start-group {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-  }
-  .start-group .btn { flex: 0 0 auto; }
   .neighbours .note h3 { color: #fff; margin-bottom: var(--space-1); }
   .neighbours .grid { margin: var(--space-3) 0; }
 </style>
